@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>✦ GOLDEN CASE OPENER ✦ | CS:GO Style Pack Simulator</title>
+    <title>✦ CS:GO STYLE LOOTBOX OPENER ✦ | GOLDEN IMPACT</title>
     <style>
         * {
             margin: 0;
@@ -14,14 +14,14 @@
 
         body {
             font-family: 'Segoe UI', 'Poppins', 'Impact', system-ui, sans-serif;
-            background: radial-gradient(circle at 20% 30%, #1a0f0a, #0a0508);
+            background: radial-gradient(circle at 20% 30%, #0a0507, #020101);
             min-height: 100vh;
             color: #ffecb3;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* ✦ GOLDEN BACKGROUND ANIMATION (sparkles, moving light) */
+        /* animated golden dust overlay */
         body::before {
             content: '';
             position: fixed;
@@ -29,18 +29,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 215, 0, 0.08) 0%, transparent 60%);
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 215, 0, 0.1) 0%, transparent 70%);
             pointer-events: none;
             z-index: 0;
-            animation: slowGoldBreathing 8s infinite alternate;
+            animation: slowBreathing 6s infinite alternate;
         }
 
-        @keyframes slowGoldBreathing {
+        @keyframes slowBreathing {
             0% { opacity: 0.3; }
-            100% { opacity: 0.9; }
+            100% { opacity: 0.8; }
         }
 
-        /* ✦ SHOOTING STARS / COMETS CANVAS */
+        /* particle canvas for stars/comets */
         #canvasFx {
             position: fixed;
             top: 0;
@@ -48,7 +48,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 15;
+            z-index: 10;
         }
 
         .container {
@@ -56,34 +56,30 @@
             margin: 0 auto;
             padding: 20px;
             position: relative;
-            z-index: 5;
-        }
-
-        /* HEADER Golden */
-        .golden-header {
-            text-align: center;
-            margin-bottom: 1.5rem;
+            z-index: 20;
         }
 
         h1 {
             font-size: 3.2rem;
+            text-align: center;
             background: linear-gradient(135deg, #f9e45b, #ffb347, #ffd966);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 15px rgba(255, 200, 0, 0.6);
+            text-shadow: 0 0 20px rgba(255, 200, 0, 0.5);
             letter-spacing: 2px;
         }
 
         .balance-card {
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.65);
             backdrop-filter: blur(12px);
             border-radius: 80px;
             display: inline-block;
             padding: 8px 32px;
             border: 1px solid gold;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            margin-bottom: 25px;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+            margin: 20px auto;
+            text-align: center;
         }
 
         .balance-card span {
@@ -99,34 +95,32 @@
             justify-content: center;
             gap: 20px;
             margin-bottom: 40px;
-            border-bottom: 2px solid rgba(255, 200, 0, 0.3);
-            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 200, 0, 0.4);
+            padding-bottom: 12px;
         }
 
         .tab-btn {
             background: none;
             border: none;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: bold;
             padding: 8px 32px;
             border-radius: 60px;
             cursor: pointer;
             color: #ffd966;
             transition: 0.2s;
-            font-family: inherit;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(5px);
         }
 
         .tab-btn.active {
             background: linear-gradient(145deg, #ffcc44, #e6a800);
             color: #1e1a0a;
             box-shadow: 0 0 18px gold;
-            text-shadow: none;
         }
 
         .tab-content {
             display: none;
-            animation: fadeGlow 0.4s ease-out;
+            animation: fadeGlow 0.4s ease;
         }
 
         .tab-content.active-tab {
@@ -134,11 +128,11 @@
         }
 
         @keyframes fadeGlow {
-            from { opacity: 0; transform: scale(0.98); filter: blur(2px);}
+            from { opacity: 0; transform: scale(0.98); filter: blur(3px);}
             to { opacity: 1; transform: scale(1); filter: blur(0);}
         }
 
-        /* PACKS GRID */
+        /* Packs Grid */
         .packs-grid {
             display: flex;
             flex-wrap: wrap;
@@ -147,29 +141,29 @@
         }
 
         .pack-card {
-            background: rgba(20, 15, 25, 0.8);
+            background: rgba(20, 15, 25, 0.85);
             backdrop-filter: blur(16px);
             border-radius: 32px;
             padding: 20px;
             width: 260px;
             text-align: center;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(255, 215, 0, 0.4);
+            transition: all 0.25s ease;
+            border: 1px solid rgba(255, 215, 0, 0.5);
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
         .pack-card:hover {
             transform: translateY(-12px);
             border-color: gold;
-            box-shadow: 0 0 28px rgba(255, 215, 0, 0.6);
+            box-shadow: 0 0 35px rgba(255, 215, 0, 0.7);
         }
 
         .pack-thumb {
             width: 100px;
             height: 100px;
             object-fit: contain;
-            background: #00000066;
+            background: #00000055;
             border-radius: 28px;
             padding: 8px;
             margin-bottom: 12px;
@@ -214,9 +208,8 @@
             box-shadow: 0 2px 0 #8b5a00;
         }
 
-        /* Settings panel */
         .settings-panel {
-            background: rgba(10, 8, 12, 0.7);
+            background: rgba(10, 8, 12, 0.8);
             backdrop-filter: blur(20px);
             border-radius: 48px;
             padding: 30px;
@@ -231,44 +224,26 @@
             justify-content: space-between;
             align-items: center;
         }
+        select, input { background: #2a241a; border: 1px solid goldenrod; padding: 8px 16px; border-radius: 32px; color: #ffeaac; }
 
-        .setting-item label {
-            font-size: 1.2rem;
-        }
+        .disabled-tab { text-align: center; margin-top: 80px; font-size: 1.6rem; opacity: 0.6; font-style: italic; }
 
-        select, input {
-            background: #2a241a;
-            border: 1px solid goldenrod;
-            padding: 8px 16px;
-            border-radius: 32px;
-            color: #ffeaac;
-            font-weight: bold;
-        }
-        /* prev wins placeholder disabled */
-        .disabled-tab {
-            text-align: center;
-            margin-top: 80px;
-            font-size: 1.6rem;
-            opacity: 0.6;
-            font-style: italic;
-        }
-
-        /* ---------- MODAL CSGO STYLE ROLLING ---------- */
+        /* ---------- MODAL CSGO LOOTBOX STYLE (SLOT MACHINE REEL) ---------- */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.92);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.96);
+            backdrop-filter: blur(20px);
             z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
             visibility: hidden;
             opacity: 0;
-            transition: visibility 0s, opacity 0.25s;
+            transition: visibility 0s, opacity 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
         .modal-overlay.active {
@@ -277,443 +252,298 @@
         }
 
         .case-modal {
-            background: #17121ecc;
-            border-radius: 56px;
-            padding: 20px 35px 45px 35px;
+            background: #0c0912ee;
+            border-radius: 60px;
+            padding: 20px 35px 45px;
             width: 90%;
-            max-width: 700px;
+            max-width: 1000px;
             text-align: center;
             border: 2px solid #ffd966;
-            box-shadow: 0 0 70px rgba(255, 200, 0, 0.6);
-            position: relative;
+            box-shadow: 0 0 80px rgba(255, 200, 0, 0.5);
+            transition: transform 0.4s cubic-bezier(0.2, 1.2, 0.3, 1);
+            transform: scale(1);
         }
 
-        .roller-area {
-            background: #00000066;
-            border-radius: 40px;
-            padding: 25px;
-            margin: 15px 0;
+        /* zoom animation classes */
+        .case-modal.zoom-in {
+            transform: scale(1.4);
+            transition: transform 0.25s ease-out;
+        }
+        .case-modal.zoom-out-flash {
+            transform: scale(0.95);
+            filter: brightness(1.8) blur(2px);
+            transition: transform 0.1s, filter 0.08s;
+        }
+
+        .reel-container {
+            background: #000000aa;
+            border-radius: 50px;
+            padding: 20px;
+            margin: 20px 0;
             overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.8), 0 0 0 2px #ffcc66;
         }
 
-        .slot-machine {
+        .slot-reel {
             display: flex;
-            justify-content: center;
             gap: 12px;
-            flex-wrap: wrap;
-            min-height: 200px;
-            perspective: 800px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            white-space: nowrap;
+            padding: 12px 8px;
+            scroll-behavior: auto;
+            justify-content: flex-start;
+            transition: all 0.05s linear;
         }
+        .slot-reel::-webkit-scrollbar { display: none; }
 
-        .rolling-card {
-            background: #221c14;
+        .item-card {
+            flex: 0 0 auto;
             width: 140px;
-            border-radius: 20px;
-            padding: 15px 5px;
+            background: #1e1926;
+            border-radius: 28px;
+            padding: 15px 8px;
             text-align: center;
-            transition: all 0.08s linear;
-            box-shadow: 0 0 0 2px #ffcc66;
-            animation: rollShake 0.1s infinite alternate;
+            transition: all 0.1s;
+            border: 1px solid #ffcc66;
+            box-shadow: 0 5px 15px black;
         }
 
-        @keyframes rollShake {
-            0% { transform: rotate(0deg) translateY(0px);}
-            100% { transform: rotate(2deg) translateY(-5px);}
-        }
-
-        .rolling-img {
+        .item-img {
             width: 90px;
             height: 90px;
             object-fit: contain;
-            margin: 8px auto;
+            margin: 0 auto;
+            display: block;
         }
 
-        .final-glow {
-            animation: flashImpact 0.3s cubic-bezier(0.2, 1.6, 0.4, 1) 2;
+        .winner-highlight {
+            border: 4px solid gold;
+            box-shadow: 0 0 35px gold;
+            background: radial-gradient(circle, #ffd96655, #1e1926);
+            transform: scale(1.02);
         }
 
-        @keyframes flashImpact {
-            0% { text-shadow: 0 0 0 white; background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 90%);}
-            50% { text-shadow: 0 0 30px gold, 0 0 50px orange; background: radial-gradient(circle, rgba(255,215,0,0.9) 0%, rgba(255,100,0,0.6) 80%);}
-            100% { text-shadow: 0 0 0 white; background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 90%);}
-        }
-
-        .result-name {
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 20px 0 10px;
+        .result-area {
+            margin-top: 20px;
+            font-size: 1.5rem;
         }
 
         .close-result {
             background: #e6b422;
             border: none;
-            padding: 10px 28px;
-            border-radius: 40px;
+            padding: 12px 32px;
+            border-radius: 60px;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin-top: 20px;
             cursor: pointer;
         }
 
-        button {
-            font-family: inherit;
+        @keyframes impactFlashAnim {
+            0% { background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 80%);}
+            40% { background: radial-gradient(circle, rgba(255,255,200,0.95) 0%, rgba(255,100,0,0.8) 100%);}
+            100% { background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 80%);}
+        }
+
+        .global-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1001;
+            animation: impactFlashAnim 0.35s ease-out forwards;
         }
     </style>
 </head>
 <body>
 <canvas id="canvasFx"></canvas>
 <div class="container">
-    <div class="golden-header">
-        <h1>✦ GOLDEN CASE OPENER ✦</h1>
-        <div class="balance-card">💎 GEMS: <span id="userBalance">5000</span></div>
-    </div>
+    <div style="text-align: center;"><h1>✦ GOLDEN LOOTBOX SIMULATOR ✦</h1></div>
+    <div style="display: flex; justify-content: center;"><div class="balance-card">💎 CREDITS: <span id="userBalance">5000</span></div></div>
 
     <div class="tabs">
         <button class="tab-btn active" data-tab="packs">📦 OPEN CASES</button>
-        <button class="tab-btn" data-tab="settings">⚙️ SETTINGS</button>
+        <button class="tab-btn" data-tab="settings">⚙️ EFFECTS</button>
         <button class="tab-btn" data-tab="wins">🏆 PREV WINS</button>
     </div>
 
-    <!-- Packs tab -->
-    <div id="packsTab" class="tab-content active-tab">
-        <div id="packsContainer" class="packs-grid"><div style="color: gold;">✨ Loading golden cases... ✨</div></div>
-    </div>
-
-    <!-- Settings tab -->
-    <div id="settingsTab" class="tab-content">
-        <div class="settings-panel">
-            <h3 style="color: #ffd966;">🌟 Special Effects</h3>
-            <div class="setting-item"><label>🎆 Shooting Stars & Comets</label><input type="checkbox" id="toggleStars" checked></div>
-            <div class="setting-item"><label>💥 Impact Flash (Flashbang)</label><input type="checkbox" id="toggleFlash" checked></div>
-            <div class="setting-item"><label>🎨 Rolling Speed (CSGO style)</label><select id="rollSpeed"><option value="400">Fast</option><option value="700" selected>Normal</option><option value="1100">Cinematic</option></select></div>
-            <p style="font-size:0.8rem; margin-top:20px;">✨ More settings coming soon ✨</p>
-        </div>
-    </div>
-
-    <!-- Prev Wins (Disabled placeholder) -->
-    <div id="winsTab" class="tab-content">
-        <div class="disabled-tab">🔮 Previous wins feature coming soon... Stay tuned for history vault! 🔮</div>
-    </div>
+    <div id="packsTab" class="tab-content active-tab"><div id="packsContainer" class="packs-grid"><div>🎴 Loading cases...</div></div></div>
+    <div id="settingsTab" class="tab-content"><div class="settings-panel"><h3>🌟 CINEMATIC SETTINGS</h3><div class="setting-item"><label>💥 DRAMATIC ZOOM + FLASHBANG</label><input type="checkbox" id="toggleZoomFlash" checked></div><div class="setting-item"><label>🎇 COMETS & SHOOTING STARS</label><input type="checkbox" id="toggleStars" checked></div><div class="setting-item"><label>🎞️ REEL SPIN SPEED</label><select id="rollSpeed"><option value="1">VERY FAST</option><option value="2" selected>CLASSIC CSGO</option><option value="3">SLOW MOTION</option></select></div></div></div>
+    <div id="winsTab" class="tab-content"><div class="disabled-tab">🔮 PAST WINS COMING SOON: EPIC HISTORY VAULT 🔮</div></div>
 </div>
 
-<!-- MODAL FOR OPENING CASE (CSGO STYLE ROLLING) -->
+<!-- MODAL CSGO REEL STYLE -->
 <div id="openingModal" class="modal-overlay">
-    <div class="case-modal">
-        <h2 style="color:#ffd966;">🔓 ROLLING CASE...</h2>
-        <div class="roller-area">
-            <div id="rollingItemsContainer" class="slot-machine"></div>
-        </div>
-        <div id="finalResultArea" style="margin-top: 10px;"></div>
-        <button id="closeModalFinalBtn" class="close-result">CONTINUE</button>
+    <div class="case-modal" id="caseModalElem">
+        <h2 style="color:#ffd966;">🔁 SPINNING REEL</h2>
+        <div class="reel-container"><div id="reelTrack" class="slot-reel"></div></div>
+        <div id="finalReveal" class="result-area"></div>
+        <button id="closeModalBtn" class="close-result">CONTINUE</button>
     </div>
 </div>
 
 <script>
-    // ---------- CONFIG ----------
+    // ========= CONFIG ==========
     const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1498140574316888164/6f0h7UyyEVZUtg1DQItPHgyXeCtzhj1eQWUQAzdDRCBKBS8ZnzMwnPqFeXiQpu8Z5HEc";
-
-    // GOOGLE SHEETS (public view)
     const PACKS_SHEET_ID = "181RdB0KhPbjnSHq-t7n_KhCFwwQwU8q4dU91u-MSHr4";
     const ITEMS_SHEET_ID = "1d0mZIPIKxWvcHRxoB6Bm20tMyx1OcfISOoy7Yi9u6jY";
     const PACKS_CSV = `https://docs.google.com/spreadsheets/d/${PACKS_SHEET_ID}/export?format=csv&gid=0`;
     const ITEMS_CSV = `https://docs.google.com/spreadsheets/d/${ITEMS_SHEET_ID}/export?format=csv&gid=0`;
 
-    let packsData = [];     // { name, color, cost, thumbnail }
-    let itemsData = [];     // { name, goldValue, belongsToPack, thumbnail, rarity }
+    let packsData = [];
+    let itemsData = [];
     let userGems = 5000;
+    let currentRollInterval = null;
+    let currentPackObj = null;
+    let finalWinItem = null;
 
     // DOM
     const packsContainer = document.getElementById('packsContainer');
     const balanceSpan = document.getElementById('userBalance');
     const modal = document.getElementById('openingModal');
-    const rollingContainer = document.getElementById('rollingItemsContainer');
-    const finalResultArea = document.getElementById('finalResultArea');
-    const closeModalBtn = document.getElementById('closeModalFinalBtn');
-
-    // Settings
+    const reelTrack = document.getElementById('reelTrack');
+    const finalRevealDiv = document.getElementById('finalReveal');
+    const closeModalButton = document.getElementById('closeModalBtn');
+    const caseModalElem = document.getElementById('caseModalElem');
+    const toggleZoomFlash = document.getElementById('toggleZoomFlash');
     const toggleStars = document.getElementById('toggleStars');
-    const toggleFlash = document.getElementById('toggleFlash');
     const rollSpeedSelect = document.getElementById('rollSpeed');
 
-    let currentPack = null;
-    let rollingInterval = null;
-    let finalItem = null;
-
-    // Helper: Update balance UI
     function updateBalanceUI() { balanceSpan.innerText = userGems; }
 
-    // ----------------------------------- CANVAS: SHOOTING STARS & COMETS ---------------------------------
+    // ========== STARFIELD CANVAS ==========
     const canvas = document.getElementById('canvasFx');
     let ctx = canvas.getContext('2d');
     let stars = [];
-    let animationId = null;
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', () => { resizeCanvas(); initStars(60); });
+    function initStars(count=70) { stars = []; for(let i=0;i<count;i++) { stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 2.8 + 1, alpha: Math.random() * 0.8 + 0.2, speedX: (Math.random() - 0.5) * 0.5, speedY: Math.random() * 2 + 1.2, isComet: Math.random() > 0.8, tail: Math.random() * 12 + 5 }); } }
+    function drawStars() { if(!toggleStars.checked) { if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height); return; } ctx.clearRect(0,0,canvas.width,canvas.height); for(let s of stars) { ctx.beginPath(); if(s.isComet) { ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.tail, s.y - s.tail*0.7); ctx.lineWidth = s.radius*1.5; ctx.strokeStyle = `rgba(255, 200, 70, ${s.alpha * 0.9})`; ctx.stroke(); ctx.beginPath(); ctx.arc(s.x, s.y, s.radius+1, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 220, 100, ${s.alpha})`; ctx.fill(); } else { ctx.arc(s.x, s.y, s.radius, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 215, 0, ${s.alpha})`; ctx.fill(); } s.x += s.speedX; s.y += s.speedY; if(s.x > canvas.width+50) s.x = -50; if(s.y > canvas.height+50) s.y = -40; if(s.x < -50) s.x = canvas.width+30; if(s.y < -50) s.y = canvas.height+20; } requestAnimationFrame(drawStars); }
+    function startStarfield() { resizeCanvas(); initStars(70); drawStars(); }
+    startStarfield();
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    // helpers: load & parse CSV
+    async function loadData() {
+        try {
+            const packResp = await fetch(PACKS_CSV); const packCsv = await packResp.text();
+            const packRows = parseCSV(packCsv);
+            packsData = packRows.map(r => ({ name: r.PackName, color: r.PackColor, cost: parseInt(r.PackCost), thumbnail: r.PackThumbnail || "https://i.imgur.com/9MjQ9sD.png" })).filter(p=>p.name);
+            const itemResp = await fetch(ITEMS_CSV); const itemCsv = await itemResp.text();
+            const itemRows = parseCSV(itemCsv);
+            itemsData = itemRows.map(r => ({ name: r.ItemName, goldValue: parseInt(r.GoldValue), belongsToPack: r.BelongsToPack, thumbnail: r.ItemThumbnail, rarity: r.CardRarity, dropChance: parseFloat(r.dropChance) || (r.CardRarity === "Chaser"?5:95) })).filter(i=>i.name);
+            if(packsData.length===0) packsData = [{ name:"Boots", color:"#E03FD8", cost:1000, thumbnail:"https://i.imgur.com/9MjQ9sD.png"}];
+            if(itemsData.length===0) itemsData = [{ name:"Rainbow Boot", goldValue:10000, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e1360a5fb96873ddeb5958/attachments/69e13611771b34a309ccacb7/download/image.png", rarity:"Chaser", dropChance:5},{ name:"Old Boot", goldValue:20, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e13d2662c6fe6dfaae7fb0/attachments/69e13d2eb7b4c5c9e4798060/download/image.png", rarity:"Ordinary", dropChance:95}];
+            renderPacks();
+        } catch(e) { console.warn(e); fallbackLocal(); renderPacks(); }
     }
-    window.addEventListener('resize', () => { resizeCanvas(); initStars(40); });
-    
-    function initStars(count=45) {
-        stars = [];
-        for(let i=0;i<count;i++) {
-            stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: Math.random() * 2.5 + 1,
-                alpha: Math.random() * 0.7 + 0.3,
-                speedX: (Math.random() - 0.5) * 0.6,
-                speedY: Math.random() * 2 + 1,
-                isComet: Math.random() > 0.85,
-                tail: Math.random() * 12 + 4
-            });
-        }
-    }
+    function fallbackLocal() { packsData = [{ name:"Boots", color:"#E03FD8", cost:1000, thumbnail:"https://i.imgur.com/9MjQ9sD.png"}]; itemsData = [{ name:"Rainbow Boot", goldValue:10000, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e1360a5fb96873ddeb5958/attachments/69e13611771b34a309ccacb7/download/image.png", rarity:"Chaser", dropChance:5},{ name:"Old Boot", goldValue:20, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e13d2662c6fe6dfaae7fb0/attachments/69e13d2eb7b4c5c9e4798060/download/image.png", rarity:"Ordinary", dropChance:95}]; }
+    function parseCSV(csv) { const lines = csv.split(/\r?\n/).filter(l=>l.trim()); if(lines.length<2) return []; const headers = lines[0].split(',').map(h=>h.replace(/"/g,'').trim()); let res=[]; for(let i=1;i<lines.length;i++) { let values=[], inQuote=false, cur=''; for(let ch of lines[i]){ if(ch==='"') inQuote=!inQuote; else if(ch===',' && !inQuote) { values.push(cur.trim().replace(/^"|"$/g,'')); cur=''; } else cur+=ch; } values.push(cur.trim().replace(/^"|"$/g,'')); let obj={}; headers.forEach((h,idx)=>{ obj[h]=values[idx]||''; }); res.push(obj); } return res; }
 
-    function drawStars() {
-        if(!toggleStars.checked) {
-            if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height);
-            return;
-        }
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        for(let s of stars) {
-            ctx.beginPath();
-            if(s.isComet) {
-                ctx.moveTo(s.x, s.y);
-                ctx.lineTo(s.x - s.tail, s.y - s.tail*0.7);
-                ctx.lineWidth = s.radius*1.5;
-                ctx.strokeStyle = `rgba(255, 200, 70, ${s.alpha * 0.8})`;
-                ctx.stroke();
-                ctx.beginPath();
-                ctx.arc(s.x, s.y, s.radius+1, 0, Math.PI*2);
-                ctx.fillStyle = `rgba(255, 220, 100, ${s.alpha})`;
-                ctx.fill();
-            } else {
-                ctx.arc(s.x, s.y, s.radius, 0, Math.PI*2);
-                ctx.fillStyle = `rgba(255, 215, 0, ${s.alpha})`;
-                ctx.fill();
-            }
-            s.x += s.speedX;
-            s.y += s.speedY;
-            if(s.x > canvas.width + 50) s.x = -50;
-            if(s.y > canvas.height + 50) s.y = -30;
-            if(s.x < -50) s.x = canvas.width+30;
-            if(s.y < -50) s.y = canvas.height+20;
-        }
-        requestAnimationFrame(drawStars);
-    }
+    function renderPacks() { packsContainer.innerHTML = packsData.map(pack => `<div class="pack-card" style="border-top:4px solid ${pack.color}"><img class="pack-thumb" src="${pack.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div class="pack-name">${pack.name}</div><div class="pack-cost">💎 ${pack.cost} GEMS</div><button class="open-case-btn" style="background:${pack.color}40; border-color:${pack.color};">OPEN CASE</button></div>`).join(''); document.querySelectorAll('.open-case-btn').forEach((btn, idx) => { btn.addEventListener('click', (e) => { e.stopPropagation(); openPack(packsData[idx]); }); }); }
 
-    function startStarfield() {
-        resizeCanvas();
-        initStars(55);
-        drawStars();
-    }
-    
-    // CSGO ROLLING ANIMATION + IMPACT FRAMES
-    function triggerFlashbangEffect() {
-        if(!toggleFlash.checked) return;
-        const modalDiv = document.querySelector('.case-modal');
-        modalDiv.classList.add('final-glow');
-        setTimeout(() => modalDiv.classList.remove('final-glow'), 400);
-        // extra white overlay
-        const overlayFlash = document.createElement('div');
-        overlayFlash.style.position = 'fixed'; overlayFlash.style.top=0; overlayFlash.style.left=0;
-        overlayFlash.style.width='100%'; overlayFlash.style.height='100%'; overlayFlash.style.background='radial-gradient(circle, rgba(255,255,200,0.9) 0%, rgba(255,150,0,0.7) 100%)';
-        overlayFlash.style.pointerEvents='none'; overlayFlash.style.zIndex='1001'; overlayFlash.style.mixBlendMode='screen';
-        document.body.appendChild(overlayFlash);
-        setTimeout(() => overlayFlash.remove(), 200);
-        // anime impact lines simulation
-        for(let i=0;i<12;i++) {
-            const line = document.createElement('div');
-            line.style.position='fixed'; line.style.backgroundColor='#ffcc44'; line.style.width='8px'; line.style.height='60px';
-            line.style.top = Math.random() * window.innerHeight + 'px';
-            line.style.left = Math.random() * window.innerWidth + 'px';
-            line.style.filter='blur(2px)'; line.style.opacity='0.9'; line.style.zIndex='1002';
-            document.body.appendChild(line);
-            setTimeout(() => line.remove(), 150);
-        }
-    }
+    // Weighted random based on dropChance
+    function getRandomItemFromPack(packName) { let eligible = itemsData.filter(i => i.belongsToPack?.toLowerCase() === packName.toLowerCase()); if(eligible.length === 0) return { name:"Mystery Dust", goldValue:5, thumbnail:"https://i.imgur.com/9MjQ9sD.png", rarity:"Common" }; let totalChance = eligible.reduce((sum,i)=> sum + (i.dropChance || 1), 0); let rand = Math.random() * totalChance; let accum = 0; for(let item of eligible){ accum += (item.dropChance || 1); if(rand <= accum) return item; } return eligible[0]; }
 
-    async function sendDiscordEmbed(pack, item) {
-        if(!DISCORD_WEBHOOK) return;
-        const embed = {
-            title: `✨ ${pack.name} CASE OPENED ✨`,
-            description: `**${item.name}** exploded out of the case!`,
-            color: 0xffaa33,
-            fields: [
-                { name: "Rarity", value: item.rarity || "Ordinary", inline: true },
-                { name: "💰 Value", value: `${item.goldValue} gems`, inline: true }
-            ],
-            thumbnail: { url: item.thumbnail || "https://i.imgur.com/9MjQ9sD.png" },
-            footer: { text: "Golden Case Opener • Impact Frame" }
-        };
-        try { await fetch(DISCORD_WEBHOOK, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({embeds:[embed]}) }); } catch(e) { console.warn(e); }
-    }
+    async function sendDiscord(pack, item){ if(!DISCORD_WEBHOOK) return; try{ await fetch(DISCORD_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:`🎁 ${pack.name} CASE OPENED`,description:`**${item.name}** was unboxed!`,color:0xffaa33,fields:[{name:"Rarity",value:item.rarity,inline:true},{name:"Value",value:`${item.goldValue} 💎`,inline:true}],thumbnail:{url:item.thumbnail},footer:{text:"CSGO Style Reel"}}]})}); }catch(e){console.warn(e);} }
 
-    function getRandomItemFromPack(packName) {
-        let eligible = itemsData.filter(i => i.belongsToPack.toLowerCase() === packName.toLowerCase());
-        if(eligible.length === 0) eligible = [{ name: "Golden Dust", goldValue: 50, thumbnail: "https://i.imgur.com/9MjQ9sD.png", rarity: "Mythic", belongsToPack: packName }];
-        const rand = Math.floor(Math.random() * eligible.length);
-        return eligible[rand];
-    }
-
-    // CSGO like rolling (carousel of random items)
-    async function startRollingAnimation(pack) {
-        if(userGems < pack.cost) { alert(`❌ Need ${pack.cost} gems!`); modal.classList.remove('active'); return false; }
-        userGems -= pack.cost;
-        updateBalanceUI();
-        currentPack = pack;
-        finalItem = getRandomItemFromPack(pack.name);
+    // CSGO REEL ANIMATION: endless items scrolling then slow down & stop
+    async function startReelAnimation(pack) {
+        if(userGems < pack.cost) { alert(`Not enough! Need ${pack.cost} gems`); return false; }
+        userGems -= pack.cost; updateBalanceUI();
+        currentPackObj = pack;
+        const allPackItems = itemsData.filter(i => i.belongsToPack?.toLowerCase() === pack.name.toLowerCase());
+        if(allPackItems.length===0) return false;
         
-        // generate rolling items list: 20 random items from same pack
-        const rollingItemsList = [];
-        for(let i=0; i<22; i++) {
-            rollingItemsList.push(getRandomItemFromPack(pack.name));
-        }
-        rollingItemsList.push(finalItem); // final at the end
+        // Build massive item pool (reel sequence) 60 items for smooth scroll
+        let reelItems = [];
+        for(let i=0;i<70; i++) { reelItems.push(allPackItems[Math.floor(Math.random()*allPackItems.length)]); }
+        finalWinItem = getRandomItemFromPack(pack.name); // true weighted random
+        reelItems.push(finalWinItem);
+        // extra clones after to simulate slowdown
+        for(let i=0;i<12;i++) reelItems.push(finalWinItem);
         
-        rollingContainer.innerHTML = '';
-        function renderRolling(index) {
-            rollingContainer.innerHTML = '';
-            const startIdx = Math.max(0, index-3);
-            for(let i=startIdx; i<=index && i<rollingItemsList.length; i++) {
-                const it = rollingItemsList[i];
-                const cardDiv = document.createElement('div');
-                cardDiv.className = 'rolling-card';
-                cardDiv.innerHTML = `<img class="rolling-img" src="${it.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div style="font-size:0.8rem;">${it.name.substring(0,12)}</div>`;
-                rollingContainer.appendChild(cardDiv);
+        reelTrack.innerHTML = '';
+        function renderReel(indexVisibleStart) {
+            reelTrack.innerHTML = '';
+            const visibleCount = 6;
+            for(let i=0; i<visibleCount; i++) {
+                let idx = (indexVisibleStart + i) % reelItems.length;
+                let it = reelItems[idx];
+                let div = document.createElement('div'); div.className = 'item-card';
+                div.innerHTML = `<img class="item-img" src="${it.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div style="font-size:0.8rem; margin-top:5px;">${it.name.substring(0,14)}</div>`;
+                reelTrack.appendChild(div);
             }
         }
         
-        let currentIdx = 0;
-        const speed = parseInt(rollSpeedSelect.value);
-        const stepTime = Math.max(70, Math.floor(speed / 10));
+        let currentIndex = 0;
+        const speedMap = {'1': 18, '2': 45, '3': 90};
+        let step = speedMap[rollSpeedSelect.value] || 45;
+        let cycles = 0;
+        const maxSteps = 38; // total steps before stop
+        let slowdownTrigger = false;
         
         return new Promise((resolve) => {
             const interval = setInterval(() => {
-                if(currentIdx >= rollingItemsList.length-1) {
+                if(!slowdownTrigger && cycles >= maxSteps-14) {
+                    slowdownTrigger = true;
+                    step = Math.max(12, step-2);
+                }
+                if(cycles >= maxSteps) {
                     clearInterval(interval);
-                    // FINAL SHOWDOWN
-                    renderRolling(rollingItemsList.length-1);
+                    // final exact show of winning item centered
+                    renderReel(reelItems.length - 5); // make center show finalWinItem
                     setTimeout(() => {
-                        triggerFlashbangEffect();
-                        const won = finalItem;
-                        finalResultArea.innerHTML = `<div class="result-name" style="color:#ffcc66;">🏆 ${won.name} 🏆</div>
-                                                     <img src="${won.thumbnail}" style="width:100px; border-radius:20px; border:2px solid gold;"><div>Rarity: ${won.rarity} | Value: ${won.goldValue} 💎</div>`;
-                        sendDiscordEmbed(pack, won);
-                        resolve(won);
-                    }, 220);
+                        triggerCinematicZoomFlash().then(() => {
+                            finalRevealDiv.innerHTML = `<div style="font-size:2rem; font-weight:bold; color:#ffcc66;">🏆 ${finalWinItem.name} 🏆</div><img src="${finalWinItem.thumbnail}" style="width:110px; border-radius:20px; border:3px solid gold;"><div>⭐ ${finalWinItem.rarity} | 💎 ${finalWinItem.goldValue}</div>`;
+                            sendDiscord(pack, finalWinItem);
+                            resolve(finalWinItem);
+                        });
+                    }, 50);
                     return;
                 }
-                currentIdx++;
-                renderRolling(currentIdx);
-            }, stepTime);
-            rollingInterval = interval;
+                currentIndex = (currentIndex + 1) % reelItems.length;
+                renderReel(currentIndex);
+                cycles++;
+            }, step);
+            currentRollInterval = interval;
         });
     }
-
-    // open case handler
+    
+    // cinematic zoom + flashbang (zoom in, then sudden zoom out + flash)
+    async function triggerCinematicZoomFlash() {
+        if(!toggleZoomFlash.checked) return;
+        caseModalElem.classList.add('zoom-in');
+        await new Promise(r => setTimeout(r, 250));
+        caseModalElem.classList.add('zoom-out-flash');
+        const flashDiv = document.createElement('div'); flashDiv.classList.add('global-flash'); document.body.appendChild(flashDiv);
+        await new Promise(r => setTimeout(r, 200));
+        caseModalElem.classList.remove('zoom-in', 'zoom-out-flash');
+        setTimeout(() => { if(flashDiv) flashDiv.remove(); }, 300);
+    }
+    
     async function openPack(pack) {
-        if(userGems < pack.cost) { alert(`Not enough gems! Need ${pack.cost} 💎`); return; }
+        if(userGems < pack.cost) { alert(`Need ${pack.cost} gems!`); return; }
         modal.classList.add('active');
-        finalResultArea.innerHTML = '<div style="animation: pulse 1s infinite;">🌀 SPINNING CASE...</div>';
-        await startRollingAnimation(pack);
-    }
-
-    // load sheets (pack thumbnail supported)
-    async function loadPacksAndItems() {
-        try {
-            const packResp = await fetch(PACKS_CSV);
-            const packCSV = await packResp.text();
-            const packRows = parseCSV(packCSV);
-            packsData = packRows.map(row => ({
-                name: row.PackName || row.packname,
-                color: row.PackColor || "#E03FD8",
-                cost: parseInt(row.PackCost || 0),
-                thumbnail: row.PackThumbnail || row.packthumbnail || "https://i.imgur.com/9MjQ9sD.png"
-            })).filter(p => p.name);
-            
-            const itemsResp = await fetch(ITEMS_CSV);
-            const itemsCSV = await itemsResp.text();
-            const itemRows = parseCSV(itemsCSV);
-            itemsData = itemRows.map(row => ({
-                name: row.ItemName,
-                goldValue: parseInt(row.GoldValue) || 0,
-                belongsToPack: row.BelongsToPack,
-                thumbnail: row.ItemThumbnail,
-                rarity: row.CardRarity || "Ordinary"
-            })).filter(i => i.name);
-            
-            if(packsData.length === 0) packsData = [{ name:"Boots", color:"#E03FD8", cost:1000, thumbnail:"https://i.imgur.com/9MjQ9sD.png" }];
-            if(itemsData.length === 0) itemsData = [{ name:"Rainbow Boot", goldValue:10000, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e1360a5fb96873ddeb5958/attachments/69e13611771b34a309ccacb7/download/image.png", rarity:"Chaser" }];
-            renderPacksGrid();
-        } catch(e) { console.error(e); fallbackData(); renderPacksGrid(); }
+        finalRevealDiv.innerHTML = '<div style="animation: pulse 1s infinite;">🌀 SPINNING REEL...</div>';
+        await startReelAnimation(pack);
     }
     
-    function fallbackData() {
-        packsData = [{ name:"Boots", color:"#E03FD8", cost:1000, thumbnail:"https://i.imgur.com/9MjQ9sD.png" }];
-        itemsData = [{ name:"Rainbow Boot", goldValue:10000, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e1360a5fb96873ddeb5958/attachments/69e13611771b34a309ccacb7/download/image.png", rarity:"Chaser" },
-                     { name:"Old Boot", goldValue:20, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e13d2662c6fe6dfaae7fb0/attachments/69e13d2eb7b4c5c9e4798060/download/image.png", rarity:"Ordinary" }];
-    }
-
-    function parseCSV(csv) {
-        const lines = csv.split(/\r?\n/).filter(l=>l.trim());
-        if(lines.length<2) return [];
-        const headers = lines[0].split(',').map(h=>h.replace(/"/g,'').trim());
-        let result = [];
-        for(let i=1;i<lines.length;i++) {
-            let values = [];
-            let inQuote=false, cur='';
-            for(let ch of lines[i]) {
-                if(ch==='"') inQuote=!inQuote;
-                else if(ch===',' && !inQuote) { values.push(cur.trim().replace(/^"|"$/g,'')); cur='';}
-                else cur+=ch;
-            }
-            values.push(cur.trim().replace(/^"|"$/g,''));
-            let obj={};
-            headers.forEach((h,idx)=> { obj[h]=values[idx] || ''; });
-            result.push(obj);
-        }
-        return result;
-    }
-
-    function renderPacksGrid() {
-        if(!packsData.length) { packsContainer.innerHTML='<div>No packs</div>'; return; }
-        packsContainer.innerHTML = '';
-        for(let pack of packsData) {
-            const card = document.createElement('div'); card.className='pack-card'; card.style.borderTop=`4px solid ${pack.color}`;
-            card.innerHTML = `<img src="${pack.thumbnail}" class="pack-thumb" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'">
-                              <div class="pack-name">${pack.name}</div>
-                              <div class="pack-cost">💎 ${pack.cost} GEMS</div>
-                              <button class="open-case-btn" style="background:${pack.color}20; border-color:${pack.color}; color:${pack.color};">OPEN CASE</button>`;
-            const btn = card.querySelector('.open-case-btn');
-            btn.addEventListener('click', (e) => { e.stopPropagation(); openPack(pack); });
-            packsContainer.appendChild(card);
-        }
-    }
-
-    // Tab switching
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-tab'));
-            const tabId = btn.getAttribute('data-tab');
-            if(tabId === 'packs') document.getElementById('packsTab').classList.add('active-tab');
-            else if(tabId === 'settings') document.getElementById('settingsTab').classList.add('active-tab');
-            else if(tabId === 'wins') document.getElementById('winsTab').classList.add('active-tab');
-        });
-    });
-    
-    closeModalBtn.addEventListener('click', () => {
-        if(rollingInterval) clearInterval(rollingInterval);
+    closeModalButton.addEventListener('click', () => {
+        if(currentRollInterval) clearInterval(currentRollInterval);
         modal.classList.remove('active');
-        rollingContainer.innerHTML = '';
-        finalResultArea.innerHTML = '';
+        reelTrack.innerHTML = '';
+        finalRevealDiv.innerHTML = '';
+        caseModalElem.classList.remove('zoom-in','zoom-out-flash');
     });
     
-    startStarfield();
-    loadPacksAndItems();
+    // TABS
+    document.querySelectorAll('.tab-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active-tab')); const id = btn.getAttribute('data-tab'); if(id==='packs') document.getElementById('packsTab').classList.add('active-tab'); if(id==='settings') document.getElementById('settingsTab').classList.add('active-tab'); if(id==='wins') document.getElementById('winsTab').classList.add('active-tab'); }); });
+    
+    loadData();
     updateBalanceUI();
 </script>
 </body>
