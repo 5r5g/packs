@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>✦ EPIC LOOTBOX | Purple · Red · Gold ✦ | Center Line Selector</title>
+    <title>✦ SPINNING LOOTBOX | CENTER LINE SELECTOR ✦</title>
     <style>
         * {
             margin: 0;
@@ -13,15 +13,14 @@
         }
 
         body {
-            font-family: 'Segoe UI', 'Poppins', 'Impact', system-ui, sans-serif;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
             background: radial-gradient(circle at 20% 10%, #1e0a2b, #2a0a1a, #0f030c);
             min-height: 100vh;
             color: #ffecb3;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* animated gradient shift */
+        /* animated gradient */
         body::before {
             content: '';
             position: fixed;
@@ -29,18 +28,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 40% 50%, rgba(156, 39, 176, 0.25), rgba(255, 80, 40, 0.2), rgba(255, 215, 0, 0.08));
+            background: radial-gradient(circle at 40% 50%, rgba(156, 39, 176, 0.3), rgba(255, 80, 40, 0.2), rgba(255, 215, 0, 0.08));
             pointer-events: none;
             z-index: 0;
-            animation: royalShift 14s infinite alternate;
+            animation: royalShift 12s infinite alternate;
         }
 
         @keyframes royalShift {
-            0% { opacity: 0.5; background: radial-gradient(circle at 30% 40%, rgba(156,39,176,0.35), rgba(255,80,40,0.15), rgba(255,215,0,0.05));}
-            100% { opacity: 1; background: radial-gradient(circle at 70% 60%, rgba(255,80,40,0.4), rgba(156,39,176,0.35), rgba(255,200,0,0.1));}
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
 
-        /* canvas for stars + comets */
+        /* canvas for stars/comets */
         #canvasFx {
             position: fixed;
             top: 0;
@@ -48,7 +47,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 5;
+            z-index: 1;
         }
 
         .container {
@@ -56,18 +55,16 @@
             margin: 0 auto;
             padding: 20px;
             position: relative;
-            z-index: 20;
+            z-index: 10;
         }
 
         h1 {
-            font-size: 3.2rem;
+            font-size: 2.8rem;
             text-align: center;
             background: linear-gradient(135deg, #ffd966, #ff6a4b, #c154e0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 25px rgba(193, 84, 224, 0.6);
-            letter-spacing: 2px;
         }
 
         .balance-card {
@@ -104,21 +101,19 @@
         .tab-btn {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: bold;
             padding: 8px 32px;
             border-radius: 60px;
             cursor: pointer;
             color: #ffcf9a;
             transition: 0.2s;
-            backdrop-filter: blur(5px);
         }
 
         .tab-btn.active {
             background: linear-gradient(145deg, #ff4d4d, #b83bc2);
             color: #fff0b5;
             box-shadow: 0 0 18px #ff66aa;
-            text-shadow: 0 0 3px darkred;
         }
 
         .tab-content {
@@ -129,8 +124,8 @@
         .tab-content.active-tab { display: block; }
 
         @keyframes fadeGlow {
-            from { opacity: 0; transform: scale(0.98); filter: blur(3px);}
-            to { opacity: 1; transform: scale(1); filter: blur(0);}
+            from { opacity: 0; transform: scale(0.98);}
+            to { opacity: 1; transform: scale(1);}
         }
 
         /* PACKS GRID */
@@ -142,41 +137,40 @@
         }
 
         .pack-card {
-            background: rgba(20, 8, 28, 0.88);
+            background: rgba(20, 8, 28, 0.85);
             backdrop-filter: blur(16px);
             border-radius: 32px;
             padding: 20px;
-            width: 260px;
+            width: 250px;
             text-align: center;
-            transition: all 0.25s ease;
+            transition: all 0.3s ease;
             border: 1px solid rgba(255, 120, 80, 0.7);
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
         .pack-card:hover {
-            transform: translateY(-12px);
+            transform: translateY(-10px);
             border-color: #ffaa66;
-            box-shadow: 0 0 35px rgba(255, 80, 120, 0.7);
+            box-shadow: 0 0 35px rgba(255, 80, 120, 0.6);
         }
 
         .pack-thumb {
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             object-fit: contain;
             background: #00000055;
             border-radius: 28px;
             padding: 8px;
-            margin-bottom: 12px;
         }
 
         .pack-name {
-            font-size: 1.9rem;
+            font-size: 1.6rem;
             font-weight: bold;
-            background: linear-gradient(135deg, #ffb347, #ff6a4b, #dd88ff);
+            background: linear-gradient(135deg, #ffb347, #ff6a4b);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            margin: 10px 0;
         }
 
         .pack-cost {
@@ -185,8 +179,6 @@
             padding: 6px 20px;
             border-radius: 40px;
             font-weight: bold;
-            margin: 10px 0;
-            font-size: 1.2rem;
             border: 1px solid #ff884d;
         }
 
@@ -195,230 +187,221 @@
             border: none;
             color: #fff0cc;
             font-weight: bold;
-            padding: 12px 0;
+            padding: 10px 0;
             width: 100%;
             border-radius: 60px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             cursor: pointer;
+            margin-top: 12px;
             transition: 0.05s linear;
-            box-shadow: 0 5px 0 #5a2a55;
         }
-
-        .open-case-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #5a2a55; }
 
         .settings-panel {
             background: rgba(25, 10, 30, 0.88);
             backdrop-filter: blur(20px);
             border-radius: 48px;
             padding: 30px;
-            max-width: 550px;
+            max-width: 500px;
             margin: 0 auto;
             border: 1px solid #ff6a4b;
         }
         .setting-item { margin: 20px 0; display: flex; justify-content: space-between; align-items: center; }
-        select, input { background: #2a1025; border: 1px solid #ff8866; padding: 8px 16px; border-radius: 32px; color: #ffdead; font-weight: bold; }
-        .disabled-tab { text-align: center; margin-top: 80px; font-size: 1.6rem; opacity: 0.6; font-style: italic; }
+        select, input { background: #2a1025; border: 1px solid #ff8866; padding: 8px 16px; border-radius: 32px; color: #ffdead; }
+        .disabled-tab { text-align: center; margin-top: 80px; font-size: 1.4rem; opacity: 0.6; }
 
-        /* ---------- MODAL CSGO/MM2 STYLE REEL WITH CENTER LINE ---------- */
-        .modal-overlay {
+        /* CONFIRMATION PANEL (slides from bottom) */
+        .confirm-overlay {
             position: fixed;
-            top: 0;
+            bottom: -100%;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.97);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 200;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            transition: bottom 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .confirm-overlay.active { bottom: 0; }
+        .confirm-card {
+            background: linear-gradient(145deg, #2a1a35, #160c20);
+            border-radius: 48px 48px 0 0;
+            padding: 30px 40px 45px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            border-top: 3px solid #ffaa66;
+        }
+        .confirm-buttons { display: flex; gap: 20px; justify-content: center; margin-top: 25px; }
+        .confirm-btn { padding: 12px 32px; border-radius: 60px; font-size: 1.1rem; font-weight: bold; border: none; cursor: pointer; }
+        .confirm-yes { background: #ff7744; color: white; }
+        .confirm-no { background: #3a2a44; color: #ffccaa; }
+
+        /* SPINNING MODAL */
+        .spin-modal {
+            position: fixed;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(20px);
-            z-index: 1000;
+            z-index: 300;
             display: flex;
             align-items: center;
             justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0s, opacity 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: top 0.45s cubic-bezier(0.2, 0.95, 0.4, 1.05);
         }
-        .modal-overlay.active { visibility: visible; opacity: 1; }
-
-        .case-modal {
-            background: #160c1cee;
+        .spin-modal.active { top: 0; }
+        .spin-container {
+            background: #130a1cee;
             border-radius: 60px;
-            padding: 25px 35px 45px;
+            padding: 25px 35px 40px;
             width: 90%;
             max-width: 1200px;
             text-align: center;
             border: 2px solid #ffaa66;
-            box-shadow: 0 0 80px rgba(255, 80, 100, 0.6);
-            transition: transform 0.3s cubic-bezier(0.2, 1.2, 0.3, 1);
-            transform: scale(1);
+            transition: transform 0.2s ease-out;
         }
-        .case-modal.zoom-in { transform: scale(1.35); transition: transform 0.22s ease-out; }
-        .case-modal.zoom-out-flash { transform: scale(0.96); filter: brightness(2) blur(2px); transition: transform 0.08s, filter 0.1s; }
 
-        /* REEL CONTAINER WITH CENTER LINE FIXED (the selector) */
+        /* REEL WITH CENTER LINE */
         .reel-wrapper {
             position: relative;
             margin: 20px 0;
-        }
-        .reel-container {
-            background: #0a0312aa;
-            border-radius: 60px;
-            padding: 20px;
             overflow: hidden;
-            box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 0 0 2px #ff7744;
+            border-radius: 50px;
+            background: #0a0312aa;
+            padding: 20px;
+            border: 2px solid #ff884d;
         }
-        .slot-reel {
+        .spinning-track {
             display: flex;
             gap: 16px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            white-space: nowrap;
-            padding: 12px 8px;
-            scroll-behavior: auto;
-            justify-content: flex-start;
+            will-change: transform;
         }
-        .slot-reel::-webkit-scrollbar { display: none; }
-
-        .item-card {
+        .spin-item {
             flex: 0 0 auto;
             width: 160px;
             background: #231b2e;
-            border-radius: 32px;
-            padding: 18px 10px;
+            border-radius: 28px;
+            padding: 15px 10px;
             text-align: center;
             border: 1px solid #ffaa77;
-            box-shadow: 0 8px 18px black;
-            transition: 0.1s;
         }
-        .item-img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            margin: 0 auto;
-            display: block;
-        }
+        .spin-item img { width: 90px; height: 90px; object-fit: contain; }
+        .spin-item span { display: block; font-size: 0.8rem; margin-top: 8px; }
 
-        /* THE CENTER SELECTOR LINE (static) */
-        .center-line {
+        /* THE CENTER SELECTOR LINE - VISIBLE AND GLOWING */
+        .center-selector {
             position: absolute;
             top: 0;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 4px;
+            width: 5px;
             background: linear-gradient(to bottom, #ff3366, #ffd966, #ff3366);
-            box-shadow: 0 0 25px rgba(255, 51, 102, 0.9), 0 0 8px gold;
-            z-index: 35;
+            box-shadow: 0 0 30px #ff3366, 0 0 15px gold;
+            z-index: 50;
             pointer-events: none;
-            border-radius: 4px;
-            animation: pulseLine 0.9s infinite alternate;
+            border-radius: 3px;
         }
-        @keyframes pulseLine {
-            0% { opacity: 0.7; width: 4px; box-shadow: 0 0 15px #ff3366;}
-            100% { opacity: 1; width: 6px; box-shadow: 0 0 35px #ffaa44;}
-        }
-        /* triangle indicator */
-        .center-line::before {
+        .center-selector::before {
             content: "▼";
             position: absolute;
-            top: -28px;
+            top: -30px;
             left: 50%;
             transform: translateX(-50%);
             font-size: 28px;
             color: #ffcc77;
-            text-shadow: 0 0 8px red;
+            text-shadow: 0 0 12px red;
         }
-        .center-line::after {
+        .center-selector::after {
             content: "▲";
             position: absolute;
-            bottom: -32px;
+            bottom: -30px;
             left: 50%;
             transform: translateX(-50%);
             font-size: 28px;
             color: #ffcc77;
-            text-shadow: 0 0 8px red;
+            text-shadow: 0 0 12px red;
         }
 
         .result-area {
-            margin-top: 25px;
-            font-size: 1.4rem;
-            background: rgba(0,0,0,0.65);
-            border-radius: 48px;
-            padding: 16px;
-            backdrop-filter: blur(8px);
+            margin-top: 20px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 40px;
+            padding: 18px;
         }
-        .close-result {
+        .close-spin {
             background: linear-gradient(145deg, #ff7744, #b83bc2);
             border: none;
             padding: 12px 32px;
             border-radius: 60px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-top: 20px;
+            font-size: 1.1rem;
+            margin-top: 18px;
             cursor: pointer;
             color: white;
         }
-        .winner-name {
-            font-size: 2.2rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #ffd966, #ffaa66, #ff66cc);
+        .winner-text {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #ffd966, #ffaa66);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            font-weight: bold;
         }
-        .detail-line { font-size: 1rem; margin-top: 8px; }
 
-        @keyframes impactFlashAnim {
+        @keyframes flashAnim {
             0% { background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 70%);}
             40% { background: radial-gradient(circle, rgba(255,200,100,0.98) 0%, rgba(255,60,80,0.95) 100%);}
             100% { background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 70%);}
         }
-        .global-flash {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1001;
-            animation: impactFlashAnim 0.4s ease-out forwards;
+        .flash-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%; pointer-events: none; z-index: 1000;
+            animation: flashAnim 0.35s ease-out forwards;
         }
-        .suspense-text {
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            color: #ffaa88;
-            animation: blinkText 1.2s infinite;
-        }
-        @keyframes blinkText { 0%{opacity:0.4;} 100%{opacity:1;} }
     </style>
 </head>
 <body>
 <canvas id="canvasFx"></canvas>
 <div class="container">
-    <div style="text-align: center;"><h1>✦ ROYAL SELECTOR CASE ✦</h1></div>
-    <div style="display: flex; justify-content: center;"><div class="balance-card">💎 ROYAL GEMS: <span id="userBalance">8500</span></div></div>
+    <div style="text-align: center;"><h1>✦ SPINNING SELECTOR LOOTBOX ✦</h1></div>
+    <div style="display: flex; justify-content: center;"><div class="balance-card">💎 GEMS: <span id="userBalance">10000</span></div></div>
 
     <div class="tabs">
-        <button class="tab-btn active" data-tab="packs">📦 OPEN CASES</button>
+        <button class="tab-btn active" data-tab="packs">📦 CASES</button>
         <button class="tab-btn" data-tab="settings">⚙️ EFFECTS</button>
-        <button class="tab-btn" data-tab="wins">🏆 PREV WINS</button>
+        <button class="tab-btn" data-tab="wins">🏆 HISTORY</button>
     </div>
-
-    <div id="packsTab" class="tab-content active-tab"><div id="packsContainer" class="packs-grid"><div>✨ Loading legendary cases...</div></div></div>
-    <div id="settingsTab" class="tab-content"><div class="settings-panel"><h3 style="color:#ffaa77;">🌟 CINEMATIC FX</h3><div class="setting-item"><label>💥 ZOOM + FLASH IMPACT</label><input type="checkbox" id="toggleZoomFlash" checked></div><div class="setting-item"><label>🌠 COMETS & STARS</label><input type="checkbox" id="toggleStars" checked></div><div class="setting-item"><label>🎞️ ROLL SPEED (SMOOTH)</label><select id="rollSpeed"><option value="1">FASTER</option><option value="2" selected>CLASSIC SUSPENSE</option><option value="3">SLOW & DRAMATIC</option></select></div></div></div>
-    <div id="winsTab" class="tab-content"><div class="disabled-tab">🏆 HISTORY VAULT COMING SOON 🏆</div></div>
+    <div id="packsTab" class="tab-content active-tab"><div id="packsContainer" class="packs-grid"><div>✨ Loading cases...</div></div></div>
+    <div id="settingsTab" class="tab-content"><div class="settings-panel"><h3>🎮 VISUAL FX</h3><div class="setting-item"><label>💥 ZOOM + FLASH</label><input type="checkbox" id="toggleZoomFlash" checked></div><div class="setting-item"><label>🌠 STARS & COMETS</label><input type="checkbox" id="toggleStars" checked></div><div class="setting-item"><label>🎞️ SPIN SPEED</label><select id="rollSpeed"><option value="8">FAST</option><option value="5.5" selected>DRAMATIC</option><option value="3.2">CINEMATIC</option></select></div></div></div>
+    <div id="winsTab" class="tab-content"><div class="disabled-tab">🏆 PREVIOUS WINS - COMING SOON 🏆</div></div>
 </div>
 
-<!-- MODAL REEL + CENTER LINE -->
-<div id="openingModal" class="modal-overlay">
-    <div class="case-modal" id="caseModalElem">
-        <h2 style="color:#ffaa77;">🎯 CENTER LINE SELECTOR · ROLLING ODDS</h2>
-        <div class="reel-wrapper">
-            <div class="reel-container">
-                <div id="reelTrack" class="slot-reel"></div>
-            </div>
-            <div class="center-line"></div>  <!-- THIS IS THE FIXED SELECTOR LINE -->
+<!-- CONFIRM PANEL -->
+<div id="confirmPanel" class="confirm-overlay">
+    <div class="confirm-card">
+        <h2 style="color:#ffaa77;">⚠️ CONFIRM OPEN</h2>
+        <p id="confirmPackInfo" style="margin:15px 0; font-size:1.2rem;">Case - 0 GEMS</p>
+        <div class="confirm-buttons">
+            <button id="confirmYes" class="confirm-btn confirm-yes">YES, OPEN</button>
+            <button id="confirmNo" class="confirm-btn confirm-no">CANCEL</button>
         </div>
-        <div id="finalReveal" class="result-area"></div>
-        <button id="closeModalBtn" class="close-result">CONTINUE</button>
+    </div>
+</div>
+
+<!-- SPIN MODAL -->
+<div id="spinModal" class="spin-modal">
+    <div class="spin-container" id="spinContainer">
+        <h2 style="color:#ffaa77;">🎯 CENTER LINE · SPINNING REEL</h2>
+        <div class="reel-wrapper">
+            <div id="spinTrack" class="spinning-track"></div>
+            <div class="center-selector"></div>
+        </div>
+        <div id="resultArea" class="result-area"></div>
+        <button id="closeSpin" class="close-spin">CONTINUE</button>
     </div>
 </div>
 
@@ -430,39 +413,40 @@
     const PACKS_CSV = `https://docs.google.com/spreadsheets/d/${PACKS_SHEET_ID}/export?format=csv&gid=0`;
     const ITEMS_CSV = `https://docs.google.com/spreadsheets/d/${ITEMS_SHEET_ID}/export?format=csv&gid=0`;
 
-    let packsData = [];
-    let itemsData = [];
-    let userGems = 8500;
-    let currentRollInterval = null;
-    let currentPackObj = null;
-    let finalWinItem = null;
-    let animationFrameReq = null;
+    let packsData = [], itemsData = [];
+    let userGems = 10000;
+    let selectedPack = null;
+    let animationId = null;
 
+    // DOM
     const packsContainer = document.getElementById('packsContainer');
     const balanceSpan = document.getElementById('userBalance');
-    const modal = document.getElementById('openingModal');
-    const reelTrack = document.getElementById('reelTrack');
-    const finalRevealDiv = document.getElementById('finalReveal');
-    const closeModalButton = document.getElementById('closeModalBtn');
-    const caseModalElem = document.getElementById('caseModalElem');
+    const confirmPanel = document.getElementById('confirmPanel');
+    const confirmPackInfo = document.getElementById('confirmPackInfo');
+    const confirmYes = document.getElementById('confirmYes');
+    const confirmNo = document.getElementById('confirmNo');
+    const spinModal = document.getElementById('spinModal');
+    const spinTrack = document.getElementById('spinTrack');
+    const resultArea = document.getElementById('resultArea');
+    const closeSpin = document.getElementById('closeSpin');
+    const spinContainer = document.getElementById('spinContainer');
     const toggleZoomFlash = document.getElementById('toggleZoomFlash');
     const toggleStars = document.getElementById('toggleStars');
     const rollSpeedSelect = document.getElementById('rollSpeed');
 
-    function updateBalanceUI() { balanceSpan.innerText = userGems; }
+    function updateBalance() { balanceSpan.innerText = userGems; }
 
-    // ========== STARFIELD + COMETS ==========
+    // Starfield
     const canvas = document.getElementById('canvasFx');
     let ctx = canvas.getContext('2d');
     let stars = [];
     function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    window.addEventListener('resize', () => { resizeCanvas(); initStars(80); });
-    function initStars(count=85) { stars = []; for(let i=0;i<count;i++) { stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 2.8 + 1, alpha: Math.random() * 0.8 + 0.2, speedX: (Math.random() - 0.5) * 0.4, speedY: Math.random() * 2.2 + 0.8, isComet: Math.random() > 0.78, tail: Math.random() * 14 + 6 }); } }
-    function drawStars() { if(!toggleStars.checked) { if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height); return; } ctx.clearRect(0,0,canvas.width,canvas.height); for(let s of stars) { ctx.beginPath(); if(s.isComet) { ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.tail*0.9, s.y - s.tail*0.6); ctx.lineWidth = s.radius*1.6; ctx.strokeStyle = `rgba(255, 150, 80, ${s.alpha * 0.9})`; ctx.stroke(); ctx.beginPath(); ctx.arc(s.x, s.y, s.radius+1, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 200, 100, ${s.alpha})`; ctx.fill(); } else { ctx.arc(s.x, s.y, s.radius, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 215, 150, ${s.alpha})`; ctx.fill(); } s.x += s.speedX; s.y += s.speedY; if(s.x > canvas.width+60) s.x = -60; if(s.y > canvas.height+60) s.y = -40; if(s.x < -60) s.x = canvas.width+40; if(s.y < -40) s.y = canvas.height+30; } requestAnimationFrame(drawStars); }
-    function startStarfield() { resizeCanvas(); initStars(85); drawStars(); }
-    startStarfield();
+    window.addEventListener('resize', resizeCanvas);
+    function initStars() { stars = []; for(let i=0;i<70;i++) { stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2.5 + 1, alpha: Math.random() * 0.7 + 0.3, speedX: (Math.random() - 0.5) * 0.3, speedY: Math.random() * 1.5 + 0.5, comet: Math.random() > 0.8 }); } }
+    function drawStars() { if(!toggleStars.checked) { ctx.clearRect(0,0,canvas.width,canvas.height); requestAnimationFrame(drawStars); return; } ctx.clearRect(0,0,canvas.width,canvas.height); for(let s of stars) { ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 200, 100, ${s.alpha})`; ctx.fill(); s.x += s.speedX; s.y += s.speedY; if(s.x > canvas.width) s.x = 0; if(s.y > canvas.height) s.y = 0; if(s.x < 0) s.x = canvas.width; if(s.y < 0) s.y = canvas.height; } requestAnimationFrame(drawStars); }
+    resizeCanvas(); initStars(); drawStars();
 
-    // ========== CSV LOADING ==========
+    // Load data
     async function loadData() {
         try {
             const packResp = await fetch(PACKS_CSV); const packCsv = await packResp.text();
@@ -478,129 +462,92 @@
     }
     function fallbackLocal() { packsData = [{ name:"Boots", color:"#E03FD8", cost:1000, thumbnail:"https://i.imgur.com/9MjQ9sD.png"}]; itemsData = [{ name:"Rainbow Boot", goldValue:10000, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e1360a5fb96873ddeb5958/attachments/69e13611771b34a309ccacb7/download/image.png", rarity:"Chaser", dropChance:5},{ name:"Old Boot", goldValue:20, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e13d2662c6fe6dfaae7fb0/attachments/69e13d2eb7b4c5c9e4798060/download/image.png", rarity:"Ordinary", dropChance:95}]; }
     function parseCSV(csv) { const lines = csv.split(/\r?\n/).filter(l=>l.trim()); if(lines.length<2) return []; const headers = lines[0].split(',').map(h=>h.replace(/"/g,'').trim()); let res=[]; for(let i=1;i<lines.length;i++) { let values=[], inQuote=false, cur=''; for(let ch of lines[i]){ if(ch==='"') inQuote=!inQuote; else if(ch===',' && !inQuote) { values.push(cur.trim().replace(/^"|"$/g,'')); cur=''; } else cur+=ch; } values.push(cur.trim().replace(/^"|"$/g,'')); let obj={}; headers.forEach((h,idx)=>{ obj[h]=values[idx]||''; }); res.push(obj); } return res; }
-    function renderPacks() { packsContainer.innerHTML = packsData.map(pack => `<div class="pack-card" style="border-top:4px solid ${pack.color}"><img class="pack-thumb" src="${pack.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div class="pack-name">${pack.name}</div><div class="pack-cost">💎 ${pack.cost} GEMS</div><button class="open-case-btn" style="background:${pack.color}60; border-color:${pack.color};">OPEN CASE</button></div>`).join(''); document.querySelectorAll('.open-case-btn').forEach((btn, idx) => { btn.addEventListener('click', (e) => { e.stopPropagation(); openPack(packsData[idx]); }); }); }
+    function renderPacks() { packsContainer.innerHTML = packsData.map(pack => `<div class="pack-card"><img class="pack-thumb" src="${pack.thumbnail}"><div class="pack-name">${pack.name}</div><div class="pack-cost">💎 ${pack.cost} GEMS</div><button class="open-case-btn" data-name="${pack.name}">SELECT CASE</button></div>`).join(''); document.querySelectorAll('.open-case-btn').forEach(btn => { btn.addEventListener('click', (e) => { const packName = btn.getAttribute('data-name'); const pack = packsData.find(p => p.name === packName); if(pack) showConfirm(pack); }); }); }
 
-    // WEIGHTED drop chance (Rainbow Boot 5% / Old Boot 95%)
-    function getRandomItemFromPack(packName) { 
+    function showConfirm(pack) { if(userGems < pack.cost) { alert(`Need ${pack.cost} gems!`); return; } selectedPack = pack; confirmPackInfo.innerText = `${pack.name} Case - ${pack.cost} GEMS`; confirmPanel.classList.add('active'); }
+    confirmYes.addEventListener('click', async () => { if(!selectedPack) return; confirmPanel.classList.remove('active'); userGems -= selectedPack.cost; updateBalance(); spinModal.classList.add('active'); await startSpin(selectedPack); });
+    confirmNo.addEventListener('click', () => { confirmPanel.classList.remove('active'); selectedPack = null; });
+
+    function getWeightedItem(packName) { 
         let eligible = itemsData.filter(i => i.belongsToPack?.toLowerCase() === packName.toLowerCase()); 
-        if(eligible.length === 0) return { name:"Mysterious Core", goldValue:80, thumbnail:"https://i.imgur.com/9MjQ9sD.png", rarity:"Arcane" }; 
-        let totalChance = eligible.reduce((sum,i)=> sum + (i.dropChance || 1), 0); 
-        let rand = Math.random() * totalChance; 
-        let accum = 0; 
-        for(let item of eligible){ accum += (item.dropChance || 1); if(rand <= accum) return item; } 
-        return eligible[0]; 
+        if(!eligible.length) return { name:"Mystery Item", goldValue:50, thumbnail:"https://i.imgur.com/9MjQ9sD.png", rarity:"Common" }; 
+        let total = eligible.reduce((s,i)=> s + (i.dropChance || 1), 0); let rand = Math.random() * total; let accum = 0;
+        for(let item of eligible){ accum += (item.dropChance || 1); if(rand <= accum) return item; } return eligible[0];
     }
+    async function sendDiscord(pack, item){ if(!DISCORD_WEBHOOK) return; try{ fetch(DISCORD_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:`🎁 ${pack.name} OPENED`,description:`**${item.name}** was selected by the center line!`,color:0xdd55aa,fields:[{name:"Rarity",value:item.rarity},{name:"Value",value:`${item.goldValue} 💎`}],thumbnail:{url:item.thumbnail}}]})}); } catch(e){} }
 
-    async function sendDiscord(pack, item){ if(!DISCORD_WEBHOOK) return; try{ await fetch(DISCORD_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:`✨ ${pack.name.toUpperCase()} DESTINY`,description:`**${item.name}** was selected by the center line!`,color:0xdd55aa,fields:[{name:"Rarity",value:item.rarity,inline:true},{name:"💎 Value",value:`${item.goldValue}`,inline:true}],thumbnail:{url:item.thumbnail},footer:{text:"Selector Line • Suspense Reel"}}]})}); }catch(e){console.warn(e);} }
-
-    // MURDER MYSTERY 2 / SMOOTH DECELERATION REEL (center line determines final item)
-    async function startSmoothReel(pack) {
-        if(userGems < pack.cost) { alert(`Need ${pack.cost} gems!`); return false; }
-        userGems -= pack.cost; updateBalanceUI();
-        currentPackObj = pack;
-        const allPackItems = itemsData.filter(i => i.belongsToPack?.toLowerCase() === pack.name.toLowerCase());
-        if(allPackItems.length===0) return false;
+    async function startSpin(pack) {
+        const allItems = itemsData.filter(i => i.belongsToPack?.toLowerCase() === pack.name.toLowerCase());
+        if(allItems.length===0) return;
+        const finalItem = getWeightedItem(pack.name);
         
-        // BUILD massive reel array (100 items for smooth scrolling)
-        let reelSequence = [];
-        for(let i=0;i<90; i++) { reelSequence.push(allPackItems[Math.floor(Math.random()*allPackItems.length)]); }
-        finalWinItem = getRandomItemFromPack(pack.name);
-        // Append final win & duplicates for graceful stop
-        for(let i=0;i<28;i++) reelSequence.push(finalWinItem);
+        // Build reel items (100+ items for smooth scroll)
+        let reelItems = [];
+        for(let i=0;i<80;i++) reelItems.push(allItems[Math.floor(Math.random()*allItems.length)]);
+        reelItems.push(finalItem);
+        for(let i=0;i<40;i++) reelItems.push(finalItem);
         
-        let currentScrollPos = 0;
-        const totalItems = reelSequence.length;
-        const visibleCount = 6;
+        spinTrack.innerHTML = '';
+        reelItems.forEach(item => {
+            const div = document.createElement('div'); div.className = 'spin-item';
+            div.innerHTML = `<img src="${item.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><span>${item.name.substring(0,12)}</span>`;
+            spinTrack.appendChild(div);
+        });
         
-        function renderScroll(position) {
-            reelTrack.innerHTML = '';
-            for(let i=0; i<visibleCount; i++) {
-                let itemIdx = (Math.floor(position) + i) % totalItems;
-                let it = reelSequence[itemIdx];
-                let cardDiv = document.createElement('div'); cardDiv.className = 'item-card';
-                cardDiv.innerHTML = `<img class="item-img" src="${it.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div style="font-size:0.8rem; margin-top:5px;">${it.name.substring(0,16)}</div>`;
-                reelTrack.appendChild(cardDiv);
-            }
+        let position = 0;
+        const itemWidth = 176;
+        const totalWidth = reelItems.length * itemWidth;
+        spinTrack.style.width = `${totalWidth}px`;
+        
+        let speed = parseFloat(rollSpeedSelect.value);
+        let decel = 0.992;
+        let minSpeed = 0.12;
+        let zoomScale = 1;
+        let zoomDirection = 1;
+        
+        function applyZoom(scale) { spinContainer.style.transform = `scale(${scale})`; }
+        
+        async function doFlashZoom() {
+            if(!toggleZoomFlash.checked) return;
+            for(let s=1; s<1.35; s+=0.03) { applyZoom(s); await new Promise(r=>setTimeout(r,12)); }
+            const flash = document.createElement('div'); flash.classList.add('flash-overlay'); document.body.appendChild(flash);
+            for(let s=1.35; s>0.85; s-=0.07) { applyZoom(s); await new Promise(r=>setTimeout(r,10)); }
+            applyZoom(1);
+            setTimeout(() => flash.remove(), 300);
         }
         
-        // determine speed based on setting & slow down naturally
-        const speedMap = {'1': 0.85, '2': 0.55, '3': 0.32};
-        let speed = speedMap[rollSpeedSelect.value] || 0.55;
-        let position = 0;
-        let deceleration = 0.995;
-        let minSpeed = 0.022;
-        let stopped = false;
-        
-        finalRevealDiv.innerHTML = `<div class="suspense-text">🎲 THE SELECTOR LINE HUNTS... 🎲</div>`;
-        
-        return new Promise((resolve) => {
-            function step() {
-                if(stopped) return;
-                position += speed;
-                if(position >= totalItems - 12) {
-                    // graceful slowdown
-                    speed *= deceleration;
-                    if(speed < minSpeed) {
-                        stopped = true;
-                        if(currentRollInterval) cancelAnimationFrame(currentRollInterval);
-                        // determine the exact item under center line (position + 2)
-                        let finalIndex = (Math.floor(position) + 2) % totalItems;
-                        let landedItem = reelSequence[finalIndex];
-                        finalWinItem = landedItem;
-                        // final render freeze on winning item
-                        renderScroll(position);
-                        setTimeout(() => {
-                            triggerCinematicZoomFlash().then(() => {
-                                finalRevealDiv.innerHTML = `
-                                    <div class="winner-name">🏆 ${finalWinItem.name} 🏆</div>
-                                    <img src="${finalWinItem.thumbnail}" style="width:110px; border-radius:25px; border:3px solid #ffaa77; margin:12px;">
-                                    <div class="detail-line">✨ Rarity: ${finalWinItem.rarity} &nbsp;| 💎 Value: ${finalWinItem.goldValue}</div>
-                                    <div class="detail-line">🎯 SELECTOR LINE LANDED ON: ${finalWinItem.name}</div>
-                                `;
-                                sendDiscord(pack, finalWinItem);
-                                resolve(finalWinItem);
-                            });
-                        }, 80);
-                        return;
-                    }
+        function animate() {
+            position += speed;
+            if(position >= totalWidth - 600) {
+                speed *= decel;
+                if(speed < minSpeed) {
+                    cancelAnimationFrame(animationId);
+                    const centerIndex = Math.floor(position / itemWidth) + 3;
+                    const landed = reelItems[Math.min(centerIndex, reelItems.length-1)];
+                    doFlashZoom().then(() => {
+                        resultArea.innerHTML = `<div class="winner-text">🏆 ${landed.name} 🏆</div><img src="${landed.thumbnail}" style="width:90px; border-radius:20px; margin:10px;"><div>✨ Rarity: ${landed.rarity} | 💎 Value: ${landed.goldValue}</div><div>🎯 CENTER LINE LANDED ON: ${landed.name}</div>`;
+                        sendDiscord(pack, landed);
+                    });
+                    return;
                 }
-                renderScroll(position);
-                currentRollInterval = requestAnimationFrame(step);
             }
-            currentRollInterval = requestAnimationFrame(step);
-        });
+            if(zoomDirection === 1 && zoomScale < 1.25) { zoomScale += 0.003; applyZoom(zoomScale); }
+            spinTrack.style.transform = `translateX(-${position}px)`;
+            animationId = requestAnimationFrame(animate);
+        }
+        
+        resultArea.innerHTML = '<div style="color:#ffaa77;">🌀 SPINNING... WATCH THE CENTER LINE 🌀</div>';
+        applyZoom(1);
+        animate();
     }
     
-    async function triggerCinematicZoomFlash() {
-        if(!toggleZoomFlash.checked) return;
-        caseModalElem.classList.add('zoom-in');
-        await new Promise(r => setTimeout(r, 230));
-        caseModalElem.classList.add('zoom-out-flash');
-        const flashDiv = document.createElement('div'); flashDiv.classList.add('global-flash'); document.body.appendChild(flashDiv);
-        await new Promise(r => setTimeout(r, 190));
-        caseModalElem.classList.remove('zoom-in', 'zoom-out-flash');
-        setTimeout(() => { if(flashDiv) flashDiv.remove(); }, 300);
-    }
+    closeSpin.addEventListener('click', () => { if(animationId) cancelAnimationFrame(animationId); spinModal.classList.remove('active'); spinTrack.innerHTML = ''; resultArea.innerHTML = ''; spinContainer.style.transform = 'scale(1)'; selectedPack = null; });
     
-    async function openPack(pack) {
-        if(userGems < pack.cost) { alert(`Insufficient Gems! Need ${pack.cost}`); return; }
-        modal.classList.add('active');
-        await startSmoothReel(pack);
-    }
-    
-    closeModalButton.addEventListener('click', () => {
-        if(currentRollInterval) cancelAnimationFrame(currentRollInterval);
-        modal.classList.remove('active');
-        reelTrack.innerHTML = '';
-        finalRevealDiv.innerHTML = '';
-        caseModalElem.classList.remove('zoom-in','zoom-out-flash');
-    });
-    
-    // TABS
+    // Tabs
     document.querySelectorAll('.tab-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active-tab')); const id = btn.getAttribute('data-tab'); if(id==='packs') document.getElementById('packsTab').classList.add('active-tab'); if(id==='settings') document.getElementById('settingsTab').classList.add('active-tab'); if(id==='wins') document.getElementById('winsTab').classList.add('active-tab'); }); });
     
     loadData();
-    updateBalanceUI();
+    updateBalance();
 </script>
 </body>
 </html>
