@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>✦ EPIC LOOTBOX | Purple · Red · Gold ✦ | Center Line Selector</title>
+    <title>✦ MOVING CAROUSEL | Center Line Selector ✦ Epic Lootbox</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', 'Poppins', 'Impact', system-ui, sans-serif;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
             background: radial-gradient(circle at 20% 10%, #1e0a2b, #2a0a1a, #0f030c);
             min-height: 100vh;
             color: #ffecb3;
@@ -21,7 +21,6 @@
             position: relative;
         }
 
-        /* animated gradient shift */
         body::before {
             content: '';
             position: fixed;
@@ -40,7 +39,6 @@
             100% { opacity: 1; background: radial-gradient(circle at 70% 60%, rgba(255,80,40,0.4), rgba(156,39,176,0.35), rgba(255,200,0,0.1));}
         }
 
-        /* canvas for stars + comets */
         #canvasFx {
             position: fixed;
             top: 0;
@@ -67,7 +65,6 @@
             background-clip: text;
             color: transparent;
             text-shadow: 0 0 25px rgba(193, 84, 224, 0.6);
-            letter-spacing: 2px;
         }
 
         .balance-card {
@@ -91,7 +88,6 @@
             color: transparent;
         }
 
-        /* TABS */
         .tabs {
             display: flex;
             justify-content: center;
@@ -118,7 +114,6 @@
             background: linear-gradient(145deg, #ff4d4d, #b83bc2);
             color: #fff0b5;
             box-shadow: 0 0 18px #ff66aa;
-            text-shadow: 0 0 3px darkred;
         }
 
         .tab-content {
@@ -133,7 +128,6 @@
             to { opacity: 1; transform: scale(1); filter: blur(0);}
         }
 
-        /* PACKS GRID */
         .packs-grid {
             display: flex;
             flex-wrap: wrap;
@@ -219,7 +213,7 @@
         select, input { background: #2a1025; border: 1px solid #ff8866; padding: 8px 16px; border-radius: 32px; color: #ffdead; font-weight: bold; }
         .disabled-tab { text-align: center; margin-top: 80px; font-size: 1.6rem; opacity: 0.6; font-style: italic; }
 
-        /* ---------- MODAL CSGO/MM2 STYLE REEL WITH CENTER LINE ---------- */
+        /* ---------- MODAL WITH PHYSICAL MOVEMENT ---------- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -243,51 +237,55 @@
             border-radius: 60px;
             padding: 25px 35px 45px;
             width: 90%;
-            max-width: 1200px;
+            max-width: 1300px;
             text-align: center;
             border: 2px solid #ffaa66;
             box-shadow: 0 0 80px rgba(255, 80, 100, 0.6);
             transition: transform 0.3s cubic-bezier(0.2, 1.2, 0.3, 1);
             transform: scale(1);
         }
-        .case-modal.zoom-in { transform: scale(1.35); transition: transform 0.22s ease-out; }
-        .case-modal.zoom-out-flash { transform: scale(0.96); filter: brightness(2) blur(2px); transition: transform 0.08s, filter 0.1s; }
 
-        /* REEL CONTAINER WITH CENTER LINE FIXED (the selector) */
         .reel-wrapper {
             position: relative;
             margin: 20px 0;
-        }
-        .reel-container {
-            background: #0a0312aa;
-            border-radius: 60px;
-            padding: 20px;
             overflow: hidden;
+            border-radius: 60px;
+            background: #0a0312aa;
             box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 0 0 2px #ff7744;
+            padding: 20px 0;
         }
-        .slot-reel {
+
+        /* Physical moving track */
+        .reel-track {
             display: flex;
-            gap: 16px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            white-space: nowrap;
-            padding: 12px 8px;
-            scroll-behavior: auto;
-            justify-content: flex-start;
+            gap: 20px;
+            will-change: transform;
+            transition: none; /* transition will be applied dynamically during spin */
+            align-items: center;
+            padding: 8px 0;
         }
-        .slot-reel::-webkit-scrollbar { display: none; }
 
         .item-card {
             flex: 0 0 auto;
-            width: 160px;
+            width: 170px;
             background: #231b2e;
             border-radius: 32px;
-            padding: 18px 10px;
+            padding: 18px 8px;
             text-align: center;
             border: 1px solid #ffaa77;
             box-shadow: 0 8px 18px black;
-            transition: 0.1s;
+            transition: transform 0.2s ease, filter 0.2s;
+            backdrop-filter: blur(4px);
         }
+        
+        /* 3D carousel perspective effect: items grow when near center (will be applied dynamically via JS) */
+        .item-card.near-center {
+            transform: scale(1.08);
+            border-color: #ffdd99;
+            box-shadow: 0 0 18px gold;
+            z-index: 2;
+        }
+
         .item-img {
             width: 100px;
             height: 100px;
@@ -296,16 +294,16 @@
             display: block;
         }
 
-        /* THE CENTER SELECTOR LINE (static) */
+        /* THE CENTER SELECTOR LINE (immortal) */
         .center-line {
             position: absolute;
             top: 0;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 4px;
+            width: 5px;
             background: linear-gradient(to bottom, #ff3366, #ffd966, #ff3366);
-            box-shadow: 0 0 25px rgba(255, 51, 102, 0.9), 0 0 8px gold;
+            box-shadow: 0 0 28px rgba(255, 51, 102, 0.9), 0 0 12px gold;
             z-index: 35;
             pointer-events: none;
             border-radius: 4px;
@@ -315,26 +313,53 @@
             0% { opacity: 0.7; width: 4px; box-shadow: 0 0 15px #ff3366;}
             100% { opacity: 1; width: 6px; box-shadow: 0 0 35px #ffaa44;}
         }
-        /* triangle indicator */
         .center-line::before {
             content: "▼";
             position: absolute;
-            top: -28px;
+            top: -32px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 28px;
+            font-size: 32px;
             color: #ffcc77;
             text-shadow: 0 0 8px red;
+            filter: drop-shadow(0 0 4px gold);
         }
         .center-line::after {
             content: "▲";
             position: absolute;
-            bottom: -32px;
+            bottom: -36px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 28px;
+            font-size: 32px;
             color: #ffcc77;
             text-shadow: 0 0 8px red;
+        }
+
+        /* Destiny glow beam */
+        .destiny-beam {
+            position: absolute;
+            top: -20px;
+            bottom: -20px;
+            left: 50%;
+            width: 12px;
+            background: linear-gradient(to bottom, rgba(255,220,100,0.9), rgba(255,100,80,0.9), rgba(255,220,100,0.9));
+            transform: translateX(-50%) scaleX(1);
+            filter: blur(8px);
+            z-index: 40;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.1s;
+            border-radius: 20px;
+            box-shadow: 0 0 40px #ffaa55;
+        }
+        .destiny-beam.active {
+            animation: beamBlast 0.6s ease-out forwards;
+        }
+        @keyframes beamBlast {
+            0% { opacity: 0; width: 8px; filter: blur(4px);}
+            20% { opacity: 1; width: 26px; filter: blur(10px); background: #fff0a0;}
+            70% { opacity: 0.9; width: 18px; filter: blur(12px);}
+            100% { opacity: 0; width: 4px; filter: blur(2px);}
         }
 
         .result-area {
@@ -364,13 +389,6 @@
             background-clip: text;
             color: transparent;
         }
-        .detail-line { font-size: 1rem; margin-top: 8px; }
-
-        @keyframes impactFlashAnim {
-            0% { background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 70%);}
-            40% { background: radial-gradient(circle, rgba(255,200,100,0.98) 0%, rgba(255,60,80,0.95) 100%);}
-            100% { background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 70%);}
-        }
         .global-flash {
             position: fixed;
             top: 0;
@@ -379,7 +397,12 @@
             height: 100%;
             pointer-events: none;
             z-index: 1001;
-            animation: impactFlashAnim 0.4s ease-out forwards;
+            animation: impactFlashAnim 0.35s ease-out forwards;
+        }
+        @keyframes impactFlashAnim {
+            0% { background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 70%);}
+            40% { background: radial-gradient(circle, rgba(255,200,100,0.98) 0%, rgba(255,60,80,0.95) 100%);}
+            100% { background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 70%);}
         }
         .suspense-text {
             font-size: 1.2rem;
@@ -388,12 +411,23 @@
             animation: blinkText 1.2s infinite;
         }
         @keyframes blinkText { 0%{opacity:0.4;} 100%{opacity:1;} }
+        
+        /* particle canvas for bursts */
+        .particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
     </style>
 </head>
 <body>
 <canvas id="canvasFx"></canvas>
 <div class="container">
-    <div style="text-align: center;"><h1>✦ ROYAL SELECTOR CASE ✦</h1></div>
+    <div style="text-align: center;"><h1>✦ MOVING CAROUSEL | CENTER LINE ✦</h1></div>
     <div style="display: flex; justify-content: center;"><div class="balance-card">💎 ROYAL GEMS: <span id="userBalance">8500</span></div></div>
 
     <div class="tabs">
@@ -402,20 +436,22 @@
         <button class="tab-btn" data-tab="wins">🏆 PREV WINS</button>
     </div>
 
-    <div id="packsTab" class="tab-content active-tab"><div id="packsContainer" class="packs-grid"><div>✨ Loading legendary cases...</div></div></div>
-    <div id="settingsTab" class="tab-content"><div class="settings-panel"><h3 style="color:#ffaa77;">🌟 CINEMATIC FX</h3><div class="setting-item"><label>💥 ZOOM + FLASH IMPACT</label><input type="checkbox" id="toggleZoomFlash" checked></div><div class="setting-item"><label>🌠 COMETS & STARS</label><input type="checkbox" id="toggleStars" checked></div><div class="setting-item"><label>🎞️ ROLL SPEED (SMOOTH)</label><select id="rollSpeed"><option value="1">FASTER</option><option value="2" selected>CLASSIC SUSPENSE</option><option value="3">SLOW & DRAMATIC</option></select></div></div></div>
-    <div id="winsTab" class="tab-content"><div class="disabled-tab">🏆 HISTORY VAULT COMING SOON 🏆</div></div>
+    <div id="packsTab" class="tab-content active-tab"><div id="packsContainer" class="packs-grid"></div></div>
+    <div id="settingsTab" class="tab-content"><div class="settings-panel"><h3 style="color:#ffaa77;">🎬 CINEMATIC FX</h3><div class="setting-item"><label>💥 ZOOM + FLASH IMPACT</label><input type="checkbox" id="toggleZoomFlash" checked></div><div class="setting-item"><label>🌠 COMETS & STARS</label><input type="checkbox" id="toggleStars" checked></div><div class="setting-item"><label>🎞️ ROLL SPEED</label><select id="rollSpeed"><option value="1">FASTER</option><option value="2" selected>CLASSIC SUSPENSE</option><option value="3">SLOW & DRAMATIC</option></select></div></div></div>
+    <div id="winsTab" class="tab-content"><div class="disabled-tab">🏆 HISTORY COMING SOON 🏆</div></div>
 </div>
 
-<!-- MODAL REEL + CENTER LINE -->
+<!-- MODAL PHYSICAL REEL -->
 <div id="openingModal" class="modal-overlay">
     <div class="case-modal" id="caseModalElem">
-        <h2 style="color:#ffaa77;">🎯 CENTER LINE SELECTOR · ROLLING ODDS</h2>
-        <div class="reel-wrapper">
-            <div class="reel-container">
-                <div id="reelTrack" class="slot-reel"></div>
+        <h2 style="color:#ffaa77;">🎯 CENTER LINE · PHYSICAL MOVEMENT</h2>
+        <div class="reel-wrapper" style="position: relative;">
+            <div id="reelTrackContainer" style="overflow-x: hidden; overflow-y: visible;">
+                <div id="reelTrack" class="reel-track"></div>
             </div>
-            <div class="center-line"></div>  <!-- THIS IS THE FIXED SELECTOR LINE -->
+            <div class="center-line"></div>
+            <div id="destinyBeam" class="destiny-beam"></div>
+            <canvas id="particleCanvas" class="particle-canvas"></canvas>
         </div>
         <div id="finalReveal" class="result-area"></div>
         <button id="closeModalBtn" class="close-result">CONTINUE</button>
@@ -423,46 +459,47 @@
 </div>
 
 <script>
-    // ========= CONFIG ==========
+    // ========== CONFIG ==========
     const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1498140574316888164/6f0h7UyyEVZUtg1DQItPHgyXeCtzhj1eQWUQAzdDRCBKBS8ZnzMwnPqFeXiQpu8Z5HEc";
     const PACKS_SHEET_ID = "181RdB0KhPbjnSHq-t7n_KhCFwwQwU8q4dU91u-MSHr4";
     const ITEMS_SHEET_ID = "1d0mZIPIKxWvcHRxoB6Bm20tMyx1OcfISOoy7Yi9u6jY";
     const PACKS_CSV = `https://docs.google.com/spreadsheets/d/${PACKS_SHEET_ID}/export?format=csv&gid=0`;
     const ITEMS_CSV = `https://docs.google.com/spreadsheets/d/${ITEMS_SHEET_ID}/export?format=csv&gid=0`;
 
-    let packsData = [];
-    let itemsData = [];
+    let packsData = [], itemsData = [];
     let userGems = 8500;
-    let currentRollInterval = null;
+    let currentAnimationId = null;
     let currentPackObj = null;
     let finalWinItem = null;
-    let animationFrameReq = null;
-
+    let isRolling = false;
+    let reelTrackDiv, trackContainer, particleCtx, particleCanvas;
+    
+    // DOM elements
     const packsContainer = document.getElementById('packsContainer');
     const balanceSpan = document.getElementById('userBalance');
     const modal = document.getElementById('openingModal');
-    const reelTrack = document.getElementById('reelTrack');
     const finalRevealDiv = document.getElementById('finalReveal');
     const closeModalButton = document.getElementById('closeModalBtn');
     const caseModalElem = document.getElementById('caseModalElem');
     const toggleZoomFlash = document.getElementById('toggleZoomFlash');
     const toggleStars = document.getElementById('toggleStars');
     const rollSpeedSelect = document.getElementById('rollSpeed');
+    const destinyBeam = document.getElementById('destinyBeam');
 
     function updateBalanceUI() { balanceSpan.innerText = userGems; }
 
-    // ========== STARFIELD + COMETS ==========
-    const canvas = document.getElementById('canvasFx');
-    let ctx = canvas.getContext('2d');
+    // ========== STARFIELD ==========
+    const canvasStars = document.getElementById('canvasFx');
+    let ctxStars = canvasStars.getContext('2d');
     let stars = [];
-    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    function resizeCanvas() { canvasStars.width = window.innerWidth; canvasStars.height = window.innerHeight; }
     window.addEventListener('resize', () => { resizeCanvas(); initStars(80); });
-    function initStars(count=85) { stars = []; for(let i=0;i<count;i++) { stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 2.8 + 1, alpha: Math.random() * 0.8 + 0.2, speedX: (Math.random() - 0.5) * 0.4, speedY: Math.random() * 2.2 + 0.8, isComet: Math.random() > 0.78, tail: Math.random() * 14 + 6 }); } }
-    function drawStars() { if(!toggleStars.checked) { if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height); return; } ctx.clearRect(0,0,canvas.width,canvas.height); for(let s of stars) { ctx.beginPath(); if(s.isComet) { ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.tail*0.9, s.y - s.tail*0.6); ctx.lineWidth = s.radius*1.6; ctx.strokeStyle = `rgba(255, 150, 80, ${s.alpha * 0.9})`; ctx.stroke(); ctx.beginPath(); ctx.arc(s.x, s.y, s.radius+1, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 200, 100, ${s.alpha})`; ctx.fill(); } else { ctx.arc(s.x, s.y, s.radius, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 215, 150, ${s.alpha})`; ctx.fill(); } s.x += s.speedX; s.y += s.speedY; if(s.x > canvas.width+60) s.x = -60; if(s.y > canvas.height+60) s.y = -40; if(s.x < -60) s.x = canvas.width+40; if(s.y < -40) s.y = canvas.height+30; } requestAnimationFrame(drawStars); }
+    function initStars(count=85) { stars = []; for(let i=0;i<count;i++) { stars.push({ x: Math.random() * canvasStars.width, y: Math.random() * canvasStars.height, radius: Math.random() * 2.8 + 1, alpha: Math.random() * 0.8 + 0.2, speedX: (Math.random() - 0.5) * 0.4, speedY: Math.random() * 2.2 + 0.8, isComet: Math.random() > 0.78, tail: Math.random() * 14 + 6 }); } }
+    function drawStars() { if(!toggleStars.checked) { if(ctxStars) ctxStars.clearRect(0,0,canvasStars.width,canvasStars.height); return; } ctxStars.clearRect(0,0,canvasStars.width,canvasStars.height); for(let s of stars) { ctxStars.beginPath(); if(s.isComet) { ctxStars.moveTo(s.x, s.y); ctxStars.lineTo(s.x - s.tail*0.9, s.y - s.tail*0.6); ctxStars.lineWidth = s.radius*1.6; ctxStars.strokeStyle = `rgba(255, 150, 80, ${s.alpha * 0.9})`; ctxStars.stroke(); ctxStars.beginPath(); ctxStars.arc(s.x, s.y, s.radius+1, 0, Math.PI*2); ctxStars.fillStyle = `rgba(255, 200, 100, ${s.alpha})`; ctxStars.fill(); } else { ctxStars.arc(s.x, s.y, s.radius, 0, Math.PI*2); ctxStars.fillStyle = `rgba(255, 215, 150, ${s.alpha})`; ctxStars.fill(); } s.x += s.speedX; s.y += s.speedY; if(s.x > canvasStars.width+60) s.x = -60; if(s.y > canvasStars.height+60) s.y = -40; if(s.x < -60) s.x = canvasStars.width+40; if(s.y < -40) s.y = canvasStars.height+30; } requestAnimationFrame(drawStars); }
     function startStarfield() { resizeCanvas(); initStars(85); drawStars(); }
     startStarfield();
 
-    // ========== CSV LOADING ==========
+    // ========== LOAD DATA ==========
     async function loadData() {
         try {
             const packResp = await fetch(PACKS_CSV); const packCsv = await packResp.text();
@@ -470,137 +507,216 @@
             packsData = packRows.map(r => ({ name: r.PackName, color: r.PackColor, cost: parseInt(r.PackCost), thumbnail: r.PackThumbnail || "https://i.imgur.com/9MjQ9sD.png" })).filter(p=>p.name);
             const itemResp = await fetch(ITEMS_CSV); const itemCsv = await itemResp.text();
             const itemRows = parseCSV(itemCsv);
-            itemsData = itemRows.map(r => ({ name: r.ItemName, goldValue: parseInt(r.GoldValue), belongsToPack: r.BelongsToPack, thumbnail: r.ItemThumbnail, rarity: r.CardRarity, dropChance: parseFloat(r.dropChance) || (r.CardRarity === "Chaser"?5:95) })).filter(i=>i.name);
-            if(packsData.length===0) packsData = [{ name:"Boots", color:"#E03FD8", cost:1000, thumbnail:"https://i.imgur.com/9MjQ9sD.png"}];
-            if(itemsData.length===0) itemsData = [{ name:"Rainbow Boot", goldValue:10000, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e1360a5fb96873ddeb5958/attachments/69e13611771b34a309ccacb7/download/image.png", rarity:"Chaser", dropChance:5},{ name:"Old Boot", goldValue:20, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e13d2662c6fe6dfaae7fb0/attachments/69e13d2eb7b4c5c9e4798060/download/image.png", rarity:"Ordinary", dropChance:95}];
+            itemsData = itemRows.map(r => ({ name: r.ItemName, goldValue: parseInt(r.GoldValue), belongsToPack: r.BelongsToPack, thumbnail: r.ItemThumbnail, rarity: r.CardRarity, dropChance: parseFloat(r.dropChance) || 50 }));
+            if(packsData.length===0) fallbackLocal();
+            if(itemsData.length===0) fallbackLocal();
             renderPacks();
-        } catch(e) { console.warn(e); fallbackLocal(); renderPacks(); }
+        } catch(e) { fallbackLocal(); renderPacks(); }
     }
-    function fallbackLocal() { packsData = [{ name:"Boots", color:"#E03FD8", cost:1000, thumbnail:"https://i.imgur.com/9MjQ9sD.png"}]; itemsData = [{ name:"Rainbow Boot", goldValue:10000, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e1360a5fb96873ddeb5958/attachments/69e13611771b34a309ccacb7/download/image.png", rarity:"Chaser", dropChance:5},{ name:"Old Boot", goldValue:20, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e13d2662c6fe6dfaae7fb0/attachments/69e13d2eb7b4c5c9e4798060/download/image.png", rarity:"Ordinary", dropChance:95}]; }
+    function fallbackLocal() { packsData = [{ name:"Boots", color:"#E03FD8", cost:1000, thumbnail:"https://i.imgur.com/9MjQ9sD.png"}]; itemsData = [{ name:"Rainbow Boot", goldValue:10000, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e1360a5fb96873ddeb5958/attachments/69e13611771b34a309ccacb7/download/image.png", rarity:"Chaser", dropChance:5},{ name:"Old Boot", goldValue:20, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e13d2662cfe6dfaae7fb0/attachments/69e13d2eb7b4c5c9e4798060/download/image.png", rarity:"Ordinary", dropChance:95}]; }
     function parseCSV(csv) { const lines = csv.split(/\r?\n/).filter(l=>l.trim()); if(lines.length<2) return []; const headers = lines[0].split(',').map(h=>h.replace(/"/g,'').trim()); let res=[]; for(let i=1;i<lines.length;i++) { let values=[], inQuote=false, cur=''; for(let ch of lines[i]){ if(ch==='"') inQuote=!inQuote; else if(ch===',' && !inQuote) { values.push(cur.trim().replace(/^"|"$/g,'')); cur=''; } else cur+=ch; } values.push(cur.trim().replace(/^"|"$/g,'')); let obj={}; headers.forEach((h,idx)=>{ obj[h]=values[idx]||''; }); res.push(obj); } return res; }
     function renderPacks() { packsContainer.innerHTML = packsData.map(pack => `<div class="pack-card" style="border-top:4px solid ${pack.color}"><img class="pack-thumb" src="${pack.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div class="pack-name">${pack.name}</div><div class="pack-cost">💎 ${pack.cost} GEMS</div><button class="open-case-btn" style="background:${pack.color}60; border-color:${pack.color};">OPEN CASE</button></div>`).join(''); document.querySelectorAll('.open-case-btn').forEach((btn, idx) => { btn.addEventListener('click', (e) => { e.stopPropagation(); openPack(packsData[idx]); }); }); }
 
-    // WEIGHTED drop chance (Rainbow Boot 5% / Old Boot 95%)
     function getRandomItemFromPack(packName) { 
         let eligible = itemsData.filter(i => i.belongsToPack?.toLowerCase() === packName.toLowerCase()); 
-        if(eligible.length === 0) return { name:"Mysterious Core", goldValue:80, thumbnail:"https://i.imgur.com/9MjQ9sD.png", rarity:"Arcane" }; 
+        if(eligible.length === 0) return { name:"Mystic Core", goldValue:80, thumbnail:"https://i.imgur.com/9MjQ9sD.png", rarity:"Arcane" }; 
         let totalChance = eligible.reduce((sum,i)=> sum + (i.dropChance || 1), 0); 
         let rand = Math.random() * totalChance; 
         let accum = 0; 
         for(let item of eligible){ accum += (item.dropChance || 1); if(rand <= accum) return item; } 
-        return eligible[0]; 
+        return eligible[0];
     }
 
-    async function sendDiscord(pack, item){ if(!DISCORD_WEBHOOK) return; try{ await fetch(DISCORD_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:`✨ ${pack.name.toUpperCase()} DESTINY`,description:`**${item.name}** was selected by the center line!`,color:0xdd55aa,fields:[{name:"Rarity",value:item.rarity,inline:true},{name:"💎 Value",value:`${item.goldValue}`,inline:true}],thumbnail:{url:item.thumbnail},footer:{text:"Selector Line • Suspense Reel"}}]})}); }catch(e){console.warn(e);} }
+    async function sendDiscord(pack, item){ if(!DISCORD_WEBHOOK) return; try{ await fetch(DISCORD_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:`✨ ${pack.name.toUpperCase()} CAROUSEL`,description:`**${item.name}** landed under center line!`,color:0xdd55aa,fields:[{name:"Rarity",value:item.rarity,inline:true},{name:"💎 Value",value:`${item.goldValue}`,inline:true}],thumbnail:{url:item.thumbnail}}]})}); }catch(e){} }
 
-    // MURDER MYSTERY 2 / SMOOTH DECELERATION REEL (center line determines final item)
-    async function startSmoothReel(pack) {
+    // PARTICLE SYSTEM
+    function initParticleCanvas() { particleCanvas = document.getElementById('particleCanvas'); if(particleCanvas) particleCtx = particleCanvas.getContext('2d'); }
+    function burstParticlesAt(x, y, colorHint) {
+        if(!particleCtx) return;
+        const rect = reelTrackContainer.getBoundingClientRect();
+        const canvasRect = particleCanvas.getBoundingClientRect();
+        const relativeX = x - canvasRect.left;
+        const relativeY = y - canvasRect.top;
+        let particles = [];
+        for(let i=0;i<14;i++) {
+            particles.push({ x: relativeX, y: relativeY, vx: (Math.random()-0.5)*6, vy: (Math.random()-0.5)*6-2, life: 1, color: colorHint || `hsl(${Math.random()*40 + 20}, 80%, 60%)` });
+        }
+        function animateParticles() {
+            if(!particleCtx) return;
+            particleCtx.clearRect(0,0,particleCanvas.width,particleCanvas.height);
+            let alive = false;
+            for(let p of particles) {
+                p.x += p.vx; p.y += p.vy; p.vy += 0.2; p.life -= 0.03;
+                if(p.life > 0) { alive=true; particleCtx.globalAlpha = p.life; particleCtx.fillStyle = p.color; particleCtx.fillRect(p.x-3, p.y-3, 6, 6); }
+            }
+            if(alive) requestAnimationFrame(animateParticles);
+            else particleCtx.clearRect(0,0,particleCanvas.width,particleCanvas.height);
+        }
+        animateParticles();
+    }
+
+    // 3D center detection + click ticks + particle burst each time item crosses center
+    function checkCrossingsAndScale(lastCenterItem, currentCenterItem, centerX, centerLineElement) {
+        if(currentCenterItem && lastCenterItem !== currentCenterItem) {
+            // burst particle at center line
+            const lineRect = centerLineElement.getBoundingClientRect();
+            burstParticlesAt(lineRect.left + lineRect.width/2, lineRect.top + lineRect.height/2, "#ffaa66");
+            // visual "click" tick flash
+            const flashTick = document.createElement('div');
+            flashTick.style.position = 'absolute'; flashTick.style.left = (lineRect.left + lineRect.width/2 - 10) + 'px';
+            flashTick.style.top = (lineRect.top + lineRect.height/2 - 10) + 'px';
+            flashTick.style.width = '20px'; flashTick.style.height = '20px';
+            flashTick.style.background = 'radial-gradient(circle, #ffcc88, #ff6644)';
+            flashTick.style.borderRadius = '50%';
+            flashTick.style.pointerEvents = 'none'; flashTick.style.zIndex = '100'; flashTick.style.filter = 'blur(2px)';
+            document.querySelector('.reel-wrapper').appendChild(flashTick);
+            setTimeout(() => flashTick.remove(), 120);
+        }
+        return currentCenterItem;
+    }
+    
+    // physical rolling with deceleration and true movement
+    async function startPhysicalReel(pack) {
         if(userGems < pack.cost) { alert(`Need ${pack.cost} gems!`); return false; }
         userGems -= pack.cost; updateBalanceUI();
         currentPackObj = pack;
-        const allPackItems = itemsData.filter(i => i.belongsToPack?.toLowerCase() === pack.name.toLowerCase());
-        if(allPackItems.length===0) return false;
+        let eligibleItems = itemsData.filter(i => i.belongsToPack?.toLowerCase() === pack.name.toLowerCase());
+        if(eligibleItems.length===0) eligibleItems = [{ name:"Mysterious Gem", goldValue:50, thumbnail:"https://i.imgur.com/9MjQ9sD.png", rarity:"Common"}];
         
-        // BUILD massive reel array (100 items for smooth scrolling)
-        let reelSequence = [];
-        for(let i=0;i<90; i++) { reelSequence.push(allPackItems[Math.floor(Math.random()*allPackItems.length)]); }
+        // build a long array of items for infinite-like scrolling (physical)
+        let loopItems = [];
+        for(let i=0;i<35;i++) loopItems.push(eligibleItems[Math.floor(Math.random()*eligibleItems.length)]);
         finalWinItem = getRandomItemFromPack(pack.name);
-        // Append final win & duplicates for graceful stop
-        for(let i=0;i<28;i++) reelSequence.push(finalWinItem);
+        for(let i=0;i<20;i++) loopItems.push(finalWinItem);
+        // make sure final item appears at least many times
+        reelTrackDiv.innerHTML = '';
+        loopItems.forEach(item => {
+            const card = document.createElement('div'); card.className = 'item-card';
+            card.innerHTML = `<img class="item-img" src="${item.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div style="margin-top:8px;">${item.name.substring(0,18)}</div>`;
+            card.setAttribute('data-item', JSON.stringify(item));
+            reelTrackDiv.appendChild(card);
+        });
         
-        let currentScrollPos = 0;
-        const totalItems = reelSequence.length;
-        const visibleCount = 6;
+        const containerRect = trackContainer.getBoundingClientRect();
+        const trackWidth = reelTrackDiv.scrollWidth;
+        let translateX = 0;
+        reelTrackDiv.style.transform = `translateX(${translateX}px)`;
+        const speedMap = {'1': 2.8, '2': 1.9, '3': 1.1};
+        let speed = speedMap[rollSpeedSelect.value] || 1.9;
+        let deceleration = 0.993;
+        let minSpeed = 0.08;
+        let animationId = null;
+        let lastCenterItemId = null;
+        const centerLineElement = document.querySelector('.center-line');
         
-        function renderScroll(position) {
-            reelTrack.innerHTML = '';
-            for(let i=0; i<visibleCount; i++) {
-                let itemIdx = (Math.floor(position) + i) % totalItems;
-                let it = reelSequence[itemIdx];
-                let cardDiv = document.createElement('div'); cardDiv.className = 'item-card';
-                cardDiv.innerHTML = `<img class="item-img" src="${it.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div style="font-size:0.8rem; margin-top:5px;">${it.name.substring(0,16)}</div>`;
-                reelTrack.appendChild(cardDiv);
+        finalRevealDiv.innerHTML = `<div class="suspense-text">🌀 SPINNING CAROUSEL · CENTER LINE DICTATES 🌀</div>`;
+        
+        function step() {
+            if(!isRolling) return;
+            translateX -= speed;
+            const maxTranslate = -(trackWidth - containerRect.width);
+            if(translateX <= maxTranslate) translateX = maxTranslate + 10;
+            reelTrackDiv.style.transform = `translateX(${translateX}px)`;
+            
+            // detect which item is under center line
+            const lineRect = centerLineElement.getBoundingClientRect();
+            const lineCenterX = lineRect.left + lineRect.width/2;
+            let closestItem = null, minDist = Infinity;
+            const cards = document.querySelectorAll('#reelTrack .item-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const itemCenter = rect.left + rect.width/2;
+                const dist = Math.abs(itemCenter - lineCenterX);
+                if(dist < minDist) { minDist = dist; closestItem = card; }
+                // 3D effect scale based on distance from center
+                const distanceFromCenter = Math.abs(itemCenter - lineCenterX);
+                const maxDist = 200;
+                let scale = 1;
+                if(distanceFromCenter < 80) scale = 1.08;
+                else if(distanceFromCenter < 140) scale = 1.02;
+                else scale = 0.98;
+                card.style.transform = `scale(${scale})`;
+                card.style.transition = 'transform 0.1s';
+            });
+            if(closestItem) {
+                let currentItemId = closestItem.innerHTML;
+                if(lastCenterItemId !== currentItemId) {
+                    burstParticlesAt(lineRect.left+lineRect.width/2, lineRect.top+lineRect.height/2, "#ffaa77");
+                    const tickDiv = document.createElement('div');
+                    tickDiv.style.cssText = `position:absolute; left:${lineRect.left+lineRect.width/2-12}px; top:${lineRect.top+lineRect.height/2-12}px; width:24px; height:24px; background:radial-gradient(circle, #ffdd99, #ff6633); border-radius:50%; pointer-events:none; z-index:100; opacity:0.7; filter:blur(1px);`;
+                    document.querySelector('.reel-wrapper').appendChild(tickDiv);
+                    setTimeout(()=>tickDiv.remove(), 100);
+                    lastCenterItemId = currentItemId;
+                }
+            }
+            
+            if(speed > minSpeed) {
+                speed *= deceleration;
+                animationId = requestAnimationFrame(step);
+            } else {
+                // final stop: pick closest item as prize
+                const finalCards = document.querySelectorAll('#reelTrack .item-card');
+                let bestCard = null, bestDist = Infinity;
+                const finalLineRect = centerLineElement.getBoundingClientRect();
+                const finalLineX = finalLineRect.left + finalLineRect.width/2;
+                finalCards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const dist = Math.abs(rect.left + rect.width/2 - finalLineX);
+                    if(dist < bestDist) { bestDist = dist; bestCard = card; }
+                });
+                if(bestCard) finalWinItem = JSON.parse(bestCard.getAttribute('data-item'));
+                else finalWinItem = finalWinItem || { name:"Destiny Artifact", goldValue:500, thumbnail:"https://i.imgur.com/9MjQ9sD.png", rarity:"Legendary" };
+                isRolling = false;
+                cancelAnimationFrame(animationId);
+                // destiny glow beam!
+                destinyBeam.classList.remove('active');
+                void destinyBeam.offsetWidth;
+                destinyBeam.classList.add('active');
+                // screen rumble last moment
+                const modalElem = document.getElementById('caseModalElem');
+                modalElem.style.transform = 'translate(2px,2px)';
+                setTimeout(()=> modalElem.style.transform = '', 100);
+                setTimeout(()=> {
+                    if(toggleZoomFlash.checked) {
+                        caseModalElem.classList.add('zoom-in');
+                        setTimeout(()=> { caseModalElem.classList.add('zoom-out-flash');
+                        const flashDiv = document.createElement('div'); flashDiv.classList.add('global-flash'); document.body.appendChild(flashDiv);
+                        setTimeout(()=> flashDiv.remove(), 300);
+                        }, 180);
+                        setTimeout(()=> caseModalElem.classList.remove('zoom-in','zoom-out-flash'), 400);
+                    }
+                    finalRevealDiv.innerHTML = `<div class="winner-name">🏆 ${finalWinItem.name} 🏆</div>
+                    <img src="${finalWinItem.thumbnail}" style="width:110px; border-radius:25px; border:3px solid #ffaa77; margin:12px;">
+                    <div>✨ ${finalWinItem.rarity} | 💎 ${finalWinItem.goldValue}</div>
+                    <div>🎯 SELECTOR LINE DECIDED: ${finalWinItem.name}</div>`;
+                    sendDiscord(pack, finalWinItem);
+                }, 60);
             }
         }
-        
-        // determine speed based on setting & slow down naturally
-        const speedMap = {'1': 0.85, '2': 0.55, '3': 0.32};
-        let speed = speedMap[rollSpeedSelect.value] || 0.55;
-        let position = 0;
-        let deceleration = 0.995;
-        let minSpeed = 0.022;
-        let stopped = false;
-        
-        finalRevealDiv.innerHTML = `<div class="suspense-text">🎲 THE SELECTOR LINE HUNTS... 🎲</div>`;
-        
-        return new Promise((resolve) => {
-            function step() {
-                if(stopped) return;
-                position += speed;
-                if(position >= totalItems - 12) {
-                    // graceful slowdown
-                    speed *= deceleration;
-                    if(speed < minSpeed) {
-                        stopped = true;
-                        if(currentRollInterval) cancelAnimationFrame(currentRollInterval);
-                        // determine the exact item under center line (position + 2)
-                        let finalIndex = (Math.floor(position) + 2) % totalItems;
-                        let landedItem = reelSequence[finalIndex];
-                        finalWinItem = landedItem;
-                        // final render freeze on winning item
-                        renderScroll(position);
-                        setTimeout(() => {
-                            triggerCinematicZoomFlash().then(() => {
-                                finalRevealDiv.innerHTML = `
-                                    <div class="winner-name">🏆 ${finalWinItem.name} 🏆</div>
-                                    <img src="${finalWinItem.thumbnail}" style="width:110px; border-radius:25px; border:3px solid #ffaa77; margin:12px;">
-                                    <div class="detail-line">✨ Rarity: ${finalWinItem.rarity} &nbsp;| 💎 Value: ${finalWinItem.goldValue}</div>
-                                    <div class="detail-line">🎯 SELECTOR LINE LANDED ON: ${finalWinItem.name}</div>
-                                `;
-                                sendDiscord(pack, finalWinItem);
-                                resolve(finalWinItem);
-                            });
-                        }, 80);
-                        return;
-                    }
-                }
-                renderScroll(position);
-                currentRollInterval = requestAnimationFrame(step);
-            }
-            currentRollInterval = requestAnimationFrame(step);
-        });
-    }
-    
-    async function triggerCinematicZoomFlash() {
-        if(!toggleZoomFlash.checked) return;
-        caseModalElem.classList.add('zoom-in');
-        await new Promise(r => setTimeout(r, 230));
-        caseModalElem.classList.add('zoom-out-flash');
-        const flashDiv = document.createElement('div'); flashDiv.classList.add('global-flash'); document.body.appendChild(flashDiv);
-        await new Promise(r => setTimeout(r, 190));
-        caseModalElem.classList.remove('zoom-in', 'zoom-out-flash');
-        setTimeout(() => { if(flashDiv) flashDiv.remove(); }, 300);
+        isRolling = true;
+        animationId = requestAnimationFrame(step);
+        return new Promise((resolve) => { const waitInterval = setInterval(() => { if(!isRolling) { clearInterval(waitInterval); resolve(finalWinItem); } }, 50); });
     }
     
     async function openPack(pack) {
         if(userGems < pack.cost) { alert(`Insufficient Gems! Need ${pack.cost}`); return; }
         modal.classList.add('active');
-        await startSmoothReel(pack);
+        reelTrackDiv = document.getElementById('reelTrack');
+        trackContainer = document.getElementById('reelTrackContainer');
+        initParticleCanvas();
+        await startPhysicalReel(pack);
     }
     
     closeModalButton.addEventListener('click', () => {
-        if(currentRollInterval) cancelAnimationFrame(currentRollInterval);
-        modal.classList.remove('active');
-        reelTrack.innerHTML = '';
-        finalRevealDiv.innerHTML = '';
-        caseModalElem.classList.remove('zoom-in','zoom-out-flash');
+        isRolling = false; modal.classList.remove('active');
+        if(reelTrackDiv) reelTrackDiv.style.transform = 'translateX(0px)';
+        destinyBeam.classList.remove('active');
     });
     
     // TABS
     document.querySelectorAll('.tab-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active-tab')); const id = btn.getAttribute('data-tab'); if(id==='packs') document.getElementById('packsTab').classList.add('active-tab'); if(id==='settings') document.getElementById('settingsTab').classList.add('active-tab'); if(id==='wins') document.getElementById('winsTab').classList.add('active-tab'); }); });
     
-    loadData();
-    updateBalanceUI();
+    loadData(); updateBalanceUI();
 </script>
 </body>
 </html>
