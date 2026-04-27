@@ -3,152 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Pack Opener Game - Open Packs & Win Items!</title>
+    <title>✦ GOLDEN CASE OPENER ✦ | CS:GO Style Pack Simulator</title>
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
             user-select: none;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(145deg, #1a1e2c 0%, #0f1219 100%);
+            font-family: 'Segoe UI', 'Poppins', 'Impact', system-ui, sans-serif;
+            background: radial-gradient(circle at 20% 30%, #1a0f0a, #0a0508);
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            color: #eee;
+            color: #ffecb3;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ✦ GOLDEN BACKGROUND ANIMATION (sparkles, moving light) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 215, 0, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+            animation: slowGoldBreathing 8s infinite alternate;
+        }
+
+        @keyframes slowGoldBreathing {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.9; }
+        }
+
+        /* ✦ SHOOTING STARS / COMETS CANVAS */
+        #canvasFx {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15;
         }
 
         .container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* HEADER Golden */
+        .golden-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
         }
 
         h1 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #ffd89b, #c7e9fb);
+            font-size: 3.2rem;
+            background: linear-gradient(135deg, #f9e45b, #ffb347, #ffd966);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            text-shadow: 0 0 15px rgba(255, 200, 0, 0.6);
+            letter-spacing: 2px;
         }
 
-        .sub {
-            text-align: center;
-            color: #aaa;
-            margin-bottom: 2rem;
+        .balance-card {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 80px;
+            display: inline-block;
+            padding: 8px 32px;
+            border: 1px solid gold;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            margin-bottom: 25px;
         }
 
-        /* Packs Grid */
+        .balance-card span {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffd966;
+            text-shadow: 0 0 6px #b8860b;
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            border-bottom: 2px solid rgba(255, 200, 0, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            font-weight: bold;
+            padding: 8px 32px;
+            border-radius: 60px;
+            cursor: pointer;
+            color: #ffd966;
+            transition: 0.2s;
+            font-family: inherit;
+            backdrop-filter: blur(4px);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(145deg, #ffcc44, #e6a800);
+            color: #1e1a0a;
+            box-shadow: 0 0 18px gold;
+            text-shadow: none;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeGlow 0.4s ease-out;
+        }
+
+        .tab-content.active-tab {
+            display: block;
+        }
+
+        @keyframes fadeGlow {
+            from { opacity: 0; transform: scale(0.98); filter: blur(2px);}
+            to { opacity: 1; transform: scale(1); filter: blur(0);}
+        }
+
+        /* PACKS GRID */
         .packs-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 25px;
-            margin-bottom: 50px;
+            gap: 30px;
         }
 
         .pack-card {
-            background: rgba(30, 35, 50, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
+            background: rgba(20, 15, 25, 0.8);
+            backdrop-filter: blur(16px);
+            border-radius: 32px;
             padding: 20px;
-            width: 220px;
+            width: 260px;
             text-align: center;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 215, 0, 0.4);
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
 
         .pack-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            transform: translateY(-12px);
+            border-color: gold;
+            box-shadow: 0 0 28px rgba(255, 215, 0, 0.6);
         }
 
-        .pack-card.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-            filter: grayscale(0.2);
-        }
-
-        .pack-icon {
-            font-size: 4rem;
-            margin-bottom: 10px;
+        .pack-thumb {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            background: #00000066;
+            border-radius: 28px;
+            padding: 8px;
+            margin-bottom: 12px;
         }
 
         .pack-name {
-            font-size: 1.6rem;
+            font-size: 1.9rem;
             font-weight: bold;
-            margin: 10px 0;
-            color: #fff;
-            text-shadow: 0 0 5px currentColor;
+            background: linear-gradient(135deg, #fff0b5, #ffcf4a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .pack-cost {
-            background: #ffb347;
+            background: #000000aa;
             display: inline-block;
-            padding: 6px 16px;
+            padding: 6px 20px;
             border-radius: 40px;
             font-weight: bold;
-            color: #2c2c2c;
-            margin: 8px 0;
-            font-size: 1.1rem;
+            margin: 10px 0;
+            font-size: 1.2rem;
+            border: 1px solid #ffb347;
         }
 
-        .open-btn {
-            background: #2ecc71;
+        .open-case-btn {
+            background: radial-gradient(circle at 30% 10%, #ffcc44, #b87c00);
             border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 40px;
-            font-size: 1rem;
+            color: #1f1a0c;
             font-weight: bold;
-            cursor: pointer;
-            margin-top: 12px;
-            transition: 0.1s linear;
+            padding: 12px 0;
             width: 100%;
-        }
-
-        .open-btn:active {
-            transform: scale(0.96);
-        }
-
-        /* Balance */
-        .balance-area {
-            background: #0a0e17;
             border-radius: 60px;
-            display: inline-block;
-            padding: 8px 24px;
-            margin-bottom: 30px;
-            border: 1px solid #ffd966;
-            box-shadow: 0 0 12px rgba(255, 200, 80, 0.3);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.05s linear;
+            box-shadow: 0 5px 0 #8b5a00;
         }
 
-        .balance-area span {
-            font-size: 1.8rem;
+        .open-case-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #8b5a00;
+        }
+
+        /* Settings panel */
+        .settings-panel {
+            background: rgba(10, 8, 12, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 48px;
+            padding: 30px;
+            max-width: 550px;
+            margin: 0 auto;
+            border: 1px solid #e6b422;
+        }
+
+        .setting-item {
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .setting-item label {
+            font-size: 1.2rem;
+        }
+
+        select, input {
+            background: #2a241a;
+            border: 1px solid goldenrod;
+            padding: 8px 16px;
+            border-radius: 32px;
+            color: #ffeaac;
             font-weight: bold;
-            color: #ffd966;
+        }
+        /* prev wins placeholder disabled */
+        .disabled-tab {
+            text-align: center;
+            margin-top: 80px;
+            font-size: 1.6rem;
+            opacity: 0.6;
+            font-style: italic;
         }
 
-        /* Modal Overlay for Opening Animation */
+        /* ---------- MODAL CSGO STYLE ROLLING ---------- */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(12px);
             z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             visibility: hidden;
             opacity: 0;
-            transition: visibility 0s, opacity 0.3s;
+            transition: visibility 0s, opacity 0.25s;
         }
 
         .modal-overlay.active {
@@ -156,411 +276,445 @@
             opacity: 1;
         }
 
-        .pack-opener {
-            background: #1e2436;
-            border-radius: 48px;
-            padding: 30px 40px;
-            text-align: center;
+        .case-modal {
+            background: #17121ecc;
+            border-radius: 56px;
+            padding: 20px 35px 45px 35px;
             width: 90%;
-            max-width: 500px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 700px;
+            text-align: center;
+            border: 2px solid #ffd966;
+            box-shadow: 0 0 70px rgba(255, 200, 0, 0.6);
+            position: relative;
         }
 
-        .spinning-box {
-            font-size: 8rem;
-            margin: 20px;
-            transition: transform 0.1s ease;
-            animation: spinRapid 0.15s infinite linear;
-            display: inline-block;
-        }
-
-        @keyframes spinRapid {
-            0% { transform: rotate(0deg) scale(1); }
-            100% { transform: rotate(360deg) scale(1.2); }
-        }
-
-        .result-item {
-            margin-top: 20px;
-            font-size: 1.4rem;
-            font-weight: bold;
-        }
-
-        .result-thumb {
-            width: 120px;
-            height: 120px;
-            object-fit: contain;
-            background: #0f121c;
-            border-radius: 20px;
-            padding: 10px;
-            margin: 15px auto;
-            display: block;
-            border: 2px solid gold;
-        }
-
-        .close-modal {
-            background: #2c3e66;
-            border: none;
-            color: white;
-            padding: 12px 28px;
+        .roller-area {
+            background: #00000066;
             border-radius: 40px;
-            font-size: 1rem;
+            padding: 25px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            min-height: 200px;
+            perspective: 800px;
+        }
+
+        .rolling-card {
+            background: #221c14;
+            width: 140px;
+            border-radius: 20px;
+            padding: 15px 5px;
+            text-align: center;
+            transition: all 0.08s linear;
+            box-shadow: 0 0 0 2px #ffcc66;
+            animation: rollShake 0.1s infinite alternate;
+        }
+
+        @keyframes rollShake {
+            0% { transform: rotate(0deg) translateY(0px);}
+            100% { transform: rotate(2deg) translateY(-5px);}
+        }
+
+        .rolling-img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            margin: 8px auto;
+        }
+
+        .final-glow {
+            animation: flashImpact 0.3s cubic-bezier(0.2, 1.6, 0.4, 1) 2;
+        }
+
+        @keyframes flashImpact {
+            0% { text-shadow: 0 0 0 white; background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 90%);}
+            50% { text-shadow: 0 0 30px gold, 0 0 50px orange; background: radial-gradient(circle, rgba(255,215,0,0.9) 0%, rgba(255,100,0,0.6) 80%);}
+            100% { text-shadow: 0 0 0 white; background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 90%);}
+        }
+
+        .result-name {
+            font-size: 2rem;
             font-weight: bold;
+            margin: 20px 0 10px;
+        }
+
+        .close-result {
+            background: #e6b422;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1.1rem;
             margin-top: 20px;
             cursor: pointer;
-        }
-
-        .error-msg {
-            color: #ff8888;
-            background: #330000;
-            padding: 8px;
-            border-radius: 20px;
-            margin-top: 10px;
         }
 
         button {
-            background: #4a5b8c;
-            border: none;
-            color: white;
-            cursor: pointer;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 0.8rem;
-            color: #6a6f87;
+            font-family: inherit;
         }
     </style>
 </head>
 <body>
-
+<canvas id="canvasFx"></canvas>
 <div class="container">
-    <h1>🎁 PACK OPENER 🎁</h1>
-    <div class="sub">Click a pack to open & win rare items!</div>
-    <div style="display: flex; justify-content: center;">
-        <div class="balance-area">
-            💎 Your Gems: <span id="userBalance">5000</span>
+    <div class="golden-header">
+        <h1>✦ GOLDEN CASE OPENER ✦</h1>
+        <div class="balance-card">💎 GEMS: <span id="userBalance">5000</span></div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="packs">📦 OPEN CASES</button>
+        <button class="tab-btn" data-tab="settings">⚙️ SETTINGS</button>
+        <button class="tab-btn" data-tab="wins">🏆 PREV WINS</button>
+    </div>
+
+    <!-- Packs tab -->
+    <div id="packsTab" class="tab-content active-tab">
+        <div id="packsContainer" class="packs-grid"><div style="color: gold;">✨ Loading golden cases... ✨</div></div>
+    </div>
+
+    <!-- Settings tab -->
+    <div id="settingsTab" class="tab-content">
+        <div class="settings-panel">
+            <h3 style="color: #ffd966;">🌟 Special Effects</h3>
+            <div class="setting-item"><label>🎆 Shooting Stars & Comets</label><input type="checkbox" id="toggleStars" checked></div>
+            <div class="setting-item"><label>💥 Impact Flash (Flashbang)</label><input type="checkbox" id="toggleFlash" checked></div>
+            <div class="setting-item"><label>🎨 Rolling Speed (CSGO style)</label><select id="rollSpeed"><option value="400">Fast</option><option value="700" selected>Normal</option><option value="1100">Cinematic</option></select></div>
+            <p style="font-size:0.8rem; margin-top:20px;">✨ More settings coming soon ✨</p>
         </div>
     </div>
 
-    <div id="packsContainer" class="packs-grid">
-        <div style="text-align:center; grid-column:span 3;">Loading packs from Google Sheets...</div>
+    <!-- Prev Wins (Disabled placeholder) -->
+    <div id="winsTab" class="tab-content">
+        <div class="disabled-tab">🔮 Previous wins feature coming soon... Stay tuned for history vault! 🔮</div>
     </div>
-    <footer>
-        ⚡ Items & Packs fetched live from Google Sheets.<br>
-        🔔 Each pack opening sends a Discord webhook!
-    </footer>
 </div>
 
-<!-- Modal for animation -->
+<!-- MODAL FOR OPENING CASE (CSGO STYLE ROLLING) -->
 <div id="openingModal" class="modal-overlay">
-    <div class="pack-opener">
-        <div id="spinArea">
-            <div class="spinning-box" id="spinnerIcon">🎁</div>
+    <div class="case-modal">
+        <h2 style="color:#ffd966;">🔓 ROLLING CASE...</h2>
+        <div class="roller-area">
+            <div id="rollingItemsContainer" class="slot-machine"></div>
         </div>
-        <div id="resultDisplay" style="min-height: 180px;"></div>
-        <button class="close-modal" id="closeModalBtn">Close</button>
+        <div id="finalResultArea" style="margin-top: 10px;"></div>
+        <button id="closeModalFinalBtn" class="close-result">CONTINUE</button>
     </div>
 </div>
 
 <script>
-    // ================= CONFIGURATION ==================
-    const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1498140574316888164/6f0h7UyyEVZUtg1DQItPHgyXeCtzhj1eQWUQAzdDRCBKBS8ZnzMwnPqFeXiQpu8Z5HEc";
+    // ---------- CONFIG ----------
+    const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1498140574316888164/6f0h7UyyEVZUtg1DQItPHgyXeCtzhj1eQWUQAzdDRCBKBS8ZnzMwnPqFeXiQpu8Z5HEc";
 
-    // Google Sheets as CSV export URLs (public viewable)
-    // Using your sheet IDs and exporting first sheet as CSV
+    // GOOGLE SHEETS (public view)
     const PACKS_SHEET_ID = "181RdB0KhPbjnSHq-t7n_KhCFwwQwU8q4dU91u-MSHr4";
     const ITEMS_SHEET_ID = "1d0mZIPIKxWvcHRxoB6Bm20tMyx1OcfISOoy7Yi9u6jY";
-    
-    const PACKS_CSV_URL = `https://docs.google.com/spreadsheets/d/${PACKS_SHEET_ID}/export?format=csv&gid=0`;
-    const ITEMS_CSV_URL = `https://docs.google.com/spreadsheets/d/${ITEMS_SHEET_ID}/export?format=csv&gid=0`;
+    const PACKS_CSV = `https://docs.google.com/spreadsheets/d/${PACKS_SHEET_ID}/export?format=csv&gid=0`;
+    const ITEMS_CSV = `https://docs.google.com/spreadsheets/d/${ITEMS_SHEET_ID}/export?format=csv&gid=0`;
 
-    let packsData = [];      // { name, color, cost }
-    let itemsData = [];      // { name, goldValue, belongsToPack, thumbnail, rarity }
-    let userGems = 5000;     // starting balance
+    let packsData = [];     // { name, color, cost, thumbnail }
+    let itemsData = [];     // { name, goldValue, belongsToPack, thumbnail, rarity }
+    let userGems = 5000;
 
-    // DOM elements
+    // DOM
     const packsContainer = document.getElementById('packsContainer');
     const balanceSpan = document.getElementById('userBalance');
     const modal = document.getElementById('openingModal');
-    const spinnerIconDiv = document.getElementById('spinnerIcon');
-    const resultDisplay = document.getElementById('resultDisplay');
-    const closeModalBtn = document.getElementById('closeModalBtn');
+    const rollingContainer = document.getElementById('rollingItemsContainer');
+    const finalResultArea = document.getElementById('finalResultArea');
+    const closeModalBtn = document.getElementById('closeModalFinalBtn');
 
-    let currentOpeningPack = null;
-    let spinningTimeout = null;
+    // Settings
+    const toggleStars = document.getElementById('toggleStars');
+    const toggleFlash = document.getElementById('toggleFlash');
+    const rollSpeedSelect = document.getElementById('rollSpeed');
 
-    // Helper: update balance UI
-    function updateBalanceUI() {
-        balanceSpan.innerText = userGems;
+    let currentPack = null;
+    let rollingInterval = null;
+    let finalItem = null;
+
+    // Helper: Update balance UI
+    function updateBalanceUI() { balanceSpan.innerText = userGems; }
+
+    // ----------------------------------- CANVAS: SHOOTING STARS & COMETS ---------------------------------
+    const canvas = document.getElementById('canvasFx');
+    let ctx = canvas.getContext('2d');
+    let stars = [];
+    let animationId = null;
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     }
-
-    // Send Discord webhook embed
-    async function sendDiscordWebhook(packName, itemName, itemRarity, itemValue, itemThumbnail) {
-        if (!DISCORD_WEBHOOK_URL) return;
-        
-        const embed = {
-            title: "🎲 Pack Opening!",
-            description: `Someone just opened a **${packName}** pack!`,
-            color: 0x00ffcc,
-            fields: [
-                {
-                    name: "🏆 Item Won",
-                    value: `**${itemName}**`,
-                    inline: true
-                },
-                {
-                    name: "✨ Rarity",
-                    value: itemRarity || "Common",
-                    inline: true
-                },
-                {
-                    name: "💰 Value",
-                    value: `${itemValue} gems`,
-                    inline: true
-                }
-            ],
-            thumbnail: {
-                url: itemThumbnail || "https://i.imgur.com/9MjQ9sD.png"
-            },
-            footer: {
-                text: "Pack Opener Game"
-            },
-            timestamp: new Date().toISOString()
-        };
-
-        try {
-            await fetch(DISCORD_WEBHOOK_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ embeds: [embed] })
+    window.addEventListener('resize', () => { resizeCanvas(); initStars(40); });
+    
+    function initStars(count=45) {
+        stars = [];
+        for(let i=0;i<count;i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2.5 + 1,
+                alpha: Math.random() * 0.7 + 0.3,
+                speedX: (Math.random() - 0.5) * 0.6,
+                speedY: Math.random() * 2 + 1,
+                isComet: Math.random() > 0.85,
+                tail: Math.random() * 12 + 4
             });
-            console.log("✅ Discord webhook sent");
-        } catch (err) {
-            console.error("Discord webhook error:", err);
         }
     }
 
-    // Get random item from specific pack
-    function getRandomItemFromPack(packName) {
-        const packItems = itemsData.filter(item => item.belongsToPack.toLowerCase() === packName.toLowerCase());
-        if (packItems.length === 0) {
-            // fallback dummy if no items found
-            return {
-                name: "Mystery Dust",
-                goldValue: 5,
-                thumbnail: "https://i.imgur.com/9MjQ9sD.png",
-                rarity: "Common",
-                belongsToPack: packName
-            };
-        }
-        const randomIndex = Math.floor(Math.random() * packItems.length);
-        return packItems[randomIndex];
-    }
-
-    // Open pack animation & logic
-    function openPack(pack) {
-        if (userGems < pack.cost) {
-            alert(`❌ Not enough gems! You need ${pack.cost} gems to open ${pack.name}.`);
-            return false;
-        }
-
-        // Deduct cost
-        userGems -= pack.cost;
-        updateBalanceUI();
-        currentOpeningPack = pack;
-
-        // Show modal and reset animation
-        resultDisplay.innerHTML = "";
-        spinnerIconDiv.style.animation = "spinRapid 0.12s infinite linear";
-        spinnerIconDiv.innerHTML = "📦";  // pack icon
-        
-        modal.classList.add('active');
-
-        // Simulate spinning for 1.8 seconds, then reveal prize
-        if (spinningTimeout) clearTimeout(spinningTimeout);
-        spinningTimeout = setTimeout(() => {
-            // stop spinning animation
-            spinnerIconDiv.style.animation = "none";
-            
-            // Pick random item from this pack
-            const wonItem = getRandomItemFromPack(pack.name);
-            
-            // Build result HTML
-            let rarityColor = "#ffffff";
-            if (wonItem.rarity === "Chaser") rarityColor = "#ff66cc";
-            else if (wonItem.rarity === "Rare") rarityColor = "#4caf50";
-            else rarityColor = "#bbbbbb";
-            
-            resultDisplay.innerHTML = `
-                <div style="font-size:1.2rem;">✨ You won! ✨</div>
-                <img class="result-thumb" src="${wonItem.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'" alt="item">
-                <div style="font-size: 1.8rem; font-weight: bold; color: ${rarityColor};">${wonItem.name}</div>
-                <div>💰 Value: ${wonItem.goldValue} gems</div>
-                <div>⭐ Rarity: ${wonItem.rarity || "Ordinary"}</div>
-            `;
-            spinnerIconDiv.innerHTML = "🎉";
-            
-            // Send Discord embed notification
-            sendDiscordWebhook(pack.name, wonItem.name, wonItem.rarity, wonItem.goldValue, wonItem.thumbnail);
-            
-            // (Optional) Add won item value to user? Not adding to balance, just collecting.
-            // Could add collection logic but for this demo we just show.
-        }, 1800);
-        
-        return true;
-    }
-
-    // Render packs from loaded data
-    function renderPacks() {
-        if (!packsData.length) {
-            packsContainer.innerHTML = '<div style="text-align:center;">No packs found. Check CSV data or sheet format.</div>';
+    function drawStars() {
+        if(!toggleStars.checked) {
+            if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height);
             return;
         }
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        for(let s of stars) {
+            ctx.beginPath();
+            if(s.isComet) {
+                ctx.moveTo(s.x, s.y);
+                ctx.lineTo(s.x - s.tail, s.y - s.tail*0.7);
+                ctx.lineWidth = s.radius*1.5;
+                ctx.strokeStyle = `rgba(255, 200, 70, ${s.alpha * 0.8})`;
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.radius+1, 0, Math.PI*2);
+                ctx.fillStyle = `rgba(255, 220, 100, ${s.alpha})`;
+                ctx.fill();
+            } else {
+                ctx.arc(s.x, s.y, s.radius, 0, Math.PI*2);
+                ctx.fillStyle = `rgba(255, 215, 0, ${s.alpha})`;
+                ctx.fill();
+            }
+            s.x += s.speedX;
+            s.y += s.speedY;
+            if(s.x > canvas.width + 50) s.x = -50;
+            if(s.y > canvas.height + 50) s.y = -30;
+            if(s.x < -50) s.x = canvas.width+30;
+            if(s.y < -50) s.y = canvas.height+20;
+        }
+        requestAnimationFrame(drawStars);
+    }
+
+    function startStarfield() {
+        resizeCanvas();
+        initStars(55);
+        drawStars();
+    }
+    
+    // CSGO ROLLING ANIMATION + IMPACT FRAMES
+    function triggerFlashbangEffect() {
+        if(!toggleFlash.checked) return;
+        const modalDiv = document.querySelector('.case-modal');
+        modalDiv.classList.add('final-glow');
+        setTimeout(() => modalDiv.classList.remove('final-glow'), 400);
+        // extra white overlay
+        const overlayFlash = document.createElement('div');
+        overlayFlash.style.position = 'fixed'; overlayFlash.style.top=0; overlayFlash.style.left=0;
+        overlayFlash.style.width='100%'; overlayFlash.style.height='100%'; overlayFlash.style.background='radial-gradient(circle, rgba(255,255,200,0.9) 0%, rgba(255,150,0,0.7) 100%)';
+        overlayFlash.style.pointerEvents='none'; overlayFlash.style.zIndex='1001'; overlayFlash.style.mixBlendMode='screen';
+        document.body.appendChild(overlayFlash);
+        setTimeout(() => overlayFlash.remove(), 200);
+        // anime impact lines simulation
+        for(let i=0;i<12;i++) {
+            const line = document.createElement('div');
+            line.style.position='fixed'; line.style.backgroundColor='#ffcc44'; line.style.width='8px'; line.style.height='60px';
+            line.style.top = Math.random() * window.innerHeight + 'px';
+            line.style.left = Math.random() * window.innerWidth + 'px';
+            line.style.filter='blur(2px)'; line.style.opacity='0.9'; line.style.zIndex='1002';
+            document.body.appendChild(line);
+            setTimeout(() => line.remove(), 150);
+        }
+    }
+
+    async function sendDiscordEmbed(pack, item) {
+        if(!DISCORD_WEBHOOK) return;
+        const embed = {
+            title: `✨ ${pack.name} CASE OPENED ✨`,
+            description: `**${item.name}** exploded out of the case!`,
+            color: 0xffaa33,
+            fields: [
+                { name: "Rarity", value: item.rarity || "Ordinary", inline: true },
+                { name: "💰 Value", value: `${item.goldValue} gems`, inline: true }
+            ],
+            thumbnail: { url: item.thumbnail || "https://i.imgur.com/9MjQ9sD.png" },
+            footer: { text: "Golden Case Opener • Impact Frame" }
+        };
+        try { await fetch(DISCORD_WEBHOOK, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({embeds:[embed]}) }); } catch(e) { console.warn(e); }
+    }
+
+    function getRandomItemFromPack(packName) {
+        let eligible = itemsData.filter(i => i.belongsToPack.toLowerCase() === packName.toLowerCase());
+        if(eligible.length === 0) eligible = [{ name: "Golden Dust", goldValue: 50, thumbnail: "https://i.imgur.com/9MjQ9sD.png", rarity: "Mythic", belongsToPack: packName }];
+        const rand = Math.floor(Math.random() * eligible.length);
+        return eligible[rand];
+    }
+
+    // CSGO like rolling (carousel of random items)
+    async function startRollingAnimation(pack) {
+        if(userGems < pack.cost) { alert(`❌ Need ${pack.cost} gems!`); modal.classList.remove('active'); return false; }
+        userGems -= pack.cost;
+        updateBalanceUI();
+        currentPack = pack;
+        finalItem = getRandomItemFromPack(pack.name);
         
-        packsContainer.innerHTML = "";
-        for (let pack of packsData) {
-            const card = document.createElement('div');
-            card.className = 'pack-card';
-            card.style.borderTop = `5px solid ${pack.color}`;
+        // generate rolling items list: 20 random items from same pack
+        const rollingItemsList = [];
+        for(let i=0; i<22; i++) {
+            rollingItemsList.push(getRandomItemFromPack(pack.name));
+        }
+        rollingItemsList.push(finalItem); // final at the end
+        
+        rollingContainer.innerHTML = '';
+        function renderRolling(index) {
+            rollingContainer.innerHTML = '';
+            const startIdx = Math.max(0, index-3);
+            for(let i=startIdx; i<=index && i<rollingItemsList.length; i++) {
+                const it = rollingItemsList[i];
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'rolling-card';
+                cardDiv.innerHTML = `<img class="rolling-img" src="${it.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div style="font-size:0.8rem;">${it.name.substring(0,12)}</div>`;
+                rollingContainer.appendChild(cardDiv);
+            }
+        }
+        
+        let currentIdx = 0;
+        const speed = parseInt(rollSpeedSelect.value);
+        const stepTime = Math.max(70, Math.floor(speed / 10));
+        
+        return new Promise((resolve) => {
+            const interval = setInterval(() => {
+                if(currentIdx >= rollingItemsList.length-1) {
+                    clearInterval(interval);
+                    // FINAL SHOWDOWN
+                    renderRolling(rollingItemsList.length-1);
+                    setTimeout(() => {
+                        triggerFlashbangEffect();
+                        const won = finalItem;
+                        finalResultArea.innerHTML = `<div class="result-name" style="color:#ffcc66;">🏆 ${won.name} 🏆</div>
+                                                     <img src="${won.thumbnail}" style="width:100px; border-radius:20px; border:2px solid gold;"><div>Rarity: ${won.rarity} | Value: ${won.goldValue} 💎</div>`;
+                        sendDiscordEmbed(pack, won);
+                        resolve(won);
+                    }, 220);
+                    return;
+                }
+                currentIdx++;
+                renderRolling(currentIdx);
+            }, stepTime);
+            rollingInterval = interval;
+        });
+    }
+
+    // open case handler
+    async function openPack(pack) {
+        if(userGems < pack.cost) { alert(`Not enough gems! Need ${pack.cost} 💎`); return; }
+        modal.classList.add('active');
+        finalResultArea.innerHTML = '<div style="animation: pulse 1s infinite;">🌀 SPINNING CASE...</div>';
+        await startRollingAnimation(pack);
+    }
+
+    // load sheets (pack thumbnail supported)
+    async function loadPacksAndItems() {
+        try {
+            const packResp = await fetch(PACKS_CSV);
+            const packCSV = await packResp.text();
+            const packRows = parseCSV(packCSV);
+            packsData = packRows.map(row => ({
+                name: row.PackName || row.packname,
+                color: row.PackColor || "#E03FD8",
+                cost: parseInt(row.PackCost || 0),
+                thumbnail: row.PackThumbnail || row.packthumbnail || "https://i.imgur.com/9MjQ9sD.png"
+            })).filter(p => p.name);
             
-            card.innerHTML = `
-                <div class="pack-icon" style="color: ${pack.color};">🎴</div>
-                <div class="pack-name" style="color: ${pack.color};">${escapeHtml(pack.name)}</div>
-                <div class="pack-cost">💎 ${pack.cost} Gems</div>
-                <button class="open-btn" data-packname="${pack.name}" style="background: ${pack.color}; color: white;">Open Pack</button>
-            `;
+            const itemsResp = await fetch(ITEMS_CSV);
+            const itemsCSV = await itemsResp.text();
+            const itemRows = parseCSV(itemsCSV);
+            itemsData = itemRows.map(row => ({
+                name: row.ItemName,
+                goldValue: parseInt(row.GoldValue) || 0,
+                belongsToPack: row.BelongsToPack,
+                thumbnail: row.ItemThumbnail,
+                rarity: row.CardRarity || "Ordinary"
+            })).filter(i => i.name);
             
-            const openBtn = card.querySelector('.open-btn');
-            openBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                openPack(pack);
-            });
-            
+            if(packsData.length === 0) packsData = [{ name:"Boots", color:"#E03FD8", cost:1000, thumbnail:"https://i.imgur.com/9MjQ9sD.png" }];
+            if(itemsData.length === 0) itemsData = [{ name:"Rainbow Boot", goldValue:10000, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e1360a5fb96873ddeb5958/attachments/69e13611771b34a309ccacb7/download/image.png", rarity:"Chaser" }];
+            renderPacksGrid();
+        } catch(e) { console.error(e); fallbackData(); renderPacksGrid(); }
+    }
+    
+    function fallbackData() {
+        packsData = [{ name:"Boots", color:"#E03FD8", cost:1000, thumbnail:"https://i.imgur.com/9MjQ9sD.png" }];
+        itemsData = [{ name:"Rainbow Boot", goldValue:10000, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e1360a5fb96873ddeb5958/attachments/69e13611771b34a309ccacb7/download/image.png", rarity:"Chaser" },
+                     { name:"Old Boot", goldValue:20, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e13d2662c6fe6dfaae7fb0/attachments/69e13d2eb7b4c5c9e4798060/download/image.png", rarity:"Ordinary" }];
+    }
+
+    function parseCSV(csv) {
+        const lines = csv.split(/\r?\n/).filter(l=>l.trim());
+        if(lines.length<2) return [];
+        const headers = lines[0].split(',').map(h=>h.replace(/"/g,'').trim());
+        let result = [];
+        for(let i=1;i<lines.length;i++) {
+            let values = [];
+            let inQuote=false, cur='';
+            for(let ch of lines[i]) {
+                if(ch==='"') inQuote=!inQuote;
+                else if(ch===',' && !inQuote) { values.push(cur.trim().replace(/^"|"$/g,'')); cur='';}
+                else cur+=ch;
+            }
+            values.push(cur.trim().replace(/^"|"$/g,''));
+            let obj={};
+            headers.forEach((h,idx)=> { obj[h]=values[idx] || ''; });
+            result.push(obj);
+        }
+        return result;
+    }
+
+    function renderPacksGrid() {
+        if(!packsData.length) { packsContainer.innerHTML='<div>No packs</div>'; return; }
+        packsContainer.innerHTML = '';
+        for(let pack of packsData) {
+            const card = document.createElement('div'); card.className='pack-card'; card.style.borderTop=`4px solid ${pack.color}`;
+            card.innerHTML = `<img src="${pack.thumbnail}" class="pack-thumb" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'">
+                              <div class="pack-name">${pack.name}</div>
+                              <div class="pack-cost">💎 ${pack.cost} GEMS</div>
+                              <button class="open-case-btn" style="background:${pack.color}20; border-color:${pack.color}; color:${pack.color};">OPEN CASE</button>`;
+            const btn = card.querySelector('.open-case-btn');
+            btn.addEventListener('click', (e) => { e.stopPropagation(); openPack(pack); });
             packsContainer.appendChild(card);
         }
     }
 
-    // simple escape for safety
-    function escapeHtml(str) {
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-tab'));
+            const tabId = btn.getAttribute('data-tab');
+            if(tabId === 'packs') document.getElementById('packsTab').classList.add('active-tab');
+            else if(tabId === 'settings') document.getElementById('settingsTab').classList.add('active-tab');
+            else if(tabId === 'wins') document.getElementById('winsTab').classList.add('active-tab');
         });
-    }
-
-    // Parse CSV string into array of objects based on headers
-    function parseCSV(csvText, expectedColumns) {
-        const lines = csvText.split(/\r?\n/).filter(line => line.trim().length > 0);
-        if (lines.length < 2) return [];
-        
-        const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
-        const dataRows = [];
-        
-        for (let i = 1; i < lines.length; i++) {
-            const values = [];
-            let inQuote = false;
-            let currentVal = '';
-            const rowStr = lines[i];
-            
-            for (let c = 0; c < rowStr.length; c++) {
-                const ch = rowStr[c];
-                if (ch === '"') {
-                    inQuote = !inQuote;
-                } else if (ch === ',' && !inQuote) {
-                    values.push(currentVal.trim().replace(/^"|"$/g, ''));
-                    currentVal = '';
-                } else {
-                    currentVal += ch;
-                }
-            }
-            values.push(currentVal.trim().replace(/^"|"$/g, ''));
-            
-            if (values.length >= headers.length) {
-                const rowObj = {};
-                headers.forEach((h, idx) => {
-                    rowObj[h] = values[idx] || '';
-                });
-                dataRows.push(rowObj);
-            }
-        }
-        return dataRows;
-    }
-
-    // Load packs from CSV
-    async function loadPacks() {
-        try {
-            const response = await fetch(PACKS_CSV_URL);
-            const csv = await response.text();
-            const rows = parseCSV(csv, ['PackName', 'PackColor', 'PackCost']);
-            
-            packsData = rows.map(row => ({
-                name: row.PackName || row.packname || row.name || 'Unknown',
-                color: row.PackColor || row.packcolor || row.color || '#aaaaaa',
-                cost: parseInt(row.PackCost || row.packcost || row.cost || 0, 10)
-            })).filter(p => p.name !== 'Unknown' && !isNaN(p.cost));
-            
-            console.log("✅ Packs loaded:", packsData);
-            if (packsData.length === 0) throw new Error("No valid packs");
-            renderPacks();
-        } catch (err) {
-            console.error(err);
-            packsContainer.innerHTML = `<div class="error-msg">⚠️ Failed to load packs data. Check sheet sharing (anyone with link can view).<br>Using fallback demo packs.</div>`;
-            // Fallback packs based on your sample
-            packsData = [
-                { name: "Boots", color: "#E03FD8", cost: 1000 }
-            ];
-            renderPacks();
-        }
-    }
-
-    // Load items from CSV
-    async function loadItems() {
-        try {
-            const response = await fetch(ITEMS_CSV_URL);
-            const csv = await response.text();
-            const rows = parseCSV(csv, ['ItemName', 'GoldValue', 'BelongsToPack', 'ItemThumbnail', 'CardRarity']);
-            
-            itemsData = rows.map(row => ({
-                name: row.ItemName || row.itemname || 'Mystery Item',
-                goldValue: parseInt(row.GoldValue || row.goldvalue || 0, 10),
-                belongsToPack: row.BelongsToPack || row.belongstopack || '',
-                thumbnail: row.ItemThumbnail || row.itemthumbnail || 'https://i.imgur.com/9MjQ9sD.png',
-                rarity: row.CardRarity || row.cardrarity || 'Ordinary'
-            })).filter(item => item.name);
-            
-            console.log("✅ Items loaded:", itemsData.length);
-        } catch (err) {
-            console.error("Items load error:", err);
-            // fallback items from your example
-            itemsData = [
-                { name: "Rainbow Boot", goldValue: 10000, belongsToPack: "Boots", thumbnail: "https://trello.com/1/cards/69e1360a5fb96873ddeb5958/attachments/69e13611771b34a309ccacb7/download/image.png", rarity: "Chaser" },
-                { name: "Old Boot", goldValue: 20, belongsToPack: "Boots", thumbnail: "https://trello.com/1/cards/69e13d2662c6fe6dfaae7fb0/attachments/69e13d2eb7b4c5c9e4798060/download/image.png", rarity: "Ordinary" }
-            ];
-        }
-    }
-
-    // Close modal handler
-    closeModalBtn.addEventListener('click', () => {
-        modal.classList.remove('active');
-        if (spinningTimeout) clearTimeout(spinningTimeout);
-        // reset spin area for next time
-        spinnerIconDiv.style.animation = "none";
-        spinnerIconDiv.innerHTML = "🎁";
-        resultDisplay.innerHTML = "";
     });
-
-    // Initialize everything
-    async function init() {
-        await loadItems();
-        await loadPacks();
-        updateBalanceUI();
-    }
     
-    init();
+    closeModalBtn.addEventListener('click', () => {
+        if(rollingInterval) clearInterval(rollingInterval);
+        modal.classList.remove('active');
+        rollingContainer.innerHTML = '';
+        finalResultArea.innerHTML = '';
+    });
+    
+    startStarfield();
+    loadPacksAndItems();
+    updateBalanceUI();
 </script>
 </body>
 </html>
