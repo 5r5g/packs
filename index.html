@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>5R5G PACKS</title>
+    <title>✦ IMPACT LOOTBOX | Purple · Red · Gold ✦</title>
     <style>
         * {
             margin: 0;
@@ -14,14 +14,14 @@
 
         body {
             font-family: 'Segoe UI', 'Poppins', 'Impact', system-ui, sans-serif;
-            background: radial-gradient(circle at 20% 30%, #0a0507, #020101);
+            background: radial-gradient(circle at 10% 20%, #1e0a2b, #2a0a1a, #0f030c);
             min-height: 100vh;
             color: #ffecb3;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* animated golden dust overlay */
+        /* animated gradient shifting overlay */
         body::before {
             content: '';
             position: fixed;
@@ -29,18 +29,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle at 40% 50%, rgba(156, 39, 176, 0.2), rgba(255, 80, 40, 0.15), rgba(255, 215, 0, 0.05));
             pointer-events: none;
             z-index: 0;
-            animation: slowBreathing 6s infinite alternate;
+            animation: royalShift 12s infinite alternate;
         }
 
-        @keyframes slowBreathing {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.8; }
+        @keyframes royalShift {
+            0% { opacity: 0.4; background: radial-gradient(circle at 30% 40%, rgba(156,39,176,0.3), rgba(255,80,40,0.1), rgba(255,215,0,0.05));}
+            100% { opacity: 1; background: radial-gradient(circle at 70% 60%, rgba(255,80,40,0.35), rgba(156,39,176,0.3), rgba(255,200,0,0.15));}
         }
 
-        /* particle canvas for stars/comets */
+        /* canvas for stars+comets */
         #canvasFx {
             position: fixed;
             top: 0;
@@ -48,7 +48,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 10;
+            z-index: 8;
         }
 
         .container {
@@ -62,11 +62,11 @@
         h1 {
             font-size: 3.2rem;
             text-align: center;
-            background: linear-gradient(135deg, #f9e45b, #ffb347, #ffd966);
+            background: linear-gradient(135deg, #ffd966, #ff6a4b, #c154e0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 20px rgba(255, 200, 0, 0.5);
+            text-shadow: 0 0 25px rgba(193, 84, 224, 0.6);
             letter-spacing: 2px;
         }
 
@@ -76,8 +76,8 @@
             border-radius: 80px;
             display: inline-block;
             padding: 8px 32px;
-            border: 1px solid gold;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+            border: 1px solid #ffb347;
+            box-shadow: 0 0 25px rgba(255, 80, 40, 0.7);
             margin: 20px auto;
             text-align: center;
         }
@@ -85,8 +85,10 @@
         .balance-card span {
             font-size: 2rem;
             font-weight: bold;
-            color: #ffd966;
-            text-shadow: 0 0 6px #b8860b;
+            background: linear-gradient(145deg, #ffd966, #ffaa55);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         /* TABS */
@@ -95,7 +97,7 @@
             justify-content: center;
             gap: 20px;
             margin-bottom: 40px;
-            border-bottom: 2px solid rgba(255, 200, 0, 0.4);
+            border-bottom: 2px solid rgba(255, 100, 80, 0.5);
             padding-bottom: 12px;
         }
 
@@ -107,15 +109,16 @@
             padding: 8px 32px;
             border-radius: 60px;
             cursor: pointer;
-            color: #ffd966;
+            color: #ffcf9a;
             transition: 0.2s;
             backdrop-filter: blur(5px);
         }
 
         .tab-btn.active {
-            background: linear-gradient(145deg, #ffcc44, #e6a800);
-            color: #1e1a0a;
-            box-shadow: 0 0 18px gold;
+            background: linear-gradient(145deg, #ff4d4d, #b83bc2);
+            color: #fff0b5;
+            box-shadow: 0 0 18px #ff66aa;
+            text-shadow: 0 0 3px darkred;
         }
 
         .tab-content {
@@ -141,22 +144,22 @@
         }
 
         .pack-card {
-            background: rgba(20, 15, 25, 0.85);
+            background: rgba(20, 8, 28, 0.85);
             backdrop-filter: blur(16px);
             border-radius: 32px;
             padding: 20px;
             width: 260px;
             text-align: center;
             transition: all 0.25s ease;
-            border: 1px solid rgba(255, 215, 0, 0.5);
+            border: 1px solid rgba(255, 120, 80, 0.6);
             cursor: pointer;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
         .pack-card:hover {
             transform: translateY(-12px);
-            border-color: gold;
-            box-shadow: 0 0 35px rgba(255, 215, 0, 0.7);
+            border-color: #ffaa66;
+            box-shadow: 0 0 35px rgba(255, 80, 120, 0.7);
         }
 
         .pack-thumb {
@@ -172,7 +175,7 @@
         .pack-name {
             font-size: 1.9rem;
             font-weight: bold;
-            background: linear-gradient(135deg, #fff0b5, #ffcf4a);
+            background: linear-gradient(135deg, #ffb347, #ff6a4b, #dd88ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -186,13 +189,13 @@
             font-weight: bold;
             margin: 10px 0;
             font-size: 1.2rem;
-            border: 1px solid #ffb347;
+            border: 1px solid #ff884d;
         }
 
         .open-case-btn {
-            background: radial-gradient(circle at 30% 10%, #ffcc44, #b87c00);
+            background: radial-gradient(circle at 30% 10%, #ff884d, #a83f9c);
             border: none;
-            color: #1f1a0c;
+            color: #fff0cc;
             font-weight: bold;
             padding: 12px 0;
             width: 100%;
@@ -200,35 +203,33 @@
             font-size: 1.2rem;
             cursor: pointer;
             transition: 0.05s linear;
-            box-shadow: 0 5px 0 #8b5a00;
+            box-shadow: 0 5px 0 #5a2a55;
         }
 
         .open-case-btn:active {
             transform: translateY(2px);
-            box-shadow: 0 2px 0 #8b5a00;
+            box-shadow: 0 2px 0 #5a2a55;
         }
 
         .settings-panel {
-            background: rgba(10, 8, 12, 0.8);
+            background: rgba(25, 10, 30, 0.85);
             backdrop-filter: blur(20px);
             border-radius: 48px;
             padding: 30px;
             max-width: 550px;
             margin: 0 auto;
-            border: 1px solid #e6b422;
+            border: 1px solid #ff6a4b;
         }
-
         .setting-item {
             margin: 20px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        select, input { background: #2a241a; border: 1px solid goldenrod; padding: 8px 16px; border-radius: 32px; color: #ffeaac; }
-
+        select, input { background: #2a1025; border: 1px solid #ff8866; padding: 8px 16px; border-radius: 32px; color: #ffdead; font-weight: bold; }
         .disabled-tab { text-align: center; margin-top: 80px; font-size: 1.6rem; opacity: 0.6; font-style: italic; }
 
-        /* ---------- MODAL CSGO LOOTBOX STYLE (SLOT MACHINE REEL) ---------- */
+        /* ---------- MODAL CSGO STYLE REEL (zoom+flash) ---------- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -245,46 +246,32 @@
             opacity: 0;
             transition: visibility 0s, opacity 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
-
-        .modal-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
+        .modal-overlay.active { visibility: visible; opacity: 1; }
 
         .case-modal {
-            background: #0c0912ee;
+            background: #160c1cee;
             border-radius: 60px;
             padding: 20px 35px 45px;
             width: 90%;
-            max-width: 1000px;
+            max-width: 1100px;
             text-align: center;
-            border: 2px solid #ffd966;
-            box-shadow: 0 0 80px rgba(255, 200, 0, 0.5);
-            transition: transform 0.4s cubic-bezier(0.2, 1.2, 0.3, 1);
+            border: 2px solid #ffaa66;
+            box-shadow: 0 0 80px rgba(255, 80, 100, 0.6);
+            transition: transform 0.3s cubic-bezier(0.2, 1.2, 0.3, 1);
             transform: scale(1);
         }
-
-        /* zoom animation classes */
-        .case-modal.zoom-in {
-            transform: scale(1.4);
-            transition: transform 0.25s ease-out;
-        }
-        .case-modal.zoom-out-flash {
-            transform: scale(0.95);
-            filter: brightness(1.8) blur(2px);
-            transition: transform 0.1s, filter 0.08s;
-        }
+        .case-modal.zoom-in { transform: scale(1.45); transition: transform 0.2s ease-out; }
+        .case-modal.zoom-out-flash { transform: scale(0.96); filter: brightness(2) blur(2px); transition: transform 0.08s, filter 0.1s; }
 
         .reel-container {
-            background: #000000aa;
+            background: #0a0312aa;
             border-radius: 50px;
             padding: 20px;
             margin: 20px 0;
             overflow: hidden;
             position: relative;
-            box-shadow: inset 0 0 25px rgba(0,0,0,0.8), 0 0 0 2px #ffcc66;
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 0 0 2px #ff7744;
         }
-
         .slot-reel {
             display: flex;
             gap: 12px;
@@ -294,22 +281,20 @@
             padding: 12px 8px;
             scroll-behavior: auto;
             justify-content: flex-start;
-            transition: all 0.05s linear;
         }
         .slot-reel::-webkit-scrollbar { display: none; }
 
         .item-card {
             flex: 0 0 auto;
-            width: 140px;
-            background: #1e1926;
+            width: 150px;
+            background: #231b2e;
             border-radius: 28px;
             padding: 15px 8px;
             text-align: center;
-            transition: all 0.1s;
-            border: 1px solid #ffcc66;
+            border: 1px solid #ff9966;
             box-shadow: 0 5px 15px black;
+            transition: 0.1s;
         }
-
         .item-img {
             width: 90px;
             height: 90px;
@@ -318,20 +303,15 @@
             display: block;
         }
 
-        .winner-highlight {
-            border: 4px solid gold;
-            box-shadow: 0 0 35px gold;
-            background: radial-gradient(circle, #ffd96655, #1e1926);
-            transform: scale(1.02);
-        }
-
         .result-area {
             margin-top: 20px;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
+            background: rgba(0,0,0,0.5);
+            border-radius: 48px;
+            padding: 15px;
         }
-
         .close-result {
-            background: #e6b422;
+            background: linear-gradient(145deg, #ff7744, #b83bc2);
             border: none;
             padding: 12px 32px;
             border-radius: 60px;
@@ -339,14 +319,21 @@
             font-size: 1.2rem;
             margin-top: 20px;
             cursor: pointer;
+            color: white;
         }
-
+        .winner-name {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ffd966, #ffaa66, #ff66cc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
         @keyframes impactFlashAnim {
-            0% { background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 80%);}
-            40% { background: radial-gradient(circle, rgba(255,255,200,0.95) 0%, rgba(255,100,0,0.8) 100%);}
-            100% { background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 80%);}
+            0% { background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 70%);}
+            40% { background: radial-gradient(circle, rgba(255,200,100,0.95) 0%, rgba(255,60,80,0.9) 100%);}
+            100% { background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 70%);}
         }
-
         .global-flash {
             position: fixed;
             top: 0;
@@ -357,29 +344,33 @@
             z-index: 1001;
             animation: impactFlashAnim 0.35s ease-out forwards;
         }
+        .detail-line {
+            font-size: 1rem;
+            margin-top: 8px;
+        }
     </style>
 </head>
 <body>
 <canvas id="canvasFx"></canvas>
 <div class="container">
-    <div style="text-align: center;"><h1>✦ GOLDEN LOOTBOX SIMULATOR ✦</h1></div>
-    <div style="display: flex; justify-content: center;"><div class="balance-card">💎 CREDITS: <span id="userBalance">5000</span></div></div>
+    <div style="text-align: center;"><h1>✦ ROYAL IMPACT CASE OPENER ✦</h1></div>
+    <div style="display: flex; justify-content: center;"><div class="balance-card">💎 ROYAL GEMS: <span id="userBalance">7500</span></div></div>
 
     <div class="tabs">
         <button class="tab-btn active" data-tab="packs">📦 OPEN CASES</button>
-        <button class="tab-btn" data-tab="settings">⚙️ EFFECTS</button>
+        <button class="tab-btn" data-tab="settings">⚙️ CINEMATICS</button>
         <button class="tab-btn" data-tab="wins">🏆 PREV WINS</button>
     </div>
 
-    <div id="packsTab" class="tab-content active-tab"><div id="packsContainer" class="packs-grid"><div>🎴 Loading cases...</div></div></div>
-    <div id="settingsTab" class="tab-content"><div class="settings-panel"><h3>🌟 CINEMATIC SETTINGS</h3><div class="setting-item"><label>💥 DRAMATIC ZOOM + FLASHBANG</label><input type="checkbox" id="toggleZoomFlash" checked></div><div class="setting-item"><label>🎇 COMETS & SHOOTING STARS</label><input type="checkbox" id="toggleStars" checked></div><div class="setting-item"><label>🎞️ REEL SPIN SPEED</label><select id="rollSpeed"><option value="1">VERY FAST</option><option value="2" selected>CLASSIC CSGO</option><option value="3">SLOW MOTION</option></select></div></div></div>
-    <div id="winsTab" class="tab-content"><div class="disabled-tab">🔮 PAST WINS COMING SOON: EPIC HISTORY VAULT 🔮</div></div>
+    <div id="packsTab" class="tab-content active-tab"><div id="packsContainer" class="packs-grid"><div>✨ Loading legendary cases...</div></div></div>
+    <div id="settingsTab" class="tab-content"><div class="settings-panel"><h3 style="color:#ffaa77;">🌟 VISUAL EFFECTS</h3><div class="setting-item"><label>💥 ZOOM + FLASHBANG IMPACT</label><input type="checkbox" id="toggleZoomFlash" checked></div><div class="setting-item"><label>🌠 COMETS & STARS</label><input type="checkbox" id="toggleStars" checked></div><div class="setting-item"><label>🎞️ REEL SCROLL SPEED</label><select id="rollSpeed"><option value="1">FAST</option><option value="2" selected>CSGO CLASSIC</option><option value="3">CINEMATIC SLOW</option></select></div></div></div>
+    <div id="winsTab" class="tab-content"><div class="disabled-tab">🏆 HISTORY VAULT COMING SOON: EPIC DROPS 🏆</div></div>
 </div>
 
-<!-- MODAL CSGO REEL STYLE -->
+<!-- MODAL REEL -->
 <div id="openingModal" class="modal-overlay">
     <div class="case-modal" id="caseModalElem">
-        <h2 style="color:#ffd966;">🔁 SPINNING REEL</h2>
+        <h2 style="color:#ffaa77;">🎰 SPINNING REEL · PREDICTING FATE</h2>
         <div class="reel-container"><div id="reelTrack" class="slot-reel"></div></div>
         <div id="finalReveal" class="result-area"></div>
         <button id="closeModalBtn" class="close-result">CONTINUE</button>
@@ -396,12 +387,11 @@
 
     let packsData = [];
     let itemsData = [];
-    let userGems = 5000;
+    let userGems = 7500;
     let currentRollInterval = null;
     let currentPackObj = null;
     let finalWinItem = null;
 
-    // DOM
     const packsContainer = document.getElementById('packsContainer');
     const balanceSpan = document.getElementById('userBalance');
     const modal = document.getElementById('openingModal');
@@ -415,18 +405,18 @@
 
     function updateBalanceUI() { balanceSpan.innerText = userGems; }
 
-    // ========== STARFIELD CANVAS ==========
+    // ========== STARFIELD + COMETS ==========
     const canvas = document.getElementById('canvasFx');
     let ctx = canvas.getContext('2d');
     let stars = [];
     function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    window.addEventListener('resize', () => { resizeCanvas(); initStars(60); });
-    function initStars(count=70) { stars = []; for(let i=0;i<count;i++) { stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 2.8 + 1, alpha: Math.random() * 0.8 + 0.2, speedX: (Math.random() - 0.5) * 0.5, speedY: Math.random() * 2 + 1.2, isComet: Math.random() > 0.8, tail: Math.random() * 12 + 5 }); } }
-    function drawStars() { if(!toggleStars.checked) { if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height); return; } ctx.clearRect(0,0,canvas.width,canvas.height); for(let s of stars) { ctx.beginPath(); if(s.isComet) { ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.tail, s.y - s.tail*0.7); ctx.lineWidth = s.radius*1.5; ctx.strokeStyle = `rgba(255, 200, 70, ${s.alpha * 0.9})`; ctx.stroke(); ctx.beginPath(); ctx.arc(s.x, s.y, s.radius+1, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 220, 100, ${s.alpha})`; ctx.fill(); } else { ctx.arc(s.x, s.y, s.radius, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 215, 0, ${s.alpha})`; ctx.fill(); } s.x += s.speedX; s.y += s.speedY; if(s.x > canvas.width+50) s.x = -50; if(s.y > canvas.height+50) s.y = -40; if(s.x < -50) s.x = canvas.width+30; if(s.y < -50) s.y = canvas.height+20; } requestAnimationFrame(drawStars); }
-    function startStarfield() { resizeCanvas(); initStars(70); drawStars(); }
+    window.addEventListener('resize', () => { resizeCanvas(); initStars(70); });
+    function initStars(count=80) { stars = []; for(let i=0;i<count;i++) { stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 2.8 + 1, alpha: Math.random() * 0.8 + 0.2, speedX: (Math.random() - 0.5) * 0.4, speedY: Math.random() * 2.2 + 0.8, isComet: Math.random() > 0.78, tail: Math.random() * 14 + 6 }); } }
+    function drawStars() { if(!toggleStars.checked) { if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height); return; } ctx.clearRect(0,0,canvas.width,canvas.height); for(let s of stars) { ctx.beginPath(); if(s.isComet) { ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.tail*0.9, s.y - s.tail*0.6); ctx.lineWidth = s.radius*1.6; ctx.strokeStyle = `rgba(255, 150, 80, ${s.alpha * 0.9})`; ctx.stroke(); ctx.beginPath(); ctx.arc(s.x, s.y, s.radius+1, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 200, 100, ${s.alpha})`; ctx.fill(); } else { ctx.arc(s.x, s.y, s.radius, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 215, 150, ${s.alpha})`; ctx.fill(); } s.x += s.speedX; s.y += s.speedY; if(s.x > canvas.width+60) s.x = -60; if(s.y > canvas.height+60) s.y = -40; if(s.x < -60) s.x = canvas.width+40; if(s.y < -40) s.y = canvas.height+30; } requestAnimationFrame(drawStars); }
+    function startStarfield() { resizeCanvas(); initStars(80); drawStars(); }
     startStarfield();
 
-    // helpers: load & parse CSV
+    // ========== CSV LOADING ==========
     async function loadData() {
         try {
             const packResp = await fetch(PACKS_CSV); const packCsv = await packResp.text();
@@ -443,28 +433,35 @@
     function fallbackLocal() { packsData = [{ name:"Boots", color:"#E03FD8", cost:1000, thumbnail:"https://i.imgur.com/9MjQ9sD.png"}]; itemsData = [{ name:"Rainbow Boot", goldValue:10000, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e1360a5fb96873ddeb5958/attachments/69e13611771b34a309ccacb7/download/image.png", rarity:"Chaser", dropChance:5},{ name:"Old Boot", goldValue:20, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e13d2662c6fe6dfaae7fb0/attachments/69e13d2eb7b4c5c9e4798060/download/image.png", rarity:"Ordinary", dropChance:95}]; }
     function parseCSV(csv) { const lines = csv.split(/\r?\n/).filter(l=>l.trim()); if(lines.length<2) return []; const headers = lines[0].split(',').map(h=>h.replace(/"/g,'').trim()); let res=[]; for(let i=1;i<lines.length;i++) { let values=[], inQuote=false, cur=''; for(let ch of lines[i]){ if(ch==='"') inQuote=!inQuote; else if(ch===',' && !inQuote) { values.push(cur.trim().replace(/^"|"$/g,'')); cur=''; } else cur+=ch; } values.push(cur.trim().replace(/^"|"$/g,'')); let obj={}; headers.forEach((h,idx)=>{ obj[h]=values[idx]||''; }); res.push(obj); } return res; }
 
-    function renderPacks() { packsContainer.innerHTML = packsData.map(pack => `<div class="pack-card" style="border-top:4px solid ${pack.color}"><img class="pack-thumb" src="${pack.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div class="pack-name">${pack.name}</div><div class="pack-cost">💎 ${pack.cost} GEMS</div><button class="open-case-btn" style="background:${pack.color}40; border-color:${pack.color};">OPEN CASE</button></div>`).join(''); document.querySelectorAll('.open-case-btn').forEach((btn, idx) => { btn.addEventListener('click', (e) => { e.stopPropagation(); openPack(packsData[idx]); }); }); }
+    function renderPacks() { packsContainer.innerHTML = packsData.map(pack => `<div class="pack-card" style="border-top:4px solid ${pack.color}"><img class="pack-thumb" src="${pack.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div class="pack-name">${pack.name}</div><div class="pack-cost">💎 ${pack.cost} GEMS</div><button class="open-case-btn" style="background:${pack.color}60; border-color:${pack.color};">UNBOX CASE</button></div>`).join(''); document.querySelectorAll('.open-case-btn').forEach((btn, idx) => { btn.addEventListener('click', (e) => { e.stopPropagation(); openPack(packsData[idx]); }); }); }
 
-    // Weighted random based on dropChance
-    function getRandomItemFromPack(packName) { let eligible = itemsData.filter(i => i.belongsToPack?.toLowerCase() === packName.toLowerCase()); if(eligible.length === 0) return { name:"Mystery Dust", goldValue:5, thumbnail:"https://i.imgur.com/9MjQ9sD.png", rarity:"Common" }; let totalChance = eligible.reduce((sum,i)=> sum + (i.dropChance || 1), 0); let rand = Math.random() * totalChance; let accum = 0; for(let item of eligible){ accum += (item.dropChance || 1); if(rand <= accum) return item; } return eligible[0]; }
+    // WEIGHTED DROP based on dropChance column (Rainbow Boot 5%, Old Boot 95%)
+    function getRandomItemFromPack(packName) { 
+        let eligible = itemsData.filter(i => i.belongsToPack?.toLowerCase() === packName.toLowerCase()); 
+        if(eligible.length === 0) return { name:"Mystery Relic", goldValue:50, thumbnail:"https://i.imgur.com/9MjQ9sD.png", rarity:"Mystic" }; 
+        let totalChance = eligible.reduce((sum,i)=> sum + (i.dropChance || 1), 0); 
+        let rand = Math.random() * totalChance; 
+        let accum = 0; 
+        for(let item of eligible){ accum += (item.dropChance || 1); if(rand <= accum) return item; } 
+        return eligible[0]; 
+    }
 
-    async function sendDiscord(pack, item){ if(!DISCORD_WEBHOOK) return; try{ await fetch(DISCORD_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:`🎁 ${pack.name} CASE OPENED`,description:`**${item.name}** was unboxed!`,color:0xffaa33,fields:[{name:"Rarity",value:item.rarity,inline:true},{name:"Value",value:`${item.goldValue} 💎`,inline:true}],thumbnail:{url:item.thumbnail},footer:{text:"CSGO Style Reel"}}]})}); }catch(e){console.warn(e);} }
+    async function sendDiscord(pack, item){ if(!DISCORD_WEBHOOK) return; try{ await fetch(DISCORD_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:`🔥 ${pack.name.toUpperCase()} UNBOXED`,description:`**${item.name}** has been drawn!`,color:0xdd55aa,fields:[{name:"Rarity",value:item.rarity,inline:true},{name:"💎 Value",value:`${item.goldValue}`,inline:true}],thumbnail:{url:item.thumbnail},footer:{text:"Purple/Red/Gold Reel"}}]})}); }catch(e){console.warn(e);} }
 
-    // CSGO REEL ANIMATION: endless items scrolling then slow down & stop
+    // CSGO STYLE REEL + clear result line (shows pack draw outcome)
     async function startReelAnimation(pack) {
-        if(userGems < pack.cost) { alert(`Not enough! Need ${pack.cost} gems`); return false; }
+        if(userGems < pack.cost) { alert(`Insufficient Gems: need ${pack.cost}`); return false; }
         userGems -= pack.cost; updateBalanceUI();
         currentPackObj = pack;
         const allPackItems = itemsData.filter(i => i.belongsToPack?.toLowerCase() === pack.name.toLowerCase());
         if(allPackItems.length===0) return false;
         
-        // Build massive item pool (reel sequence) 60 items for smooth scroll
+        // Build reel item sequence (60 items flickering)
         let reelItems = [];
-        for(let i=0;i<70; i++) { reelItems.push(allPackItems[Math.floor(Math.random()*allPackItems.length)]); }
-        finalWinItem = getRandomItemFromPack(pack.name); // true weighted random
+        for(let i=0;i<65; i++) { reelItems.push(allPackItems[Math.floor(Math.random()*allPackItems.length)]); }
+        finalWinItem = getRandomItemFromPack(pack.name);   // <--- THIS IS THE FINAL DETERMINISTIC DRAW (weighted)
         reelItems.push(finalWinItem);
-        // extra clones after to simulate slowdown
-        for(let i=0;i<12;i++) reelItems.push(finalWinItem);
+        for(let i=0;i<14;i++) reelItems.push(finalWinItem); // slowdown duplication
         
         reelTrack.innerHTML = '';
         function renderReel(indexVisibleStart) {
@@ -480,29 +477,35 @@
         }
         
         let currentIndex = 0;
-        const speedMap = {'1': 18, '2': 45, '3': 90};
-        let step = speedMap[rollSpeedSelect.value] || 45;
+        const speedMap = {'1': 16, '2': 44, '3': 88};
+        let step = speedMap[rollSpeedSelect.value] || 44;
         let cycles = 0;
-        const maxSteps = 38; // total steps before stop
+        const maxSteps = 42;
         let slowdownTrigger = false;
         
         return new Promise((resolve) => {
             const interval = setInterval(() => {
-                if(!slowdownTrigger && cycles >= maxSteps-14) {
+                if(!slowdownTrigger && cycles >= maxSteps-16) {
                     slowdownTrigger = true;
-                    step = Math.max(12, step-2);
+                    step = Math.max(10, step-3);
                 }
                 if(cycles >= maxSteps) {
                     clearInterval(interval);
-                    // final exact show of winning item centered
-                    renderReel(reelItems.length - 5); // make center show finalWinItem
+                    // center final winning item in the reel visible area
+                    renderReel(reelItems.length - 5);
                     setTimeout(() => {
                         triggerCinematicZoomFlash().then(() => {
-                            finalRevealDiv.innerHTML = `<div style="font-size:2rem; font-weight:bold; color:#ffcc66;">🏆 ${finalWinItem.name} 🏆</div><img src="${finalWinItem.thumbnail}" style="width:110px; border-radius:20px; border:3px solid gold;"><div>⭐ ${finalWinItem.rarity} | 💎 ${finalWinItem.goldValue}</div>`;
+                            // CLEAR RESULT DISPLAY: explicitly show what the pack draw landed on
+                            finalRevealDiv.innerHTML = `
+                                <div class="winner-name">🏆 ${finalWinItem.name} 🏆</div>
+                                <img src="${finalWinItem.thumbnail}" style="width:100px; border-radius:20px; border:3px solid #ffaa77; margin:10px;">
+                                <div class="detail-line">✨ Rarity: ${finalWinItem.rarity} &nbsp;&nbsp;| 💎 Value: ${finalWinItem.goldValue}</div>
+                                <div class="detail-line" style="font-size:0.9rem;">🎲 Pack: ${pack.name} • Drawn using weighted odds</div>
+                            `;
                             sendDiscord(pack, finalWinItem);
                             resolve(finalWinItem);
                         });
-                    }, 50);
+                    }, 70);
                     return;
                 }
                 currentIndex = (currentIndex + 1) % reelItems.length;
@@ -513,22 +516,21 @@
         });
     }
     
-    // cinematic zoom + flashbang (zoom in, then sudden zoom out + flash)
     async function triggerCinematicZoomFlash() {
         if(!toggleZoomFlash.checked) return;
         caseModalElem.classList.add('zoom-in');
-        await new Promise(r => setTimeout(r, 250));
+        await new Promise(r => setTimeout(r, 220));
         caseModalElem.classList.add('zoom-out-flash');
         const flashDiv = document.createElement('div'); flashDiv.classList.add('global-flash'); document.body.appendChild(flashDiv);
-        await new Promise(r => setTimeout(r, 200));
+        await new Promise(r => setTimeout(r, 180));
         caseModalElem.classList.remove('zoom-in', 'zoom-out-flash');
-        setTimeout(() => { if(flashDiv) flashDiv.remove(); }, 300);
+        setTimeout(() => { if(flashDiv) flashDiv.remove(); }, 280);
     }
     
     async function openPack(pack) {
         if(userGems < pack.cost) { alert(`Need ${pack.cost} gems!`); return; }
         modal.classList.add('active');
-        finalRevealDiv.innerHTML = '<div style="animation: pulse 1s infinite;">🌀 SPINNING REEL...</div>';
+        finalRevealDiv.innerHTML = '<div style="animation: pulse 1s infinite;">🌀 ROLLING REEL • DECODING DROP...</div>';
         await startReelAnimation(pack);
     }
     
