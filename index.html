@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>✦ MOVING CAROUSEL | Center Line Selector ✦ Epic Lootbox</title>
+    <title>✦ FAST CAROUSEL | Center Line Selector ✦ Epic Lootbox</title>
     <style>
         * {
             margin: 0;
@@ -255,12 +255,11 @@
             padding: 20px 0;
         }
 
-        /* Physical moving track */
         .reel-track {
             display: flex;
             gap: 20px;
             will-change: transform;
-            transition: none; /* transition will be applied dynamically during spin */
+            transition: none;
             align-items: center;
             padding: 8px 0;
         }
@@ -274,11 +273,10 @@
             text-align: center;
             border: 1px solid #ffaa77;
             box-shadow: 0 8px 18px black;
-            transition: transform 0.2s ease, filter 0.2s;
+            transition: transform 0.1s ease;
             backdrop-filter: blur(4px);
         }
         
-        /* 3D carousel perspective effect: items grow when near center (will be applied dynamically via JS) */
         .item-card.near-center {
             transform: scale(1.08);
             border-color: #ffdd99;
@@ -294,7 +292,6 @@
             display: block;
         }
 
-        /* THE CENTER SELECTOR LINE (immortal) */
         .center-line {
             position: absolute;
             top: 0;
@@ -335,7 +332,6 @@
             text-shadow: 0 0 8px red;
         }
 
-        /* Destiny glow beam */
         .destiny-beam {
             position: absolute;
             top: -20px;
@@ -412,7 +408,6 @@
         }
         @keyframes blinkText { 0%{opacity:0.4;} 100%{opacity:1;} }
         
-        /* particle canvas for bursts */
         .particle-canvas {
             position: absolute;
             top: 0;
@@ -427,7 +422,7 @@
 <body>
 <canvas id="canvasFx"></canvas>
 <div class="container">
-    <div style="text-align: center;"><h1>✦ MOVING CAROUSEL | CENTER LINE ✦</h1></div>
+    <div style="text-align: center;"><h1>✦ FAST CAROUSEL | CENTER LINE ✦</h1></div>
     <div style="display: flex; justify-content: center;"><div class="balance-card">💎 ROYAL GEMS: <span id="userBalance">8500</span></div></div>
 
     <div class="tabs">
@@ -441,7 +436,6 @@
     <div id="winsTab" class="tab-content"><div class="disabled-tab">🏆 HISTORY COMING SOON 🏆</div></div>
 </div>
 
-<!-- MODAL PHYSICAL REEL -->
 <div id="openingModal" class="modal-overlay">
     <div class="case-modal" id="caseModalElem">
         <h2 style="color:#ffaa77;">🎯 CENTER LINE · PHYSICAL MOVEMENT</h2>
@@ -459,7 +453,6 @@
 </div>
 
 <script>
-    // ========== CONFIG ==========
     const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1498140574316888164/6f0h7UyyEVZUtg1DQItPHgyXeCtzhj1eQWUQAzdDRCBKBS8ZnzMwnPqFeXiQpu8Z5HEc";
     const PACKS_SHEET_ID = "181RdB0KhPbjnSHq-t7n_KhCFwwQwU8q4dU91u-MSHr4";
     const ITEMS_SHEET_ID = "1d0mZIPIKxWvcHRxoB6Bm20tMyx1OcfISOoy7Yi9u6jY";
@@ -473,8 +466,8 @@
     let finalWinItem = null;
     let isRolling = false;
     let reelTrackDiv, trackContainer, particleCtx, particleCanvas;
+    let webhookSentForCurrentOpen = false;
     
-    // DOM elements
     const packsContainer = document.getElementById('packsContainer');
     const balanceSpan = document.getElementById('userBalance');
     const modal = document.getElementById('openingModal');
@@ -488,7 +481,7 @@
 
     function updateBalanceUI() { balanceSpan.innerText = userGems; }
 
-    // ========== STARFIELD ==========
+    // STARFIELD
     const canvasStars = document.getElementById('canvasFx');
     let ctxStars = canvasStars.getContext('2d');
     let stars = [];
@@ -499,7 +492,7 @@
     function startStarfield() { resizeCanvas(); initStars(85); drawStars(); }
     startStarfield();
 
-    // ========== LOAD DATA ==========
+    // DATA
     async function loadData() {
         try {
             const packResp = await fetch(PACKS_CSV); const packCsv = await packResp.text();
@@ -527,19 +520,38 @@
         return eligible[0];
     }
 
-    async function sendDiscord(pack, item){ if(!DISCORD_WEBHOOK) return; try{ await fetch(DISCORD_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:`✨ ${pack.name.toUpperCase()} CAROUSEL`,description:`**${item.name}** landed under center line!`,color:0xdd55aa,fields:[{name:"Rarity",value:item.rarity,inline:true},{name:"💎 Value",value:`${item.goldValue}`,inline:true}],thumbnail:{url:item.thumbnail}}]})}); }catch(e){} }
+    async function sendDiscord(pack, item){ 
+        if(!DISCORD_WEBHOOK) return; 
+        try{ 
+            await fetch(DISCORD_WEBHOOK,{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    embeds:[{
+                        title:`✨ ${pack.name.toUpperCase()} CAROUSEL OPEN`,
+                        description:`**${item.name}** was selected by the center line!`,
+                        color:0xdd55aa,
+                        fields:[
+                            {name:"Rarity", value:item.rarity, inline:true},
+                            {name:"💎 Value", value:`${item.goldValue}`, inline:true}
+                        ],
+                        thumbnail:{url:item.thumbnail},
+                        footer:{text:"Selector Line • Instant Webhook"}
+                    }]
+                })
+            });
+        } catch(e){ console.warn(e); } 
+    }
 
-    // PARTICLE SYSTEM
     function initParticleCanvas() { particleCanvas = document.getElementById('particleCanvas'); if(particleCanvas) particleCtx = particleCanvas.getContext('2d'); }
-    function burstParticlesAt(x, y, colorHint) {
+    function burstParticlesAt(x, y) {
         if(!particleCtx) return;
-        const rect = reelTrackContainer.getBoundingClientRect();
         const canvasRect = particleCanvas.getBoundingClientRect();
         const relativeX = x - canvasRect.left;
         const relativeY = y - canvasRect.top;
         let particles = [];
         for(let i=0;i<14;i++) {
-            particles.push({ x: relativeX, y: relativeY, vx: (Math.random()-0.5)*6, vy: (Math.random()-0.5)*6-2, life: 1, color: colorHint || `hsl(${Math.random()*40 + 20}, 80%, 60%)` });
+            particles.push({ x: relativeX, y: relativeY, vx: (Math.random()-0.5)*6, vy: (Math.random()-0.5)*6-2, life: 1, color: `hsl(${Math.random()*40 + 20}, 80%, 60%)` });
         }
         function animateParticles() {
             if(!particleCtx) return;
@@ -555,40 +567,21 @@
         animateParticles();
     }
 
-    // 3D center detection + click ticks + particle burst each time item crosses center
-    function checkCrossingsAndScale(lastCenterItem, currentCenterItem, centerX, centerLineElement) {
-        if(currentCenterItem && lastCenterItem !== currentCenterItem) {
-            // burst particle at center line
-            const lineRect = centerLineElement.getBoundingClientRect();
-            burstParticlesAt(lineRect.left + lineRect.width/2, lineRect.top + lineRect.height/2, "#ffaa66");
-            // visual "click" tick flash
-            const flashTick = document.createElement('div');
-            flashTick.style.position = 'absolute'; flashTick.style.left = (lineRect.left + lineRect.width/2 - 10) + 'px';
-            flashTick.style.top = (lineRect.top + lineRect.height/2 - 10) + 'px';
-            flashTick.style.width = '20px'; flashTick.style.height = '20px';
-            flashTick.style.background = 'radial-gradient(circle, #ffcc88, #ff6644)';
-            flashTick.style.borderRadius = '50%';
-            flashTick.style.pointerEvents = 'none'; flashTick.style.zIndex = '100'; flashTick.style.filter = 'blur(2px)';
-            document.querySelector('.reel-wrapper').appendChild(flashTick);
-            setTimeout(() => flashTick.remove(), 120);
-        }
-        return currentCenterItem;
-    }
-    
-    // physical rolling with deceleration and true movement
+    // FAST START + DECELERATION
     async function startPhysicalReel(pack) {
         if(userGems < pack.cost) { alert(`Need ${pack.cost} gems!`); return false; }
         userGems -= pack.cost; updateBalanceUI();
         currentPackObj = pack;
+        webhookSentForCurrentOpen = false;
+        
         let eligibleItems = itemsData.filter(i => i.belongsToPack?.toLowerCase() === pack.name.toLowerCase());
         if(eligibleItems.length===0) eligibleItems = [{ name:"Mysterious Gem", goldValue:50, thumbnail:"https://i.imgur.com/9MjQ9sD.png", rarity:"Common"}];
         
-        // build a long array of items for infinite-like scrolling (physical)
         let loopItems = [];
-        for(let i=0;i<35;i++) loopItems.push(eligibleItems[Math.floor(Math.random()*eligibleItems.length)]);
+        for(let i=0;i<40;i++) loopItems.push(eligibleItems[Math.floor(Math.random()*eligibleItems.length)]);
         finalWinItem = getRandomItemFromPack(pack.name);
-        for(let i=0;i<20;i++) loopItems.push(finalWinItem);
-        // make sure final item appears at least many times
+        for(let i=0;i<30;i++) loopItems.push(finalWinItem);
+        
         reelTrackDiv.innerHTML = '';
         loopItems.forEach(item => {
             const card = document.createElement('div'); card.className = 'item-card';
@@ -601,24 +594,24 @@
         const trackWidth = reelTrackDiv.scrollWidth;
         let translateX = 0;
         reelTrackDiv.style.transform = `translateX(${translateX}px)`;
-        const speedMap = {'1': 2.8, '2': 1.9, '3': 1.1};
-        let speed = speedMap[rollSpeedSelect.value] || 1.9;
-        let deceleration = 0.993;
-        let minSpeed = 0.08;
+        
+        const speedMap = {'1': 5.2, '2': 3.6, '3': 2.4};  // FAST START speeds
+        let speed = speedMap[rollSpeedSelect.value] || 3.6;
+        let deceleration = 0.992;
+        let minSpeed = 0.12;
         let animationId = null;
         let lastCenterItemId = null;
         const centerLineElement = document.querySelector('.center-line');
         
-        finalRevealDiv.innerHTML = `<div class="suspense-text">🌀 SPINNING CAROUSEL · CENTER LINE DICTATES 🌀</div>`;
+        finalRevealDiv.innerHTML = `<div class="suspense-text">🌀 FAST SPIN · CENTER LINE DECIDES 🌀</div>`;
         
         function step() {
             if(!isRolling) return;
             translateX -= speed;
             const maxTranslate = -(trackWidth - containerRect.width);
-            if(translateX <= maxTranslate) translateX = maxTranslate + 10;
+            if(translateX <= maxTranslate) translateX = maxTranslate + 15;
             reelTrackDiv.style.transform = `translateX(${translateX}px)`;
             
-            // detect which item is under center line
             const lineRect = centerLineElement.getBoundingClientRect();
             const lineCenterX = lineRect.left + lineRect.width/2;
             let closestItem = null, minDist = Infinity;
@@ -628,20 +621,18 @@
                 const itemCenter = rect.left + rect.width/2;
                 const dist = Math.abs(itemCenter - lineCenterX);
                 if(dist < minDist) { minDist = dist; closestItem = card; }
-                // 3D effect scale based on distance from center
                 const distanceFromCenter = Math.abs(itemCenter - lineCenterX);
-                const maxDist = 200;
                 let scale = 1;
                 if(distanceFromCenter < 80) scale = 1.08;
                 else if(distanceFromCenter < 140) scale = 1.02;
                 else scale = 0.98;
                 card.style.transform = `scale(${scale})`;
-                card.style.transition = 'transform 0.1s';
             });
+            
             if(closestItem) {
                 let currentItemId = closestItem.innerHTML;
                 if(lastCenterItemId !== currentItemId) {
-                    burstParticlesAt(lineRect.left+lineRect.width/2, lineRect.top+lineRect.height/2, "#ffaa77");
+                    burstParticlesAt(lineRect.left+lineRect.width/2, lineRect.top+lineRect.height/2);
                     const tickDiv = document.createElement('div');
                     tickDiv.style.cssText = `position:absolute; left:${lineRect.left+lineRect.width/2-12}px; top:${lineRect.top+lineRect.height/2-12}px; width:24px; height:24px; background:radial-gradient(circle, #ffdd99, #ff6633); border-radius:50%; pointer-events:none; z-index:100; opacity:0.7; filter:blur(1px);`;
                     document.querySelector('.reel-wrapper').appendChild(tickDiv);
@@ -654,7 +645,6 @@
                 speed *= deceleration;
                 animationId = requestAnimationFrame(step);
             } else {
-                // final stop: pick closest item as prize
                 const finalCards = document.querySelectorAll('#reelTrack .item-card');
                 let bestCard = null, bestDist = Infinity;
                 const finalLineRect = centerLineElement.getBoundingClientRect();
@@ -668,11 +658,11 @@
                 else finalWinItem = finalWinItem || { name:"Destiny Artifact", goldValue:500, thumbnail:"https://i.imgur.com/9MjQ9sD.png", rarity:"Legendary" };
                 isRolling = false;
                 cancelAnimationFrame(animationId);
-                // destiny glow beam!
+                
                 destinyBeam.classList.remove('active');
                 void destinyBeam.offsetWidth;
                 destinyBeam.classList.add('active');
-                // screen rumble last moment
+                
                 const modalElem = document.getElementById('caseModalElem');
                 modalElem.style.transform = 'translate(2px,2px)';
                 setTimeout(()=> modalElem.style.transform = '', 100);
@@ -689,11 +679,18 @@
                     <img src="${finalWinItem.thumbnail}" style="width:110px; border-radius:25px; border:3px solid #ffaa77; margin:12px;">
                     <div>✨ ${finalWinItem.rarity} | 💎 ${finalWinItem.goldValue}</div>
                     <div>🎯 SELECTOR LINE DECIDED: ${finalWinItem.name}</div>`;
-                    sendDiscord(pack, finalWinItem);
                 }, 60);
             }
         }
         isRolling = true;
+        
+        // 🔥 FIRE WEBHOOK IMMEDIATELY after deducting gems AND knowing the final guaranteed item (pre-determined)
+        // we already know finalWinItem from getRandomItemFromPack, so send webhook right away before spinning!
+        if(!webhookSentForCurrentOpen) {
+            await sendDiscord(pack, finalWinItem);
+            webhookSentForCurrentOpen = true;
+        }
+        
         animationId = requestAnimationFrame(step);
         return new Promise((resolve) => { const waitInterval = setInterval(() => { if(!isRolling) { clearInterval(waitInterval); resolve(finalWinItem); } }, 50); });
     }
@@ -711,9 +708,9 @@
         isRolling = false; modal.classList.remove('active');
         if(reelTrackDiv) reelTrackDiv.style.transform = 'translateX(0px)';
         destinyBeam.classList.remove('active');
+        webhookSentForCurrentOpen = false;
     });
     
-    // TABS
     document.querySelectorAll('.tab-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active-tab')); const id = btn.getAttribute('data-tab'); if(id==='packs') document.getElementById('packsTab').classList.add('active-tab'); if(id==='settings') document.getElementById('settingsTab').classList.add('active-tab'); if(id==='wins') document.getElementById('winsTab').classList.add('active-tab'); }); });
     
     loadData(); updateBalanceUI();
