@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>5R5G Packs!</title>
+    <title>✦ EPIC LOOTBOX | Purple · Red · Gold ✦ | Center Line Selector</title>
     <style>
         * {
             margin: 0;
@@ -14,14 +14,14 @@
 
         body {
             font-family: 'Segoe UI', 'Poppins', 'Impact', system-ui, sans-serif;
-            background: radial-gradient(circle at 10% 20%, #1e0a2b, #2a0a1a, #0f030c);
+            background: radial-gradient(circle at 20% 10%, #1e0a2b, #2a0a1a, #0f030c);
             min-height: 100vh;
             color: #ffecb3;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* animated gradient shifting overlay */
+        /* animated gradient shift */
         body::before {
             content: '';
             position: fixed;
@@ -29,18 +29,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 40% 50%, rgba(156, 39, 176, 0.2), rgba(255, 80, 40, 0.15), rgba(255, 215, 0, 0.05));
+            background: radial-gradient(circle at 40% 50%, rgba(156, 39, 176, 0.25), rgba(255, 80, 40, 0.2), rgba(255, 215, 0, 0.08));
             pointer-events: none;
             z-index: 0;
-            animation: royalShift 12s infinite alternate;
+            animation: royalShift 14s infinite alternate;
         }
 
         @keyframes royalShift {
-            0% { opacity: 0.4; background: radial-gradient(circle at 30% 40%, rgba(156,39,176,0.3), rgba(255,80,40,0.1), rgba(255,215,0,0.05));}
-            100% { opacity: 1; background: radial-gradient(circle at 70% 60%, rgba(255,80,40,0.35), rgba(156,39,176,0.3), rgba(255,200,0,0.15));}
+            0% { opacity: 0.5; background: radial-gradient(circle at 30% 40%, rgba(156,39,176,0.35), rgba(255,80,40,0.15), rgba(255,215,0,0.05));}
+            100% { opacity: 1; background: radial-gradient(circle at 70% 60%, rgba(255,80,40,0.4), rgba(156,39,176,0.35), rgba(255,200,0,0.1));}
         }
 
-        /* canvas for stars+comets */
+        /* canvas for stars + comets */
         #canvasFx {
             position: fixed;
             top: 0;
@@ -48,7 +48,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 8;
+            z-index: 5;
         }
 
         .container {
@@ -71,12 +71,12 @@
         }
 
         .balance-card {
-            background: rgba(0, 0, 0, 0.65);
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(12px);
             border-radius: 80px;
             display: inline-block;
             padding: 8px 32px;
-            border: 1px solid #ffb347;
+            border: 1px solid #ffaa66;
             box-shadow: 0 0 25px rgba(255, 80, 40, 0.7);
             margin: 20px auto;
             text-align: center;
@@ -126,16 +126,14 @@
             animation: fadeGlow 0.4s ease;
         }
 
-        .tab-content.active-tab {
-            display: block;
-        }
+        .tab-content.active-tab { display: block; }
 
         @keyframes fadeGlow {
             from { opacity: 0; transform: scale(0.98); filter: blur(3px);}
             to { opacity: 1; transform: scale(1); filter: blur(0);}
         }
 
-        /* Packs Grid */
+        /* PACKS GRID */
         .packs-grid {
             display: flex;
             flex-wrap: wrap;
@@ -144,14 +142,14 @@
         }
 
         .pack-card {
-            background: rgba(20, 8, 28, 0.85);
+            background: rgba(20, 8, 28, 0.88);
             backdrop-filter: blur(16px);
             border-radius: 32px;
             padding: 20px;
             width: 260px;
             text-align: center;
             transition: all 0.25s ease;
-            border: 1px solid rgba(255, 120, 80, 0.6);
+            border: 1px solid rgba(255, 120, 80, 0.7);
             cursor: pointer;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
@@ -206,13 +204,10 @@
             box-shadow: 0 5px 0 #5a2a55;
         }
 
-        .open-case-btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #5a2a55;
-        }
+        .open-case-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #5a2a55; }
 
         .settings-panel {
-            background: rgba(25, 10, 30, 0.85);
+            background: rgba(25, 10, 30, 0.88);
             backdrop-filter: blur(20px);
             border-radius: 48px;
             padding: 30px;
@@ -220,23 +215,18 @@
             margin: 0 auto;
             border: 1px solid #ff6a4b;
         }
-        .setting-item {
-            margin: 20px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .setting-item { margin: 20px 0; display: flex; justify-content: space-between; align-items: center; }
         select, input { background: #2a1025; border: 1px solid #ff8866; padding: 8px 16px; border-radius: 32px; color: #ffdead; font-weight: bold; }
         .disabled-tab { text-align: center; margin-top: 80px; font-size: 1.6rem; opacity: 0.6; font-style: italic; }
 
-        /* ---------- MODAL CSGO STYLE REEL (zoom+flash) ---------- */
+        /* ---------- MODAL CSGO/MM2 STYLE REEL WITH CENTER LINE ---------- */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.96);
+            background: rgba(0, 0, 0, 0.97);
             backdrop-filter: blur(20px);
             z-index: 1000;
             display: flex;
@@ -251,30 +241,33 @@
         .case-modal {
             background: #160c1cee;
             border-radius: 60px;
-            padding: 20px 35px 45px;
+            padding: 25px 35px 45px;
             width: 90%;
-            max-width: 1100px;
+            max-width: 1200px;
             text-align: center;
             border: 2px solid #ffaa66;
             box-shadow: 0 0 80px rgba(255, 80, 100, 0.6);
             transition: transform 0.3s cubic-bezier(0.2, 1.2, 0.3, 1);
             transform: scale(1);
         }
-        .case-modal.zoom-in { transform: scale(1.45); transition: transform 0.2s ease-out; }
+        .case-modal.zoom-in { transform: scale(1.35); transition: transform 0.22s ease-out; }
         .case-modal.zoom-out-flash { transform: scale(0.96); filter: brightness(2) blur(2px); transition: transform 0.08s, filter 0.1s; }
 
+        /* REEL CONTAINER WITH CENTER LINE FIXED (the selector) */
+        .reel-wrapper {
+            position: relative;
+            margin: 20px 0;
+        }
         .reel-container {
             background: #0a0312aa;
-            border-radius: 50px;
+            border-radius: 60px;
             padding: 20px;
-            margin: 20px 0;
             overflow: hidden;
-            position: relative;
             box-shadow: inset 0 0 25px rgba(0,0,0,0.6), 0 0 0 2px #ff7744;
         }
         .slot-reel {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             overflow-x: auto;
             scrollbar-width: none;
             white-space: nowrap;
@@ -286,29 +279,71 @@
 
         .item-card {
             flex: 0 0 auto;
-            width: 150px;
+            width: 160px;
             background: #231b2e;
-            border-radius: 28px;
-            padding: 15px 8px;
+            border-radius: 32px;
+            padding: 18px 10px;
             text-align: center;
-            border: 1px solid #ff9966;
-            box-shadow: 0 5px 15px black;
+            border: 1px solid #ffaa77;
+            box-shadow: 0 8px 18px black;
             transition: 0.1s;
         }
         .item-img {
-            width: 90px;
-            height: 90px;
+            width: 100px;
+            height: 100px;
             object-fit: contain;
             margin: 0 auto;
             display: block;
         }
 
+        /* THE CENTER SELECTOR LINE (static) */
+        .center-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            background: linear-gradient(to bottom, #ff3366, #ffd966, #ff3366);
+            box-shadow: 0 0 25px rgba(255, 51, 102, 0.9), 0 0 8px gold;
+            z-index: 35;
+            pointer-events: none;
+            border-radius: 4px;
+            animation: pulseLine 0.9s infinite alternate;
+        }
+        @keyframes pulseLine {
+            0% { opacity: 0.7; width: 4px; box-shadow: 0 0 15px #ff3366;}
+            100% { opacity: 1; width: 6px; box-shadow: 0 0 35px #ffaa44;}
+        }
+        /* triangle indicator */
+        .center-line::before {
+            content: "▼";
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 28px;
+            color: #ffcc77;
+            text-shadow: 0 0 8px red;
+        }
+        .center-line::after {
+            content: "▲";
+            position: absolute;
+            bottom: -32px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 28px;
+            color: #ffcc77;
+            text-shadow: 0 0 8px red;
+        }
+
         .result-area {
-            margin-top: 20px;
+            margin-top: 25px;
             font-size: 1.4rem;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.65);
             border-radius: 48px;
-            padding: 15px;
+            padding: 16px;
+            backdrop-filter: blur(8px);
         }
         .close-result {
             background: linear-gradient(145deg, #ff7744, #b83bc2);
@@ -322,16 +357,18 @@
             color: white;
         }
         .winner-name {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: bold;
             background: linear-gradient(135deg, #ffd966, #ffaa66, #ff66cc);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
+        .detail-line { font-size: 1rem; margin-top: 8px; }
+
         @keyframes impactFlashAnim {
             0% { background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 70%);}
-            40% { background: radial-gradient(circle, rgba(255,200,100,0.95) 0%, rgba(255,60,80,0.9) 100%);}
+            40% { background: radial-gradient(circle, rgba(255,200,100,0.98) 0%, rgba(255,60,80,0.95) 100%);}
             100% { background: radial-gradient(circle, rgba(255,215,0,0) 0%, rgba(0,0,0,0) 70%);}
         }
         .global-flash {
@@ -342,36 +379,44 @@
             height: 100%;
             pointer-events: none;
             z-index: 1001;
-            animation: impactFlashAnim 0.35s ease-out forwards;
+            animation: impactFlashAnim 0.4s ease-out forwards;
         }
-        .detail-line {
-            font-size: 1rem;
-            margin-top: 8px;
+        .suspense-text {
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            color: #ffaa88;
+            animation: blinkText 1.2s infinite;
         }
+        @keyframes blinkText { 0%{opacity:0.4;} 100%{opacity:1;} }
     </style>
 </head>
 <body>
 <canvas id="canvasFx"></canvas>
 <div class="container">
-    <div style="text-align: center;"><h1>5R5G PACKS</h1></div>
-    <div style="display: flex; justify-content: center;"><div class="balance-card">💎 ROYAL GEMS: <span id="userBalance">7500</span></div></div>
+    <div style="text-align: center;"><h1>✦ ROYAL SELECTOR CASE ✦</h1></div>
+    <div style="display: flex; justify-content: center;"><div class="balance-card">💎 ROYAL GEMS: <span id="userBalance">8500</span></div></div>
 
     <div class="tabs">
         <button class="tab-btn active" data-tab="packs">📦 OPEN CASES</button>
-        <button class="tab-btn" data-tab="settings">⚙️ CINEMATICS</button>
+        <button class="tab-btn" data-tab="settings">⚙️ EFFECTS</button>
         <button class="tab-btn" data-tab="wins">🏆 PREV WINS</button>
     </div>
 
     <div id="packsTab" class="tab-content active-tab"><div id="packsContainer" class="packs-grid"><div>✨ Loading legendary cases...</div></div></div>
-    <div id="settingsTab" class="tab-content"><div class="settings-panel"><h3 style="color:#ffaa77;">🌟 VISUAL EFFECTS</h3><div class="setting-item"><label>💥 ZOOM + FLASHBANG IMPACT</label><input type="checkbox" id="toggleZoomFlash" checked></div><div class="setting-item"><label>🌠 COMETS & STARS</label><input type="checkbox" id="toggleStars" checked></div><div class="setting-item"><label>🎞️ REEL SCROLL SPEED</label><select id="rollSpeed"><option value="1">FAST</option><option value="2" selected>CSGO CLASSIC</option><option value="3">CINEMATIC SLOW</option></select></div></div></div>
-    <div id="winsTab" class="tab-content"><div class="disabled-tab">🏆 HISTORY VAULT COMING SOON: EPIC DROPS 🏆</div></div>
+    <div id="settingsTab" class="tab-content"><div class="settings-panel"><h3 style="color:#ffaa77;">🌟 CINEMATIC FX</h3><div class="setting-item"><label>💥 ZOOM + FLASH IMPACT</label><input type="checkbox" id="toggleZoomFlash" checked></div><div class="setting-item"><label>🌠 COMETS & STARS</label><input type="checkbox" id="toggleStars" checked></div><div class="setting-item"><label>🎞️ ROLL SPEED (SMOOTH)</label><select id="rollSpeed"><option value="1">FASTER</option><option value="2" selected>CLASSIC SUSPENSE</option><option value="3">SLOW & DRAMATIC</option></select></div></div></div>
+    <div id="winsTab" class="tab-content"><div class="disabled-tab">🏆 HISTORY VAULT COMING SOON 🏆</div></div>
 </div>
 
-<!-- MODAL REEL -->
+<!-- MODAL REEL + CENTER LINE -->
 <div id="openingModal" class="modal-overlay">
     <div class="case-modal" id="caseModalElem">
-        <h2 style="color:#ffaa77;">🎰 SPINNING REEL · PREDICTING FATE</h2>
-        <div class="reel-container"><div id="reelTrack" class="slot-reel"></div></div>
+        <h2 style="color:#ffaa77;">🎯 CENTER LINE SELECTOR · ROLLING ODDS</h2>
+        <div class="reel-wrapper">
+            <div class="reel-container">
+                <div id="reelTrack" class="slot-reel"></div>
+            </div>
+            <div class="center-line"></div>  <!-- THIS IS THE FIXED SELECTOR LINE -->
+        </div>
         <div id="finalReveal" class="result-area"></div>
         <button id="closeModalBtn" class="close-result">CONTINUE</button>
     </div>
@@ -387,10 +432,11 @@
 
     let packsData = [];
     let itemsData = [];
-    let userGems = 7500;
+    let userGems = 8500;
     let currentRollInterval = null;
     let currentPackObj = null;
     let finalWinItem = null;
+    let animationFrameReq = null;
 
     const packsContainer = document.getElementById('packsContainer');
     const balanceSpan = document.getElementById('userBalance');
@@ -410,10 +456,10 @@
     let ctx = canvas.getContext('2d');
     let stars = [];
     function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    window.addEventListener('resize', () => { resizeCanvas(); initStars(70); });
-    function initStars(count=80) { stars = []; for(let i=0;i<count;i++) { stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 2.8 + 1, alpha: Math.random() * 0.8 + 0.2, speedX: (Math.random() - 0.5) * 0.4, speedY: Math.random() * 2.2 + 0.8, isComet: Math.random() > 0.78, tail: Math.random() * 14 + 6 }); } }
+    window.addEventListener('resize', () => { resizeCanvas(); initStars(80); });
+    function initStars(count=85) { stars = []; for(let i=0;i<count;i++) { stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 2.8 + 1, alpha: Math.random() * 0.8 + 0.2, speedX: (Math.random() - 0.5) * 0.4, speedY: Math.random() * 2.2 + 0.8, isComet: Math.random() > 0.78, tail: Math.random() * 14 + 6 }); } }
     function drawStars() { if(!toggleStars.checked) { if(ctx) ctx.clearRect(0,0,canvas.width,canvas.height); return; } ctx.clearRect(0,0,canvas.width,canvas.height); for(let s of stars) { ctx.beginPath(); if(s.isComet) { ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.tail*0.9, s.y - s.tail*0.6); ctx.lineWidth = s.radius*1.6; ctx.strokeStyle = `rgba(255, 150, 80, ${s.alpha * 0.9})`; ctx.stroke(); ctx.beginPath(); ctx.arc(s.x, s.y, s.radius+1, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 200, 100, ${s.alpha})`; ctx.fill(); } else { ctx.arc(s.x, s.y, s.radius, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 215, 150, ${s.alpha})`; ctx.fill(); } s.x += s.speedX; s.y += s.speedY; if(s.x > canvas.width+60) s.x = -60; if(s.y > canvas.height+60) s.y = -40; if(s.x < -60) s.x = canvas.width+40; if(s.y < -40) s.y = canvas.height+30; } requestAnimationFrame(drawStars); }
-    function startStarfield() { resizeCanvas(); initStars(80); drawStars(); }
+    function startStarfield() { resizeCanvas(); initStars(85); drawStars(); }
     startStarfield();
 
     // ========== CSV LOADING ==========
@@ -432,13 +478,12 @@
     }
     function fallbackLocal() { packsData = [{ name:"Boots", color:"#E03FD8", cost:1000, thumbnail:"https://i.imgur.com/9MjQ9sD.png"}]; itemsData = [{ name:"Rainbow Boot", goldValue:10000, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e1360a5fb96873ddeb5958/attachments/69e13611771b34a309ccacb7/download/image.png", rarity:"Chaser", dropChance:5},{ name:"Old Boot", goldValue:20, belongsToPack:"Boots", thumbnail:"https://trello.com/1/cards/69e13d2662c6fe6dfaae7fb0/attachments/69e13d2eb7b4c5c9e4798060/download/image.png", rarity:"Ordinary", dropChance:95}]; }
     function parseCSV(csv) { const lines = csv.split(/\r?\n/).filter(l=>l.trim()); if(lines.length<2) return []; const headers = lines[0].split(',').map(h=>h.replace(/"/g,'').trim()); let res=[]; for(let i=1;i<lines.length;i++) { let values=[], inQuote=false, cur=''; for(let ch of lines[i]){ if(ch==='"') inQuote=!inQuote; else if(ch===',' && !inQuote) { values.push(cur.trim().replace(/^"|"$/g,'')); cur=''; } else cur+=ch; } values.push(cur.trim().replace(/^"|"$/g,'')); let obj={}; headers.forEach((h,idx)=>{ obj[h]=values[idx]||''; }); res.push(obj); } return res; }
+    function renderPacks() { packsContainer.innerHTML = packsData.map(pack => `<div class="pack-card" style="border-top:4px solid ${pack.color}"><img class="pack-thumb" src="${pack.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div class="pack-name">${pack.name}</div><div class="pack-cost">💎 ${pack.cost} GEMS</div><button class="open-case-btn" style="background:${pack.color}60; border-color:${pack.color};">OPEN CASE</button></div>`).join(''); document.querySelectorAll('.open-case-btn').forEach((btn, idx) => { btn.addEventListener('click', (e) => { e.stopPropagation(); openPack(packsData[idx]); }); }); }
 
-    function renderPacks() { packsContainer.innerHTML = packsData.map(pack => `<div class="pack-card" style="border-top:4px solid ${pack.color}"><img class="pack-thumb" src="${pack.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div class="pack-name">${pack.name}</div><div class="pack-cost">💎 ${pack.cost} GEMS</div><button class="open-case-btn" style="background:${pack.color}60; border-color:${pack.color};">UNBOX CASE</button></div>`).join(''); document.querySelectorAll('.open-case-btn').forEach((btn, idx) => { btn.addEventListener('click', (e) => { e.stopPropagation(); openPack(packsData[idx]); }); }); }
-
-    // WEIGHTED DROP based on dropChance column (Rainbow Boot 5%, Old Boot 95%)
+    // WEIGHTED drop chance (Rainbow Boot 5% / Old Boot 95%)
     function getRandomItemFromPack(packName) { 
         let eligible = itemsData.filter(i => i.belongsToPack?.toLowerCase() === packName.toLowerCase()); 
-        if(eligible.length === 0) return { name:"Mystery Relic", goldValue:50, thumbnail:"https://i.imgur.com/9MjQ9sD.png", rarity:"Mystic" }; 
+        if(eligible.length === 0) return { name:"Mysterious Core", goldValue:80, thumbnail:"https://i.imgur.com/9MjQ9sD.png", rarity:"Arcane" }; 
         let totalChance = eligible.reduce((sum,i)=> sum + (i.dropChance || 1), 0); 
         let rand = Math.random() * totalChance; 
         let accum = 0; 
@@ -446,96 +491,105 @@
         return eligible[0]; 
     }
 
-    async function sendDiscord(pack, item){ if(!DISCORD_WEBHOOK) return; try{ await fetch(DISCORD_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:`🔥 ${pack.name.toUpperCase()} UNBOXED`,description:`**${item.name}** has been drawn!`,color:0xdd55aa,fields:[{name:"Rarity",value:item.rarity,inline:true},{name:"💎 Value",value:`${item.goldValue}`,inline:true}],thumbnail:{url:item.thumbnail},footer:{text:"Purple/Red/Gold Reel"}}]})}); }catch(e){console.warn(e);} }
+    async function sendDiscord(pack, item){ if(!DISCORD_WEBHOOK) return; try{ await fetch(DISCORD_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({embeds:[{title:`✨ ${pack.name.toUpperCase()} DESTINY`,description:`**${item.name}** was selected by the center line!`,color:0xdd55aa,fields:[{name:"Rarity",value:item.rarity,inline:true},{name:"💎 Value",value:`${item.goldValue}`,inline:true}],thumbnail:{url:item.thumbnail},footer:{text:"Selector Line • Suspense Reel"}}]})}); }catch(e){console.warn(e);} }
 
-    // CSGO STYLE REEL + clear result line (shows pack draw outcome)
-    async function startReelAnimation(pack) {
-        if(userGems < pack.cost) { alert(`Insufficient Gems: need ${pack.cost}`); return false; }
+    // MURDER MYSTERY 2 / SMOOTH DECELERATION REEL (center line determines final item)
+    async function startSmoothReel(pack) {
+        if(userGems < pack.cost) { alert(`Need ${pack.cost} gems!`); return false; }
         userGems -= pack.cost; updateBalanceUI();
         currentPackObj = pack;
         const allPackItems = itemsData.filter(i => i.belongsToPack?.toLowerCase() === pack.name.toLowerCase());
         if(allPackItems.length===0) return false;
         
-        // Build reel item sequence (60 items flickering)
-        let reelItems = [];
-        for(let i=0;i<65; i++) { reelItems.push(allPackItems[Math.floor(Math.random()*allPackItems.length)]); }
-        finalWinItem = getRandomItemFromPack(pack.name);   // <--- THIS IS THE FINAL DETERMINISTIC DRAW (weighted)
-        reelItems.push(finalWinItem);
-        for(let i=0;i<14;i++) reelItems.push(finalWinItem); // slowdown duplication
+        // BUILD massive reel array (100 items for smooth scrolling)
+        let reelSequence = [];
+        for(let i=0;i<90; i++) { reelSequence.push(allPackItems[Math.floor(Math.random()*allPackItems.length)]); }
+        finalWinItem = getRandomItemFromPack(pack.name);
+        // Append final win & duplicates for graceful stop
+        for(let i=0;i<28;i++) reelSequence.push(finalWinItem);
         
-        reelTrack.innerHTML = '';
-        function renderReel(indexVisibleStart) {
+        let currentScrollPos = 0;
+        const totalItems = reelSequence.length;
+        const visibleCount = 6;
+        
+        function renderScroll(position) {
             reelTrack.innerHTML = '';
-            const visibleCount = 6;
             for(let i=0; i<visibleCount; i++) {
-                let idx = (indexVisibleStart + i) % reelItems.length;
-                let it = reelItems[idx];
-                let div = document.createElement('div'); div.className = 'item-card';
-                div.innerHTML = `<img class="item-img" src="${it.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div style="font-size:0.8rem; margin-top:5px;">${it.name.substring(0,14)}</div>`;
-                reelTrack.appendChild(div);
+                let itemIdx = (Math.floor(position) + i) % totalItems;
+                let it = reelSequence[itemIdx];
+                let cardDiv = document.createElement('div'); cardDiv.className = 'item-card';
+                cardDiv.innerHTML = `<img class="item-img" src="${it.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'"><div style="font-size:0.8rem; margin-top:5px;">${it.name.substring(0,16)}</div>`;
+                reelTrack.appendChild(cardDiv);
             }
         }
         
-        let currentIndex = 0;
-        const speedMap = {'1': 16, '2': 44, '3': 88};
-        let step = speedMap[rollSpeedSelect.value] || 44;
-        let cycles = 0;
-        const maxSteps = 42;
-        let slowdownTrigger = false;
+        // determine speed based on setting & slow down naturally
+        const speedMap = {'1': 0.85, '2': 0.55, '3': 0.32};
+        let speed = speedMap[rollSpeedSelect.value] || 0.55;
+        let position = 0;
+        let deceleration = 0.995;
+        let minSpeed = 0.022;
+        let stopped = false;
+        
+        finalRevealDiv.innerHTML = `<div class="suspense-text">🎲 THE SELECTOR LINE HUNTS... 🎲</div>`;
         
         return new Promise((resolve) => {
-            const interval = setInterval(() => {
-                if(!slowdownTrigger && cycles >= maxSteps-16) {
-                    slowdownTrigger = true;
-                    step = Math.max(10, step-3);
+            function step() {
+                if(stopped) return;
+                position += speed;
+                if(position >= totalItems - 12) {
+                    // graceful slowdown
+                    speed *= deceleration;
+                    if(speed < minSpeed) {
+                        stopped = true;
+                        if(currentRollInterval) cancelAnimationFrame(currentRollInterval);
+                        // determine the exact item under center line (position + 2)
+                        let finalIndex = (Math.floor(position) + 2) % totalItems;
+                        let landedItem = reelSequence[finalIndex];
+                        finalWinItem = landedItem;
+                        // final render freeze on winning item
+                        renderScroll(position);
+                        setTimeout(() => {
+                            triggerCinematicZoomFlash().then(() => {
+                                finalRevealDiv.innerHTML = `
+                                    <div class="winner-name">🏆 ${finalWinItem.name} 🏆</div>
+                                    <img src="${finalWinItem.thumbnail}" style="width:110px; border-radius:25px; border:3px solid #ffaa77; margin:12px;">
+                                    <div class="detail-line">✨ Rarity: ${finalWinItem.rarity} &nbsp;| 💎 Value: ${finalWinItem.goldValue}</div>
+                                    <div class="detail-line">🎯 SELECTOR LINE LANDED ON: ${finalWinItem.name}</div>
+                                `;
+                                sendDiscord(pack, finalWinItem);
+                                resolve(finalWinItem);
+                            });
+                        }, 80);
+                        return;
+                    }
                 }
-                if(cycles >= maxSteps) {
-                    clearInterval(interval);
-                    // center final winning item in the reel visible area
-                    renderReel(reelItems.length - 5);
-                    setTimeout(() => {
-                        triggerCinematicZoomFlash().then(() => {
-                            // CLEAR RESULT DISPLAY: explicitly show what the pack draw landed on
-                            finalRevealDiv.innerHTML = `
-                                <div class="winner-name">🏆 ${finalWinItem.name} 🏆</div>
-                                <img src="${finalWinItem.thumbnail}" style="width:100px; border-radius:20px; border:3px solid #ffaa77; margin:10px;">
-                                <div class="detail-line">✨ Rarity: ${finalWinItem.rarity} &nbsp;&nbsp;| 💎 Value: ${finalWinItem.goldValue}</div>
-                                <div class="detail-line" style="font-size:0.9rem;">🎲 Pack: ${pack.name} • Drawn using weighted odds</div>
-                            `;
-                            sendDiscord(pack, finalWinItem);
-                            resolve(finalWinItem);
-                        });
-                    }, 70);
-                    return;
-                }
-                currentIndex = (currentIndex + 1) % reelItems.length;
-                renderReel(currentIndex);
-                cycles++;
-            }, step);
-            currentRollInterval = interval;
+                renderScroll(position);
+                currentRollInterval = requestAnimationFrame(step);
+            }
+            currentRollInterval = requestAnimationFrame(step);
         });
     }
     
     async function triggerCinematicZoomFlash() {
         if(!toggleZoomFlash.checked) return;
         caseModalElem.classList.add('zoom-in');
-        await new Promise(r => setTimeout(r, 220));
+        await new Promise(r => setTimeout(r, 230));
         caseModalElem.classList.add('zoom-out-flash');
         const flashDiv = document.createElement('div'); flashDiv.classList.add('global-flash'); document.body.appendChild(flashDiv);
-        await new Promise(r => setTimeout(r, 180));
+        await new Promise(r => setTimeout(r, 190));
         caseModalElem.classList.remove('zoom-in', 'zoom-out-flash');
-        setTimeout(() => { if(flashDiv) flashDiv.remove(); }, 280);
+        setTimeout(() => { if(flashDiv) flashDiv.remove(); }, 300);
     }
     
     async function openPack(pack) {
-        if(userGems < pack.cost) { alert(`Need ${pack.cost} gems!`); return; }
+        if(userGems < pack.cost) { alert(`Insufficient Gems! Need ${pack.cost}`); return; }
         modal.classList.add('active');
-        finalRevealDiv.innerHTML = '<div style="animation: pulse 1s infinite;">🌀 ROLLING REEL • DECODING DROP...</div>';
-        await startReelAnimation(pack);
+        await startSmoothReel(pack);
     }
     
     closeModalButton.addEventListener('click', () => {
-        if(currentRollInterval) clearInterval(currentRollInterval);
+        if(currentRollInterval) cancelAnimationFrame(currentRollInterval);
         modal.classList.remove('active');
         reelTrack.innerHTML = '';
         finalRevealDiv.innerHTML = '';
