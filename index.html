@@ -1,1 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Pack Opener Game - Open Packs & Win Items!</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(145deg, #1a1e2c 0%, #0f1219 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: #eee;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #ffd89b, #c7e9fb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .sub {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 2rem;
+        }
+
+        /* Packs Grid */
+        .packs-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .pack-card {
+            background: rgba(30, 35, 50, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 20px;
+            width: 220px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .pack-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        .pack-card.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            filter: grayscale(0.2);
+        }
+
+        .pack-icon {
+            font-size: 4rem;
+            margin-bottom: 10px;
+        }
+
+        .pack-name {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #fff;
+            text-shadow: 0 0 5px currentColor;
+        }
+
+        .pack-cost {
+            background: #ffb347;
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: bold;
+            color: #2c2c2c;
+            margin: 8px 0;
+            font-size: 1.1rem;
+        }
+
+        .open-btn {
+            background: #2ecc71;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: 0.1s linear;
+            width: 100%;
+        }
+
+        .open-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Balance */
+        .balance-area {
+            background: #0a0e17;
+            border-radius: 60px;
+            display: inline-block;
+            padding: 8px 24px;
+            margin-bottom: 30px;
+            border: 1px solid #ffd966;
+            box-shadow: 0 0 12px rgba(255, 200, 80, 0.3);
+        }
+
+        .balance-area span {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffd966;
+        }
+
+        /* Modal Overlay for Opening Animation */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .pack-opener {
+            background: #1e2436;
+            border-radius: 48px;
+            padding: 30px 40px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .spinning-box {
+            font-size: 8rem;
+            margin: 20px;
+            transition: transform 0.1s ease;
+            animation: spinRapid 0.15s infinite linear;
+            display: inline-block;
+        }
+
+        @keyframes spinRapid {
+            0% { transform: rotate(0deg) scale(1); }
+            100% { transform: rotate(360deg) scale(1.2); }
+        }
+
+        .result-item {
+            margin-top: 20px;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .result-thumb {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            background: #0f121c;
+            border-radius: 20px;
+            padding: 10px;
+            margin: 15px auto;
+            display: block;
+            border: 2px solid gold;
+        }
+
+        .close-modal {
+            background: #2c3e66;
+            border: none;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .error-msg {
+            color: #ff8888;
+            background: #330000;
+            padding: 8px;
+            border-radius: 20px;
+            margin-top: 10px;
+        }
+
+        button {
+            background: #4a5b8c;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: #6a6f87;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎁 PACK OPENER 🎁</h1>
+    <div class="sub">Click a pack to open & win rare items!</div>
+    <div style="display: flex; justify-content: center;">
+        <div class="balance-area">
+            💎 Your Gems: <span id="userBalance">5000</span>
+        </div>
+    </div>
+
+    <div id="packsContainer" class="packs-grid">
+        <div style="text-align:center; grid-column:span 3;">Loading packs from Google Sheets...</div>
+    </div>
+    <footer>
+        ⚡ Items & Packs fetched live from Google Sheets.<br>
+        🔔 Each pack opening sends a Discord webhook!
+    </footer>
+</div>
+
+<!-- Modal for animation -->
+<div id="openingModal" class="modal-overlay">
+    <div class="pack-opener">
+        <div id="spinArea">
+            <div class="spinning-box" id="spinnerIcon">🎁</div>
+        </div>
+        <div id="resultDisplay" style="min-height: 180px;"></div>
+        <button class="close-modal" id="closeModalBtn">Close</button>
+    </div>
+</div>
+
+<script>
+    // ================= CONFIGURATION ==================
+    const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1498140574316888164/6f0h7UyyEVZUtg1DQItPHgyXeCtzhj1eQWUQAzdDRCBKBS8ZnzMwnPqFeXiQpu8Z5HEc";
+
+    // Google Sheets as CSV export URLs (public viewable)
+    // Using your sheet IDs and exporting first sheet as CSV
+    const PACKS_SHEET_ID = "181RdB0KhPbjnSHq-t7n_KhCFwwQwU8q4dU91u-MSHr4";
+    const ITEMS_SHEET_ID = "1d0mZIPIKxWvcHRxoB6Bm20tMyx1OcfISOoy7Yi9u6jY";
+    
+    const PACKS_CSV_URL = `https://docs.google.com/spreadsheets/d/${PACKS_SHEET_ID}/export?format=csv&gid=0`;
+    const ITEMS_CSV_URL = `https://docs.google.com/spreadsheets/d/${ITEMS_SHEET_ID}/export?format=csv&gid=0`;
+
+    let packsData = [];      // { name, color, cost }
+    let itemsData = [];      // { name, goldValue, belongsToPack, thumbnail, rarity }
+    let userGems = 5000;     // starting balance
+
+    // DOM elements
+    const packsContainer = document.getElementById('packsContainer');
+    const balanceSpan = document.getElementById('userBalance');
+    const modal = document.getElementById('openingModal');
+    const spinnerIconDiv = document.getElementById('spinnerIcon');
+    const resultDisplay = document.getElementById('resultDisplay');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    let currentOpeningPack = null;
+    let spinningTimeout = null;
+
+    // Helper: update balance UI
+    function updateBalanceUI() {
+        balanceSpan.innerText = userGems;
+    }
+
+    // Send Discord webhook embed
+    async function sendDiscordWebhook(packName, itemName, itemRarity, itemValue, itemThumbnail) {
+        if (!DISCORD_WEBHOOK_URL) return;
+        
+        const embed = {
+            title: "🎲 Pack Opening!",
+            description: `Someone just opened a **${packName}** pack!`,
+            color: 0x00ffcc,
+            fields: [
+                {
+                    name: "🏆 Item Won",
+                    value: `**${itemName}**`,
+                    inline: true
+                },
+                {
+                    name: "✨ Rarity",
+                    value: itemRarity || "Common",
+                    inline: true
+                },
+                {
+                    name: "💰 Value",
+                    value: `${itemValue} gems`,
+                    inline: true
+                }
+            ],
+            thumbnail: {
+                url: itemThumbnail || "https://i.imgur.com/9MjQ9sD.png"
+            },
+            footer: {
+                text: "Pack Opener Game"
+            },
+            timestamp: new Date().toISOString()
+        };
+
+        try {
+            await fetch(DISCORD_WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ embeds: [embed] })
+            });
+            console.log("✅ Discord webhook sent");
+        } catch (err) {
+            console.error("Discord webhook error:", err);
+        }
+    }
+
+    // Get random item from specific pack
+    function getRandomItemFromPack(packName) {
+        const packItems = itemsData.filter(item => item.belongsToPack.toLowerCase() === packName.toLowerCase());
+        if (packItems.length === 0) {
+            // fallback dummy if no items found
+            return {
+                name: "Mystery Dust",
+                goldValue: 5,
+                thumbnail: "https://i.imgur.com/9MjQ9sD.png",
+                rarity: "Common",
+                belongsToPack: packName
+            };
+        }
+        const randomIndex = Math.floor(Math.random() * packItems.length);
+        return packItems[randomIndex];
+    }
+
+    // Open pack animation & logic
+    function openPack(pack) {
+        if (userGems < pack.cost) {
+            alert(`❌ Not enough gems! You need ${pack.cost} gems to open ${pack.name}.`);
+            return false;
+        }
+
+        // Deduct cost
+        userGems -= pack.cost;
+        updateBalanceUI();
+        currentOpeningPack = pack;
+
+        // Show modal and reset animation
+        resultDisplay.innerHTML = "";
+        spinnerIconDiv.style.animation = "spinRapid 0.12s infinite linear";
+        spinnerIconDiv.innerHTML = "📦";  // pack icon
+        
+        modal.classList.add('active');
+
+        // Simulate spinning for 1.8 seconds, then reveal prize
+        if (spinningTimeout) clearTimeout(spinningTimeout);
+        spinningTimeout = setTimeout(() => {
+            // stop spinning animation
+            spinnerIconDiv.style.animation = "none";
+            
+            // Pick random item from this pack
+            const wonItem = getRandomItemFromPack(pack.name);
+            
+            // Build result HTML
+            let rarityColor = "#ffffff";
+            if (wonItem.rarity === "Chaser") rarityColor = "#ff66cc";
+            else if (wonItem.rarity === "Rare") rarityColor = "#4caf50";
+            else rarityColor = "#bbbbbb";
+            
+            resultDisplay.innerHTML = `
+                <div style="font-size:1.2rem;">✨ You won! ✨</div>
+                <img class="result-thumb" src="${wonItem.thumbnail}" onerror="this.src='https://i.imgur.com/9MjQ9sD.png'" alt="item">
+                <div style="font-size: 1.8rem; font-weight: bold; color: ${rarityColor};">${wonItem.name}</div>
+                <div>💰 Value: ${wonItem.goldValue} gems</div>
+                <div>⭐ Rarity: ${wonItem.rarity || "Ordinary"}</div>
+            `;
+            spinnerIconDiv.innerHTML = "🎉";
+            
+            // Send Discord embed notification
+            sendDiscordWebhook(pack.name, wonItem.name, wonItem.rarity, wonItem.goldValue, wonItem.thumbnail);
+            
+            // (Optional) Add won item value to user? Not adding to balance, just collecting.
+            // Could add collection logic but for this demo we just show.
+        }, 1800);
+        
+        return true;
+    }
+
+    // Render packs from loaded data
+    function renderPacks() {
+        if (!packsData.length) {
+            packsContainer.innerHTML = '<div style="text-align:center;">No packs found. Check CSV data or sheet format.</div>';
+            return;
+        }
+        
+        packsContainer.innerHTML = "";
+        for (let pack of packsData) {
+            const card = document.createElement('div');
+            card.className = 'pack-card';
+            card.style.borderTop = `5px solid ${pack.color}`;
+            
+            card.innerHTML = `
+                <div class="pack-icon" style="color: ${pack.color};">🎴</div>
+                <div class="pack-name" style="color: ${pack.color};">${escapeHtml(pack.name)}</div>
+                <div class="pack-cost">💎 ${pack.cost} Gems</div>
+                <button class="open-btn" data-packname="${pack.name}" style="background: ${pack.color}; color: white;">Open Pack</button>
+            `;
+            
+            const openBtn = card.querySelector('.open-btn');
+            openBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openPack(pack);
+            });
+            
+            packsContainer.appendChild(card);
+        }
+    }
+
+    // simple escape for safety
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Parse CSV string into array of objects based on headers
+    function parseCSV(csvText, expectedColumns) {
+        const lines = csvText.split(/\r?\n/).filter(line => line.trim().length > 0);
+        if (lines.length < 2) return [];
+        
+        const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+        const dataRows = [];
+        
+        for (let i = 1; i < lines.length; i++) {
+            const values = [];
+            let inQuote = false;
+            let currentVal = '';
+            const rowStr = lines[i];
+            
+            for (let c = 0; c < rowStr.length; c++) {
+                const ch = rowStr[c];
+                if (ch === '"') {
+                    inQuote = !inQuote;
+                } else if (ch === ',' && !inQuote) {
+                    values.push(currentVal.trim().replace(/^"|"$/g, ''));
+                    currentVal = '';
+                } else {
+                    currentVal += ch;
+                }
+            }
+            values.push(currentVal.trim().replace(/^"|"$/g, ''));
+            
+            if (values.length >= headers.length) {
+                const rowObj = {};
+                headers.forEach((h, idx) => {
+                    rowObj[h] = values[idx] || '';
+                });
+                dataRows.push(rowObj);
+            }
+        }
+        return dataRows;
+    }
+
+    // Load packs from CSV
+    async function loadPacks() {
+        try {
+            const response = await fetch(PACKS_CSV_URL);
+            const csv = await response.text();
+            const rows = parseCSV(csv, ['PackName', 'PackColor', 'PackCost']);
+            
+            packsData = rows.map(row => ({
+                name: row.PackName || row.packname || row.name || 'Unknown',
+                color: row.PackColor || row.packcolor || row.color || '#aaaaaa',
+                cost: parseInt(row.PackCost || row.packcost || row.cost || 0, 10)
+            })).filter(p => p.name !== 'Unknown' && !isNaN(p.cost));
+            
+            console.log("✅ Packs loaded:", packsData);
+            if (packsData.length === 0) throw new Error("No valid packs");
+            renderPacks();
+        } catch (err) {
+            console.error(err);
+            packsContainer.innerHTML = `<div class="error-msg">⚠️ Failed to load packs data. Check sheet sharing (anyone with link can view).<br>Using fallback demo packs.</div>`;
+            // Fallback packs based on your sample
+            packsData = [
+                { name: "Boots", color: "#E03FD8", cost: 1000 }
+            ];
+            renderPacks();
+        }
+    }
+
+    // Load items from CSV
+    async function loadItems() {
+        try {
+            const response = await fetch(ITEMS_CSV_URL);
+            const csv = await response.text();
+            const rows = parseCSV(csv, ['ItemName', 'GoldValue', 'BelongsToPack', 'ItemThumbnail', 'CardRarity']);
+            
+            itemsData = rows.map(row => ({
+                name: row.ItemName || row.itemname || 'Mystery Item',
+                goldValue: parseInt(row.GoldValue || row.goldvalue || 0, 10),
+                belongsToPack: row.BelongsToPack || row.belongstopack || '',
+                thumbnail: row.ItemThumbnail || row.itemthumbnail || 'https://i.imgur.com/9MjQ9sD.png',
+                rarity: row.CardRarity || row.cardrarity || 'Ordinary'
+            })).filter(item => item.name);
+            
+            console.log("✅ Items loaded:", itemsData.length);
+        } catch (err) {
+            console.error("Items load error:", err);
+            // fallback items from your example
+            itemsData = [
+                { name: "Rainbow Boot", goldValue: 10000, belongsToPack: "Boots", thumbnail: "https://trello.com/1/cards/69e1360a5fb96873ddeb5958/attachments/69e13611771b34a309ccacb7/download/image.png", rarity: "Chaser" },
+                { name: "Old Boot", goldValue: 20, belongsToPack: "Boots", thumbnail: "https://trello.com/1/cards/69e13d2662c6fe6dfaae7fb0/attachments/69e13d2eb7b4c5c9e4798060/download/image.png", rarity: "Ordinary" }
+            ];
+        }
+    }
+
+    // Close modal handler
+    closeModalBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+        if (spinningTimeout) clearTimeout(spinningTimeout);
+        // reset spin area for next time
+        spinnerIconDiv.style.animation = "none";
+        spinnerIconDiv.innerHTML = "🎁";
+        resultDisplay.innerHTML = "";
+    });
+
+    // Initialize everything
+    async function init() {
+        await loadItems();
+        await loadPacks();
+        updateBalanceUI();
+    }
+    
+    init();
+</script>
+</body>
+</html>
